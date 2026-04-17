@@ -1,0 +1,171 @@
+[
+  {
+    "category": "HOT BEVERAGES",
+    "products": [
+      { "name": "Black Coffee (Small)", "price": 70 },
+      { "name": "Black Coffee (Large)", "price": 100 },
+      { "name": "Tea (Small)", "price": 70 },
+      { "name": "Tea (Large)", "price": 120 },
+      { "name": "Lemon Tea (Small)", "price": 70 },
+      { "name": "Lemon Tea (Large)", "price": 100 },
+      { "name": "Tea Masala/ Ginger (Small)", "price": 100 },
+      { "name": "Tea Masala/ Ginger (Large)", "price": 150 },
+      { "name": "Hot Chocolate (Small)", "price": 70 },
+      { "name": "Hot Chocolate (Large)", "price": 100 },
+      { "name": "Tea Special (Small)", "price": 100 },
+      { "name": "Tea Special (Large)", "price": 150 },
+      { "name": "A1 Coffee (Small)", "price": 150 },
+      { "name": "A1 Coffee (Large)", "price": 200 }
+    ]
+  },
+  {
+    "category": "SNACKS",
+    "products": [
+      { "name": "Mahamri", "price": 10 },
+      { "name": "Bhajia (per piece)", "price": 10 },
+      { "name": "Viazi Karai (per piece)", "price": 10 },
+      { "name": "Sweet Potato/Arrow Roots", "price": 100 },
+      { "name": "Sausage Halal", "price": 150 },
+      { "name": "Samosa 2pcs", "price": 150 },
+      { "name": "2 Eggs Fry/Boiled", "price": 100 },
+      { "name": "Omelette Spanish", "price": 150 },
+      { "name": "Pancakes 2pcs", "price": 100 }
+    ]
+  },
+  {
+    "category": "DRINKS",
+    "products": [
+      { "name": "Soda", "price": 100 },
+      { "name": "Diet Coke", "price": 150 },
+      { "name": "Fresh Milk", "price": 100 },
+      { "name": "Mala", "price": 150 },
+      { "name": "Yoghurt", "price": 150 }
+    ]
+  },
+  {
+    "category": "DRINKING WATER",
+    "products": [
+      { "name": "Mineral Water", "price": 100 },
+      { "name": "Mineral Water 1 litre", "price": 150 },
+      { "name": "Mineral Water 1.5 litre", "price": 200 },
+      { "name": "Keringet/Dasani 500ml", "price": 150 },
+      { "name": "Sparkling Water 500ml", "price": 150 },
+      { "name": "Sparkling Water 1 litre", "price": 200 }
+    ]
+  },
+  {
+    "category": "JUICE",
+    "products": [
+      { "name": "Juice (Small)", "price": 200 },
+      { "name": "Juice (Medium)", "price": 250 },
+      { "name": "Juice (Xlarge)", "price": 300 },
+      { "name": "Fresh Cocktail Juice", "price": 300 },
+      { "name": "Health Mix Juice (sugarless)", "price": 300 }
+    ]
+  },
+  {
+    "category": "DESSERTS",
+    "products": [
+      { "name": "Fruit salad Mix", "price": 200 },
+      { "name": "Smoothies (Yoghurt & Fruits)", "price": 400 },
+      { "name": "Fruit slice", "price": 40 }
+    ]
+  },
+  {
+    "category": "HEALTH",
+    "products": [
+      { "name": "Power porridge", "price": 150 },
+      { "name": "Dawa (Garlic, Lemon, Ginger & Honey)", "price": 150 }
+    ]
+  },
+  {
+    "category": "FRIES",
+    "products": [
+      { "name": "Chips Plain", "price": 200 },
+      { "name": "Chips Masala", "price": 250 }
+    ]
+  },
+  {
+    "category": "MAIN MEALS",
+    "products": [
+      { "name": "Chapati - White", "price": 30 },
+      { "name": "Chapati - Brown", "price": 40 },
+      { "name": "Sima", "price": 100 },
+      { "name": "Beans Plain", "price": 120 },
+      { "name": "Rice Plate", "price": 150 },
+      { "name": "Rolex (Chapati & Omelette)", "price": 200 },
+      { "name": "Githeri Plain", "price": 150 },
+      { "name": "Githeri Special", "price": 200 },
+      { "name": "Matoke Plain", "price": 250 },
+      { "name": "Matoke Special", "price": 300 },
+      { "name": "Bone Soup + Chapati/Mahamri", "price": 200 },
+      { "name": "Pilau", "price": 300 },
+      { "name": "Kuku Kienyeji soup", "price": 400 },
+      { "name": "Chef Mix (Vegetarian)", "price": 300 },
+      { "name": "Chef Mix", "price": 400 },
+      { "name": "Biriani Kuku", "price": 700 },
+      { "name": "Biriani Beef", "price": 600 },
+      { "name": "Mataha Veg", "price": 300 },
+      { "name": "Mataha Special", "price": 400 },
+      { "name": "Vegetables in Season", "price": 100 },
+      { "name": "Traditional Vegetables", "price": 150 },
+      { "name": "Assorted Vegetables (Large)", "price": 200 },
+      { "name": "Beef Stew (with Chapati/Sima/Veg)", "price": 450 },
+      { "name": "Beef Stew (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 500 },
+      { "name": "Beef Dry Fry (with Chapati/Sima/Veg)", "price": 500 },
+      { "name": "Beef Dry Fry (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 550 },
+      { "name": "Liver/ Goat Stew (with Chapati/Sima/Veg)", "price": 550 },
+      { "name": "Liver/ Goat Stew (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 600 },
+      { "name": "Liver/ Goat Dry Fry (with Chapati/Sima/Veg)", "price": 600 },
+      { "name": "Liver/ Goat Dry Fry (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 650 },
+      { "name": "Matumbo (with Chapati/Sima/Veg)", "price": 350 },
+      { "name": "Matumbo (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 400 },
+      { "name": "Kuku Choma (with Chapati/Sima/Veg)", "price": 550 },
+      { "name": "Kuku Choma (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 600 },
+      { "name": "Kienyeji Kuku Gravy (with Chapati/Sima/Veg)", "price": 550 },
+      { "name": "Kienyeji Kuku Gravy (with Rice/Mataha/Matoke/Chips/Spaghetti/Veg)", "price": 600 },
+      { "name": "Full Chicken Broiler", "price": 1300 },
+      { "name": "Full Chicken Kienyeji", "price": 1600 }
+    ]
+  },
+  {
+    "category": "FRESH WATER FISH",
+    "products": [
+      { "name": "Tilapia Medium", "price": 750 },
+      { "name": "Tilapia Medium Gravy", "price": 800 },
+      { "name": "Tilapia Large", "price": 850 },
+      { "name": "Tilapia Large Gravy", "price": 900 }
+    ]
+  },
+  {
+    "category": "SEA FOOD",
+    "products": [
+      { "name": "Ta? Dry Fry (Full Fish)", "price": 450 },
+      { "name": "Ta? Gravy (Full Fish)", "price": 550 },
+      { "name": "King Fish Slice", "price": 450 },
+      { "name": "King Fish Slice Gravy", "price": 550 },
+      { "name": "Red Snapper Slice", "price": 450 },
+      { "name": "Red Snapper Slice Gravy", "price": 500 }
+    ]
+  },
+  {
+    "category": "CHOMA",
+    "products": [
+      { "name": "Beef 1/4 kg", "price": 350 },
+      { "name": "Beef 1/2 kg", "price": 600 },
+      { "name": "Beef 1 kg", "price": 1200 },
+      { "name": "Mbuzi 1/4 kg", "price": 450 },
+      { "name": "Mbuzi 1/2 kg", "price": 800 },
+      { "name": "Mbuzi 1 kg", "price": 1400 }
+    ]
+  },
+  {
+    "category": "CURRIES",
+    "products": [
+      { "name": "Chicken Curry", "price": 700 },
+      { "name": "Beef Curry", "price": 600 },
+      { "name": "Vegetable Curry", "price": 300 },
+      { "name": "Mbuzi Curry", "price": 700 }
+    ]
+  }
+]

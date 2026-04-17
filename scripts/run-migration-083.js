@@ -1,0 +1,27 @@
+
+const { createClient } = require("@supabase/supabase-js");
+const fs = require("fs");
+const path = require("path");
+const dotenv = require("dotenv");
+
+const envPath = fs.existsSync(path.resolve(process.cwd(), ".env")) 
+  ? path.resolve(process.cwd(), ".env")
+  : path.resolve(process.cwd(), ".env.local")
+
+if (fs.existsSync(envPath)) {
+  const envConfig = dotenv.parse(fs.readFileSync(envPath));
+  for (const k in envConfig) {
+    process.env[k] = envConfig[k];
+  }
+}
+
+const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+async function run() {
+  const sql = fs.readFileSync(path.resolve(process.cwd(), "scripts/083_enhanced_variance_analysis.sql"), "utf8");
+  const { data, error } = await supabase.rpc("exec_sql", { sql_query: sql });
+  if (error) console.error(error);
+  else console.log("Applied enhanced variance analysis (083)");
+}
+
+run();

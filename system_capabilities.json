@@ -1,0 +1,112 @@
+{
+  "system_name": "Mama Jos ERP",
+  "version": "2.0.0-PRO",
+  "architecture": {
+    "frontend": "Next.js 14 (App Router)",
+    "styling": "Tailwind CSS + Shadcn UI",
+    "backend_as_a_service": "Supabase (PostgreSQL, Auth, Storage, Real-time)",
+    "real_time_engine": "PostgreSQL Change Data Capture (CDC) via Supabase Channels"
+  },
+  "core_modules": [
+    {
+      "module": "Omni-channel Ordering",
+      "features": [
+        "Online Self-Checkout",
+        "Physical Point of Sale (POS)",
+        "QR Code Table Ordering",
+        "M-Pesa & Card Payment Integration"
+      ]
+    },
+    {
+      "module": "Kitchen Production (KDS)",
+      "features": [
+        "Live Production Queue",
+        "Color-coded Urgency Alerts",
+        "Digital Recipe Intelligence",
+        "Chef-specific Performance Tracking"
+      ]
+    },
+    {
+      "module": "Fulfillment & Logistics",
+      "features": [
+        "Integrated Rider App",
+        "Waiter Collection Board",
+        "Dine-in vs Delivery specialized workflows",
+        "Live Order Tracking for Customers"
+      ]
+    },
+    {
+      "module": "Inventory & Supply Chain",
+      "features": [
+        "Real-time Ingredient Deduction",
+        "Automated Reordering Logic",
+        "Supplier Management",
+        "Wastage & Variance Analysis"
+      ]
+    },
+    {
+      "module": "Finance & Compliance",
+      "features": [
+        "Automated General Ledger Updates",
+        "KRA eTIMS Integration",
+        "Daily Sales & Profit Reporting",
+        "Payroll & Statutory Deductions (NHIF/NSSF/PAYE)"
+      ]
+    },
+    {
+      "module": "CRM & Loyalty",
+      "features": [
+        "Social Media Loyalty Integration",
+        "Automated Discount System",
+        "Customer Lifetime Value (CLV) Analytics",
+        "Personalized Marketing Campaigns"
+      ]
+    }
+  ],
+  "monitored_food_lifecycle": {
+    "stages": [
+      {
+        "stage": "placement",
+        "status": "pending",
+        "actor": "Customer / POS Staff",
+        "description": "Order initiated and payment verified."
+      },
+      {
+        "stage": "validation",
+        "status": "approved",
+        "actor": "Accountant / System Auto-verify",
+        "description": "Funds confirmed; order released to kitchen."
+      },
+      {
+        "stage": "production_start",
+        "status": "cooking",
+        "actor": "Chef",
+        "description": "Kitchen clicks START; ingredients deducted from inventory."
+      },
+      {
+        "stage": "production_complete",
+        "status": "ready",
+        "actor": "Chef",
+        "description": "Kitchen clicks READY; Fulfillment team notified."
+      },
+      {
+        "stage": "transit",
+        "status": "on_transit / out_for_delivery",
+        "actor": "Rider / Waiter",
+        "description": "Order picked up for table service or home delivery."
+      },
+      {
+        "stage": "fulfillment",
+        "status": "served / delivered",
+        "actor": "Rider / Waiter",
+        "description": "Order handed to customer; final ledger updated."
+      }
+    ]
+  },
+  "competitive_differentiators": [
+    "Unified Data Thread: Zero manual sync between Sales, Kitchen, and Accounting.",
+    "Inventory Intelligence: Recipes drive stock levels automatically.",
+    "Real-time Visibility: Management sees exact order location (Kitchen vs Road) instantly.",
+    "Compliance Built-in: Direct eTIMS and statutory tax handling."
+  ]
+}

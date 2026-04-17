@@ -1,0 +1,80 @@
+[
+  {
+    "id": "cat-hot-beverages",
+    "name": "HOT BEVERAGES",
+    "slug": "hot-beverages",
+    "description": "Hot tea, coffee and chocolate"
+  },
+  {
+    "id": "cat-snacks",
+    "name": "SNACKS",
+    "slug": "snacks",
+    "description": "Assorted snacks and small bites"
+  },
+  {
+    "id": "cat-drinks",
+    "name": "DRINKS",
+    "slug": "drinks-category",
+    "description": "Sodas, milk and yoghurt"
+  },
+  {
+    "id": "cat-drinking-water",
+    "name": "DRINKING WATER",
+    "slug": "drinking-water",
+    "description": "Bottled mineral and sparkling water"
+  },
+  {
+    "id": "cat-juice",
+    "name": "JUICE",
+    "slug": "juice-category",
+    "description": "Fresh fruit juices"
+  },
+  {
+    "id": "cat-desserts",
+    "name": "DESSERTS",
+    "slug": "desserts-category",
+    "description": "Sweet treats and fruit salads"
+  },
+  {
+    "id": "cat-health",
+    "name": "HEALTH",
+    "slug": "health-category",
+    "description": "Healthy options like porridge and dawa"
+  },
+  {
+    "id": "cat-fries",
+    "name": "FRIES",
+    "slug": "fries-category",
+    "description": "Plain and masala chips"
+  },
+  {
+    "id": "cat-main-meals",
+    "name": "MAIN MEALS",
+    "slug": "main-meals",
+    "description": "Hearty main dishes"
+  },
+  {
+    "id": "cat-fresh-water-fish",
+    "name": "FRESH WATER FISH",
+    "slug": "fresh-water-fish",
+    "description": "Tilapia and other fresh water fish"
+  },
+  {
+    "id": "cat-sea-food",
+    "name": "SEA FOOD",
+    "slug": "sea-food",
+    "description": "Fish slices and full fish from the sea"
+  },
+  {
+    "id": "cat-choma",
+    "name": "CHOMA",
+    "slug": "choma-category",
+    "description": "Grilled beef and mbuzi"
+  },
+  {
+    "id": "cat-curries",
+    "name": "CURRIES",
+    "slug": "curries-category",
+    "description": "Various meat and vegetable curries"
+  }
+]
