@@ -25,37 +25,8 @@ async function restoreProfiles() {
       return;
     }
 
-    // Create profiles table if it doesn't exist
-    console.log('Creating profiles table if not exists...');
-    await supabase.rpc('exec', {
-      sql: `
-        CREATE TABLE IF NOT EXISTS profiles (
-          id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-          full_name text,
-          avatar_url text,
-          bio text,
-          role text,
-          phone text,
-          address text,
-          city text,
-          state text,
-          postal_code text,
-          country text,
-          created_at timestamp with time zone DEFAULT timezone('utc'::text, now()),
-          updated_at timestamp with time zone DEFAULT timezone('utc'::text, now())
-        );
-
-        ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-
-        CREATE POLICY "Users can view their own profile"
-          ON profiles FOR SELECT
-          USING (auth.uid() = id);
-
-        CREATE POLICY "Users can update their own profile"
-          ON profiles FOR UPDATE
-          USING (auth.uid() = id);
-      `
-    }).catch(() => console.log('Profile table creation via RPC failed, continuing with data insertion...'));
+    // Note: profiles table should have been created by migration scripts
+    console.log('Proceeding with profile data insertion...');
 
     // Insert profiles in batches
     const batchSize = 10;
