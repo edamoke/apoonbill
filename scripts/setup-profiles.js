@@ -22,43 +22,44 @@ async function setupProfiles() {
 
     // Create profiles table using SQL
     console.log('Creating profiles table...');
-    const { error: createError } = await supabase.rpc('exec_sql', {
-      sql: `
-        CREATE TABLE IF NOT EXISTS public.profiles (
-          id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
-          full_name text,
-          avatar_url text,
-          bio text,
-          role text,
-          phone text,
-          address text,
-          city text,
-          state text,
-          postal_code text,
-          country text,
-          created_at timestamp with time zone DEFAULT timezone('utc'::text, now()),
-          updated_at timestamp with time zone DEFAULT timezone('utc'::text, now())
-        );
+    try {
+      const { error: createError } = await supabase.rpc('exec_sql', {
+        sql: `
+          CREATE TABLE IF NOT EXISTS public.profiles (
+            id uuid PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
+            full_name text,
+            avatar_url text,
+            bio text,
+            role text,
+            phone text,
+            address text,
+            city text,
+            state text,
+            postal_code text,
+            country text,
+            created_at timestamp with time zone DEFAULT timezone('utc'::text, now()),
+            updated_at timestamp with time zone DEFAULT timezone('utc'::text, now())
+          );
 
-        ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
+          ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 
-        CREATE POLICY IF NOT EXISTS "Users can view their own profile"
-          ON public.profiles FOR SELECT
-          USING (auth.uid() = id);
+          CREATE POLICY IF NOT EXISTS "Users can view their own profile"
+            ON public.profiles FOR SELECT
+            USING (auth.uid() = id);
 
-        CREATE POLICY IF NOT EXISTS "Users can update their own profile"
-          ON public.profiles FOR UPDATE
-          USING (auth.uid() = id);
-      `
-    }).catch(() => {
+          CREATE POLICY IF NOT EXISTS "Users can update their own profile"
+            ON public.profiles FOR UPDATE
+            USING (auth.uid() = id);
+        `
+      });
+
+      if (createError) {
+        console.error('Error creating profiles table:', createError);
+      } else {
+        console.log('Profiles table created successfully');
+      }
+    } catch (tableCreateError) {
       console.log('RPC method not available, proceeding with direct insert...');
-      return { error: null };
-    });
-
-    if (createError) {
-      console.error('Error creating profiles table:', createError);
-    } else {
-      console.log('Profiles table created successfully');
     }
 
     // Insert profiles data
