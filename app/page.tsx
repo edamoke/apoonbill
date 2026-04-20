@@ -63,21 +63,21 @@ export default async function HomePage() {
       )}
       <ParallaxHero content={getSetting("hero")} theme={activeTheme} />
       <RepeatingBanner image="/kentaaa.jpg" />
-      <FloatingDishes />
+      <FloatingDishes theme={activeTheme} />
       <div className="-mt-16 md:-mt-24">
         <FullWidthParallax 
-          image="/images/pxl-20251209-123652576-landscape.jpg" 
+          image="/images/hero-new.png" 
           title="Taste of Tradition" 
           subtitle="Experience the rich, authentic flavors of African heritage prepared with love and served with elegance."
         />
       </div>
       <RepeatingBanner image="/kentaaa.jpg" reverse={true} />
       <GridSplit content={getSetting("grid_split")} theme={activeTheme} />
-      <HorizontalMenu content={getSetting("featured_menu")} />
-      <CenteredForm content={getSetting("subscription")} />
-      <MasonryGrid />
-      <ElegantQuote />
-      <SiteFooter content={getSetting("footer")} />
+      <HorizontalMenu content={getSetting("featured_menu")} theme={activeTheme} />
+      <CenteredForm content={getSetting("subscription")} theme={activeTheme} />
+      <MasonryGrid theme={activeTheme} />
+      <ElegantQuote theme={activeTheme} />
+      <SiteFooter content={getSetting("footer")} theme={activeTheme} />
       <ChatWidget />
     </div>
   )

@@ -331,7 +331,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
             <h3 
               className={cn(
                 "text-4xl md:text-5xl font-bold mb-8 leading-tight text-foreground",
-                theme?.typography.heading || "font-serif"
+                theme?.typography.heading
               )}
               dangerouslySetInnerHTML={{ __html: giftCard.title }}
             />
@@ -342,7 +342,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
               "aspect-[1.6/1] rounded-xl shadow-2xl flex items-center justify-center p-8 text-center transition-transform hover:rotate-0 border border-white/10",
               theme?.id === 'fast-food' ? "bg-primary rotate-0" : "bg-gradient-to-r from-primary to-secondary rotate-3"
             )}>
-               <span className="text-white text-2xl font-serif italic">{giftCard.cardText}</span>
+               <span className={cn("text-white text-2xl italic", theme?.typography.heading)}>{giftCard.cardText}</span>
             </div>
             <div className="absolute -top-4 -right-4 bg-primary text-white text-[10px] font-bold p-4 rounded-full w-24 h-24 flex items-center justify-center text-center leading-tight rotate-12 shadow-lg border-2 border-white/20">
               {giftCard.promoText}
@@ -368,7 +368,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
               {seafoodCard.tag}
             </span>
             <p className="text-white/80 font-bold tracking-widest mb-2 uppercase italic">{seafoodCard.intro}</p>
-            <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight", theme?.typography.heading || "font-serif")}>
+            <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight", theme?.typography.heading)}>
               {seafoodCard.title}
             </h3>
           </div>
@@ -378,7 +378,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
   )
 }
 
-export function CenteredForm({ content }: { content?: any }) {
+export function CenteredForm({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const [isMounted, setIsMounted] = useState(false)
   const title = content?.title || "Join our email list"
   const disclaimer = content?.disclaimer || "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from thespoonbill."
@@ -390,9 +390,9 @@ export function CenteredForm({ content }: { content?: any }) {
 
   if (!isMounted) {
     return (
-      <section className="bg-white py-24 border-y border-gray-100">
+      <section className="bg-background py-24 border-y border-border">
         <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className="text-4xl font-serif italic font-bold mb-12">{title}</h2>
+          <h2 className={cn("text-4xl italic font-bold mb-12", theme?.typography.heading)}>{title}</h2>
           <div className="flex flex-col md:flex-row gap-4 mb-8 min-h-[60px]">
             {/* Placeholder to maintain layout during hydration */}
           </div>
@@ -405,7 +405,7 @@ export function CenteredForm({ content }: { content?: any }) {
   return (
     <section className="py-24 border-y border-border bg-background transition-colors duration-500">
       <div className="container mx-auto px-4 max-w-3xl text-center text-foreground">
-        <h2 className="text-4xl font-serif italic font-bold mb-12 opacity-80 text-foreground">{title}</h2>
+        <h2 className={cn("text-4xl italic font-bold mb-12 opacity-80 text-foreground", theme?.typography.heading)}>{title}</h2>
         
         <form className="flex flex-col md:flex-row gap-4 mb-8">
           <input 
@@ -438,7 +438,7 @@ export function CenteredForm({ content }: { content?: any }) {
   )
 }
 
-export function MasonryGrid() {
+export function MasonryGrid({ theme }: { theme?: ThemeConfig }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const items = [
     { src: "/images/pxl-20251209-114620748.jpg", span: "md:col-span-2 md:row-span-2" },
@@ -470,7 +470,7 @@ export function MasonryGrid() {
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
           <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2">Visual Journey</p>
-          <h2 className="text-5xl md:text-6xl font-serif italic font-bold text-foreground">The Experience</h2>
+          <h2 className={cn("text-5xl md:text-6xl italic font-bold text-foreground", theme?.typography.heading)}>The Experience</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
@@ -485,7 +485,7 @@ export function MasonryGrid() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                <span className="font-serif italic text-white text-lg">View Details</span>
+                <span className={cn("italic text-white text-lg", theme?.typography.heading)}>View Details</span>
               </div>
             </div>
           ))}
@@ -495,7 +495,7 @@ export function MasonryGrid() {
   )
 }
 
-export function ElegantQuote() {
+export function ElegantQuote({ theme }: { theme?: ThemeConfig }) {
   return (
     <section className="relative py-32 overflow-hidden bg-black text-white shadow-2xl">
       <div 
@@ -507,7 +507,7 @@ export function ElegantQuote() {
       />
       <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
         <div className="w-20 h-1 bg-primary mx-auto mb-12" />
-        <blockquote className="text-3xl md:text-5xl font-serif italic leading-tight mb-8">
+        <blockquote className={cn("text-3xl md:text-5xl italic leading-tight mb-8", theme?.typography.heading)}>
           "Every meal here is a journey through Kenya's finest culinary traditions, presented with an elegance that matches the warmth of our hospitality."
         </blockquote>
         <cite className="text-primary font-bold tracking-[0.2em] uppercase not-italic">
@@ -518,7 +518,7 @@ export function ElegantQuote() {
   )
 }
 
-export function FloatingDishes() {
+export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const dish1Ref = useRef<HTMLDivElement>(null)
   const dish2Ref = useRef<HTMLDivElement>(null)
@@ -567,7 +567,7 @@ export function FloatingDishes() {
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
         <div className="relative z-10">
           <p className="text-primary font-bold tracking-[0.3em] uppercase mb-4 reveal-text">Fast Food & Asian Cuisine</p>
-          <h2 className="text-5xl md:text-7xl font-serif italic font-bold mb-8 reveal-text">Deliciously Fast, <br />Authentically Asian</h2>
+          <h2 className={cn("text-5xl md:text-7xl italic font-bold mb-8 reveal-text", theme?.typography.heading)}>Deliciously Fast, <br />Authentically Asian</h2>
           <p className="text-xl text-muted-foreground max-w-md reveal-text">
             The Spoonbill specializes in mouth-watering burgers, hotdogs, and a curated selection of Chinese takeaway. Available for dine-in and to-go.
           </p>
@@ -586,7 +586,7 @@ export function FloatingDishes() {
   )
 }
 
-export function HorizontalMenu({ content }: { content?: any }) {
+export function HorizontalMenu({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const sectionRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
 
@@ -626,7 +626,7 @@ export function HorizontalMenu({ content }: { content?: any }) {
   return (
     <div ref={triggerRef} className="bg-black overflow-hidden">
       <div className="container mx-auto px-4 pt-20 pb-10">
-        <h2 className="text-white text-5xl md:text-7xl font-serif italic font-bold">{title}</h2>
+        <h2 className={cn("text-white text-5xl md:text-7xl italic font-bold", theme?.typography.heading)}>{title}</h2>
       </div>
       <div 
         ref={sectionRef} 
@@ -640,7 +640,7 @@ export function HorizontalMenu({ content }: { content?: any }) {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <h3 className="absolute bottom-10 left-10 text-white text-4xl font-serif italic font-bold">{item.title}</h3>
+            <h3 className={cn("absolute bottom-10 left-10 text-white text-4xl italic font-bold", theme?.typography.heading)}>{item.title}</h3>
           </div>
         ))}
       </div>
@@ -744,7 +744,7 @@ export function FullWidthParallax({ image, title, subtitle }: { image: string, t
   )
 }
 
-export function SiteFooter({ content }: { content?: any }) {
+export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const location = content?.location || {
     title: "LOCATION",
     lines: ["Next to ACK Church after Barbar,", "Malindi Lamu Road,", "Malindi"]
@@ -798,7 +798,7 @@ export function SiteFooter({ content }: { content?: any }) {
             </div>
             
             <div className="mt-8 text-foreground">
-               <h1 className="text-2xl font-serif italic font-bold text-secondary">thespoonbill</h1>
+               <h1 className={cn("text-2xl italic font-bold text-secondary", theme?.typography.heading)}>thespoonbill</h1>
             </div>
           </div>
         </div>
