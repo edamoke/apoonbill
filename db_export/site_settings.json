@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "id": "branding",
+    "key": "brand_name",
+    "value": "thespoonbill"
+  },
+  {
+    "id": "branding",
+    "key": "specialization",
+    "value": "Fast Food & Asian Cuisine"
+  },
+  {
+    "id": "branding",
+    "key": "hero_title",
+    "value": "Deliciously Fast, Authentically Asian"
+  },
+  {
+    "id": "branding",
+    "key": "hero_description",
+    "value": "The Spoonbill specializes in mouth-watering burgers, hotdogs, and a curated selection of Chinese takeaway. Available for dine-in and to-go."
+  },
+  {
+    "id": "contact",
+    "key": "location",
+    "value": "Next to ACK Church after Barbar, Malindi Lamu Road, Malindi"
+  },
+  {
+    "id": "contact",
+    "key": "phone",
+    "value": "0748 422 994"
+  }
+]

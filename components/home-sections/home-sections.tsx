@@ -566,10 +566,10 @@ export function FloatingDishes() {
     <section ref={containerRef} className="py-32 bg-background overflow-hidden relative border-b border-border">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
         <div className="relative z-10">
-          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-4 reveal-text">Art of Plating</p>
-          <h2 className="text-5xl md:text-7xl font-serif italic font-bold mb-8 reveal-text">Exquisite Flavors, <br />Beautifully Served</h2>
+          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-4 reveal-text">Fast Food & Asian Cuisine</p>
+          <h2 className="text-5xl md:text-7xl font-serif italic font-bold mb-8 reveal-text">Deliciously Fast, <br />Authentically Asian</h2>
           <p className="text-xl text-muted-foreground max-w-md reveal-text">
-            Our chefs combine traditional coastal spices with modern techniques to create dishes that are as visually stunning as they are delicious.
+            The Spoonbill specializes in mouth-watering burgers, hotdogs, and a curated selection of Chinese takeaway. Available for dine-in and to-go.
           </p>
         </div>
         <div className="relative min-h-[500px]">
@@ -747,7 +747,7 @@ export function FullWidthParallax({ image, title, subtitle }: { image: string, t
 export function SiteFooter({ content }: { content?: any }) {
   const location = content?.location || {
     title: "LOCATION",
-    lines: ["Opposite KCB Bank,", "Malindi Lamu Road,", "Malindi"]
+    lines: ["Next to ACK Church after Barbar,", "Malindi Lamu Road,", "Malindi"]
   };
 
   const menu = content?.menu || {
