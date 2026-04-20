@@ -258,5 +258,15 @@ export const FONT_COMBINATIONS = [
     bodyGoogle: "Work+Sans:wght@400;500;600",
     headingClass: "font-kanit",
     bodyClass: "font-worksans"
-  }
+  },
+  {
+    id: "worksans",
+    name: "Work Sans / Work Sans",
+    heading: "Work Sans",
+    body: "Work Sans",
+    headingGoogle: "Work+Sans:wght@700",
+    bodyGoogle: "Work+Sans:wght@400",
+    headingClass: "font-worksans",
+    bodyClass: "font-worksans",
+  },
 ];

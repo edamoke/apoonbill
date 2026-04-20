@@ -47,7 +47,8 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
       )}>
         <Link href="/" className={cn(
           "flex items-center gap-2 group transition-all",
-          headerLayout === 'centered' && "flex-col text-center"
+          headerLayout === 'centered' && "flex-col text-center",
+          theme?.id === 'marco-good' && headerLayout === 'centered' && "items-center"
         )}>
           <div className="relative">
             <div className={cn(
@@ -56,7 +57,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             )} />
             <img 
               src={branding?.logoUrl || (theme?.id === 'swahili' ? "/placeholder-logo.svg" : (theme?.palette.background === '#000000' ? "/placeholder-logo.svg" : "/placeholder-logo.png"))} 
-              alt={branding?.title || "Mama Jos"} 
+              alt={branding?.title || "The Spoonbill"} 
               className={cn(
                 "h-10 w-auto transition-all",
                 !branding?.logoUrl && (theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100"))
@@ -67,11 +68,14 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             <span className={cn(
               "text-xl font-bold tracking-tight leading-none",
               theme?.typography.heading || "font-serif italic",
-              headerLayout === 'centered' ? "text-2xl text-[var(--foreground)]" : "text-white"
+              headerLayout === 'centered' ? "text-2xl text-[var(--foreground)]" : "text-white",
+              theme?.id === 'marco-good' && headerLayout === 'centered' && "font-bold tracking-widest uppercase"
             )}>
-              {branding?.title || "Mama Jos"}
+              {branding?.title || "THE SPOONBILL"}
             </span>
-            <span className="text-[10px] font-bold text-[var(--primary)] tracking-[0.2em] uppercase">
+            <span className={cn("text-[10px] font-bold text-[var(--primary)] tracking-[0.2em] uppercase",
+              theme?.id === 'marco-good' && headerLayout === 'centered' && "hidden"
+            )}>
               {branding?.subtitle || "Malindi"}
             </span>
           </div>
@@ -114,7 +118,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative text-white hover:bg-white/10" asChild>
+          <Button variant="ghost" size="icon" className={cn("relative text-white hover:bg-white/10", theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10")} asChild>
             <Link href="/cart">
               <ShoppingCart className="h-5 w-5" />
               {cartItemCount > 0 && (
@@ -129,10 +133,10 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             <UserNav user={user} profile={profile} />
           ) : (
             <div className="hidden md:flex items-center gap-2">
-              <Button variant="ghost" className="text-white hover:bg-white/10" asChild>
+              <Button variant="ghost" className={cn("text-white hover:bg-white/10", theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10")} asChild>
                 <Link href="/auth/login">Login</Link>
               </Button>
-              <Button className="bg-[var(--primary)] text-white hover:opacity-90" asChild>
+              <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90", theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90")} asChild>
                 <Link href="/auth/sign-up">Sign Up</Link>
               </Button>
             </div>
@@ -142,7 +146,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-white hover:bg-white/10"
+            className={cn("md:hidden text-white hover:bg-white/10", theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10")}
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -151,31 +155,41 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <nav className="absolute top-full left-0 right-0 mt-4 md:hidden py-6 px-4 space-y-4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl animate-in fade-in slide-in-from-top-4">
+          <nav className={cn("absolute top-full left-0 right-0 mt-4 md:hidden py-6 px-4 space-y-4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl animate-in fade-in slide-in-from-top-4",
+            theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--background)]/90 border-[var(--foreground)]/10"
+          )}>
             <Link
               href="/menu"
-              className="block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
               onClick={() => setMobileMenuOpen(false)}
             >
               Menu
             </Link>
             <Link
               href="/offers-events"
-              className="block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
               onClick={() => setMobileMenuOpen(false)}
             >
               Offers & Events
             </Link>
             <Link
               href="/diary"
-              className="block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
               onClick={() => setMobileMenuOpen(false)}
             >
               Diary
             </Link>
             <Link
               href="/catering"
-              className="block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
               onClick={() => setMobileMenuOpen(false)}
             >
               Outside Catering
@@ -183,17 +197,25 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             {user ? (
               <Link
                 href="/orders"
-                className="block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors"
+                className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                  theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+                )}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Orders
               </Link>
             ) : (
-              <div className="flex flex-col gap-4 pt-4 border-t border-white/10">
-                <Button variant="ghost" className="text-white hover:bg-white/10 w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+              <div className={cn("flex flex-col gap-4 pt-4 border-t border-white/10",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "border-[var(--foreground)]/10"
+              )}>
+                <Button variant="ghost" className={cn("text-white hover:bg-white/10 w-full",
+                  theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10"
+                )} asChild onClick={() => setMobileMenuOpen(false)}>
                   <Link href="/auth/login">Login</Link>
                 </Button>
-                <Button className="bg-[var(--primary)] text-white w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                <Button className={cn("bg-[var(--primary)] text-white w-full",
+                  theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90"
+                )} asChild onClick={() => setMobileMenuOpen(false)}>
                   <Link href="/auth/sign-up">Sign Up</Link>
                 </Button>
               </div>

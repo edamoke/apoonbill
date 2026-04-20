@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+      - .env.local
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    # If you want to include Supabase CLI, uncomment the following:
+    # environment:
+    #   - SUPABASE_CLI_VERSION=1.x.x # Specify a version or 'latest'
+    #   - PGPASSWORD=${POSTGRES_PASSWORD}
+    # command: sh -c "npm install -g supabase@${SUPABASE_CLI_VERSION} && npm start"

@@ -1,6 +1,6 @@
 # Accountant Module User Manual
 
-This manual provides detailed instructions on how to set up and use the Accountant module within the Mama Jos system.
+This manual provides detailed instructions on how to set up and use the Accountant module within the The Spoonbill system.
 
 ## Overview
 The Accountant module is designed to handle all financial aspects of the venue, including double-entry bookkeeping, general ledger management, sales reconciliation, supplier payments, and financial reporting (P&L, Sales Analysis).

@@ -25,7 +25,7 @@ export interface ThemeConfig {
 export const THEMES: Record<string, ThemeConfig> = {
   default: {
     id: 'default',
-    name: "Mama Jos Classic",
+    name: "The Spoonbill Classic",
     description: 'The elegant original design with deep blues and crimson accents.',
     palette: {
       primary: '#d62828',
@@ -160,6 +160,29 @@ export const THEMES: Record<string, ThemeConfig> = {
       header: 'classic',
       grid: 'loose'
     }
+  },
+  "marco-good": {
+    id: "marco-good",
+    name: "Marco Good",
+    description: "Clean and modern design with a focus on simplicity and readability.",
+    palette: {
+      primary: "#d62828", // Vibrant Red
+      secondary: "#fcbf49", // Warm Yellow
+      accent: "#003049", // Dark Blue
+      background: "#eae2b7", // Light Cream
+      foreground: "#001d2d", // Very Dark Blue
+      muted: "#a8dadc", // Light Blue/Gray
+    },
+    typography: {
+      heading: "font-worksans", // Modern sans-serif
+      body: "font-worksans", // Modern sans-serif
+      baseSize: "base",
+    },
+    layout: {
+      hero: "minimal",
+      header: "centered",
+      grid: "standard",
+    },
   }
 };
 

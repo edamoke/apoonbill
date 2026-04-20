@@ -104,7 +104,7 @@ export function AdminHeader({ user, profile }: AdminHeaderProps) {
               <span className="text-2xl font-serif text-primary-foreground font-bold">M</span>
             </div>
             <div>
-              <h1 className="text-lg font-serif font-bold leading-none">Mama Jos</h1>
+              <h1 className="text-lg font-serif font-bold leading-none">The Spoonbill</h1>
               <p className="text-[10px] text-muted-foreground uppercase tracking-widest mt-1">Restaurant Management</p>
             </div>
           </Link>

@@ -1,5 +1,5 @@
 {
-  "system_name": "Mama Jos ERP",
+  "system_name": "The Spoonbill ERP",
   "version": "2.0.0-PRO",
   "architecture": {
     "frontend": "Next.js 14 (App Router)",

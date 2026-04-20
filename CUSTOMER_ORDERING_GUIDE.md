@@ -1,6 +1,6 @@
 # Customer Ordering & Tracking Guide
 
-Welcome to the Mama Jos online ordering platform. This guide will walk you through how to place an order, make a payment, and track your food in real-time.
+Welcome to the The Spoonbill online ordering platform. This guide will walk you through how to place an order, make a payment, and track your food in real-time.
 
 ---
 

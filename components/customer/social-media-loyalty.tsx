@@ -122,7 +122,7 @@ export function SocialMediaLoyalty({ user }: { user: any }) {
             <div className="space-y-2">
               <Label>Share your thoughts...</Label>
               <Textarea 
-                placeholder="Delicious meal at Mama Jos! #MamaJos" 
+                placeholder="Delicious meal at The Spoonbill! #thespoonbill" 
                 value={postData.caption}
                 onChange={(e) => setPostData({...postData, caption: e.target.value})}
               />

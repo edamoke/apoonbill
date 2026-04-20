@@ -28,7 +28,7 @@ CREATE POLICY "Allow admin write access on site_settings"
 -- Insert initial settings
 INSERT INTO site_settings (id, content) VALUES
 ('hero', '{
-  "title": "mamaJos",
+  "title": "thespoonbill",
   "subtitle": "Malindi",
   "mainHeading": "Stars & <br />Gaters",
   "buttonText": "START ORDER",
@@ -41,7 +41,7 @@ INSERT INTO site_settings (id, content) VALUES
     "tag": "BRAND NEW",
     "intro": "INTRODUCING",
     "title": "THE MOST <br />DELICIOUS GIFT",
-    "cardText": "mamaJos Gift Card",
+    "cardText": "thespoonbill Gift Card",
     "buttonText": "BUY NOW",
     "promoText": "GET & GIFT SOMEONE TODAY"
   },
@@ -54,7 +54,7 @@ INSERT INTO site_settings (id, content) VALUES
 }'),
 ('subscription', '{
   "title": "Join our email list",
-  "disclaimer": "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from mamaJos.",
+  "disclaimer": "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from thespoonbill.",
   "socials": ["Facebook", "Twitter", "Instagram"]
 }'),
 ('footer', '{
@@ -75,7 +75,7 @@ INSERT INTO site_settings (id, content) VALUES
     "title": "CALL US",
     "phone": "0748 422 994"
   },
-  "copyright": "© 2025 mamaJos. All Rights Reserved"
+  "copyright": "© 2025 thespoonbill. All Rights Reserved"
 }'),
 ('styles', '{
   "fontSize": "base",

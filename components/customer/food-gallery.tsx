@@ -68,14 +68,14 @@ export function FoodGallery({ profile, user }: { profile: any, user: any }) {
   const shareOnSocial = (imgUrl: string) => {
     if (navigator.share) {
       navigator.share({
-        title: 'DeliciousMama jos!',
-        text: 'Check out this meal I had at mamaJos!',
+        title: 'DeliciousThe Spoonbill!',
+        text: 'Check out this meal I had at thespoonbill!',
         url: imgUrl,
       }).catch(console.error);
     } else {
       // Fallback for desktop or browsers without Web Share API
       const shareUrl = encodeURIComponent(imgUrl)
-      const text = encodeURIComponent('Check out this delicious meal I had at mamaJos!')
+      const text = encodeURIComponent('Check out this delicious meal I had at thespoonbill!')
       
       // We can offer a simple choice or just copy to clipboard
       navigator.clipboard.writeText(imgUrl)

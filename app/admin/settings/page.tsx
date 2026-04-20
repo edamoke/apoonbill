@@ -191,7 +191,7 @@ export default function AdminSettingsPage() {
             <CardContent className="space-y-4">
               <div>
                 <label className="text-sm font-medium">Restaurant Name</label>
-                <p className="text-sm text-muted-foreground mt-1">Mama Jos</p>
+                <p className="text-sm text-muted-foreground mt-1">The Spoonbill</p>
               </div>
               <div>
                 <label className="text-sm font-medium">Location</label>

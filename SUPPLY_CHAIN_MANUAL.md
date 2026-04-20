@@ -1,6 +1,6 @@
-# Mama Jos - Supply Chain Operations Manual
+# The Spoonbill - Supply Chain Operations Manual
 
-This manual provides a comprehensive guide to managing the end-to-end supply chain within the Mama Jos system. It covers everything from onboarding suppliers to processing payments and auditing inventory.
+This manual provides a comprehensive guide to managing the end-to-end supply chain within the The Spoonbill system. It covers everything from onboarding suppliers to processing payments and auditing inventory.
 
 ---
 

@@ -1,7 +1,6 @@
 -- Activate test user macpczone by confirming email
 UPDATE auth.users
-SET email_confirmed_at = NOW(),
-    confirmed_at = NOW()
+SET email_confirmed_at = NOW()
 WHERE email = 'macpczone@test.local';
 
 -- Create or update the profile for the test user

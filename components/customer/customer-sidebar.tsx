@@ -95,7 +95,7 @@ export function CustomerSidebar({ profile }: { profile?: any }) {
       )}>
         <div className="flex flex-col h-full py-6 md:py-4">
           <div className="px-6 mb-6 md:hidden">
-            <h2 className="text-xl font-serif font-bold">mamaJos</h2>
+            <h2 className="text-xl font-serif font-bold">thespoonbill</h2>
             <p className="text-xs text-muted-foreground">Customer Dashboard</p>
           </div>
           <nav className="flex-1 px-4 space-y-2">

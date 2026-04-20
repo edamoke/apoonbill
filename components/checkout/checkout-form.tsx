@@ -276,7 +276,7 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
                 <div className="space-y-2 pt-2 border-t">
                   <Label htmlFor="password">Verify your password</Label>
                   <p className="text-xs text-muted-foreground">
-                    For your security, please enter your mamaJos account password to authorize the M-Pesa
+                    For your security, please enter your thespoonbill account password to authorize the M-Pesa
                     payment.
                   </p>
                   <Input

@@ -25,7 +25,7 @@ export default async function DiaryPage() {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-serif mb-4">Our Diary</h1>
           <p className="text-muted-foreground text-lg mb-12">
-            Stories, insights, and updates from the Mama Jos kitchen and community.
+            Stories, insights, and updates from the The Spoonbill kitchen and community.
           </p>
 
           <div className="space-y-8">

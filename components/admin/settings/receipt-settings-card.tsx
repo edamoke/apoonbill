@@ -15,12 +15,12 @@ export function ReceiptSettingsCard() {
   const supabase = createClient()
   const [loading, setLoading] = useState(false)
   const [settings, setSettings] = useState({
-    restaurant_name: "Mama Jos",
+    restaurant_name: "The Spoonbill",
     address: "Nairobi, Kenya",
     phone: "+254 700 000 000",
     kra_pin: "P051XXXXXXX",
     tax_number: "ETIMS-XXXX-XXXX",
-    receipt_header: "Welcome to Mama Jos",
+    receipt_header: "Welcome to The Spoonbill",
     receipt_footer: "Thank you for dining with us!",
     show_logo: true,
     show_qr: true

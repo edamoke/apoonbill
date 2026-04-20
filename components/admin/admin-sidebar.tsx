@@ -197,7 +197,7 @@ export function AdminSidebar({ userRole, isAdmin, isChef, isRider, isAccountant 
                 <span className="text-2xl font-serif text-primary-foreground">M</span>
               </div>
               <div>
-                <h1 className="text-lg font-serif font-bold">Mama Jos</h1>
+                <h1 className="text-lg font-serif font-bold">The Spoonbill</h1>
                 <p className="text-xs text-muted-foreground capitalize">{userRole} Portal</p>
               </div>
             </Link>

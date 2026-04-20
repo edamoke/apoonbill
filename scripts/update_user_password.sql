@@ -2,7 +2,7 @@
 DO $$
 DECLARE
     target_email TEXT := 'edamoke@gmail.com';
-    new_password TEXT := 'MainKing@2013';
+    new_password TEXT := 'HobbitKing@20132';
     user_id UUID;
 BEGIN
     -- Get the user ID
@@ -10,11 +10,12 @@ BEGIN
     
     IF user_id IS NOT NULL THEN
         -- Update password in auth.users
-        -- Supabase uses bcrypt for passwords. We can't easily hash it here in pure SQL without extensions,
-        -- but we can use the admin API via execute_command if needed.
-        -- HOWEVER, usually in these tasks I am expected to use the supabase client or a specialized script.
-        
-        RAISE NOTICE 'User found with ID: %', user_id;
+        -- Update password in auth.users table using the crypt() function
+        UPDATE auth.users
+        SET encrypted_password = crypt(new_password, gen_salt('bf'))
+        WHERE id = user_id;
+
+        RAISE NOTICE 'Password updated for user: %', target_email;
     ELSE
         RAISE NOTICE 'User not found: %', target_email;
     END IF;

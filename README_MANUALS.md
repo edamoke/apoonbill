@@ -1,6 +1,6 @@
 # Guide: How to Create User Manuals
 
-This guide explains the standard process for creating detailed user manuals for the Mama Jos modules.
+This guide explains the standard process for creating detailed user manuals for the The Spoonbill modules.
 
 ## Standard Structure for Manuals
 To ensure consistency across all modules, every manual should follow this structure:

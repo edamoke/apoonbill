@@ -12,7 +12,7 @@ import { Plus, Trash2, Upload, MoveUp, MoveDown, Loader2 } from "lucide-react"
 
 export function HeroEditor({ initialContent }: { initialContent: any }) {
   const [content, setContent] = useState({
-    title: initialContent?.title || "mamaJos",
+    title: initialContent?.title || "thespoonbill",
     subtitle: initialContent?.subtitle || "Malindi",
     logoUrl: initialContent?.logoUrl || "/placeholder-logo.svg",
     slides: initialContent?.slides || [

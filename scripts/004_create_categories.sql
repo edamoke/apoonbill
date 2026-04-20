@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS public.categories (
   slug TEXT NOT NULL UNIQUE,
   description TEXT,
   image_url TEXT,
+  is_active BOOLEAN DEFAULT true,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

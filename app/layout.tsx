@@ -50,7 +50,7 @@ const karla = Karla({ subsets: ["latin"], variable: "--font-karla" })
 const kanit = Kanit({ subsets: ["latin"], variable: "--font-kanit", weight: ["400", "500", "600", "700", "800", "900"] })
 
 export const metadata: Metadata = {
-  title: "MamaJos- Restaurant & Delivery",
+  title: "thespoonbill- Restaurant & Delivery",
   description: "Premium restaurant ordering and delivery platform with real-time tracking",
   generator: "v0.app",
   icons: {

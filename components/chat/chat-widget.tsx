@@ -145,7 +145,7 @@ export function ChatWidget({ title = "S&G Concierge" }: { title?: string }) {
                   <Bot className="h-8 w-8 text-primary" />
                 </div>
                 <div className="space-y-2">
-                  <p className="font-serif text-xl">Welcome to mamaJos</p>
+                  <p className="font-serif text-xl">Welcome to thespoonbill</p>
                   <p className="text-muted-foreground text-sm max-w-[250px] mx-auto">
                     I'm your personal concierge. I can help you explore our menu, track your orders, or place a new one for you.
                   </p>
@@ -220,7 +220,7 @@ export function ChatWidget({ title = "S&G Concierge" }: { title?: string }) {
                 <Send className="h-4 w-4" />
               </Button>
             </form>
-            <p className="text-[9px] text-center text-muted-foreground mt-3 uppercase tracking-tighter">Powered by mamaJos AI</p>
+            <p className="text-[9px] text-center text-muted-foreground mt-3 uppercase tracking-tighter">Powered by thespoonbill AI</p>
           </div>
         </Card>
       )}

@@ -47,7 +47,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         <AdminHeader user={user} profile={profile} />
         <div className="p-4 lg:p-8">{children}</div>
       </main>
-      <ChatWidget title="Mama Jos Admin Assistant" />
+      <ChatWidget title="The Spoonbill Admin Assistant" />
     </div>
   )
 }

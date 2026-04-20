@@ -79,7 +79,7 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
     }
   ]
 
-  const title = content?.title || "mamaJos"
+  const title = content?.title || "thespoonbill"
   const subtitle = content?.subtitle || "Malindi"
   const logoUrl = content?.logoUrl || "/placeholder-logo.svg"
 
@@ -282,7 +282,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
     tag: "BRAND NEW",
     intro: "INTRODUCING",
     title: "THE MOST <br />DELICIOUS GIFT",
-    cardText: "mamaJos Gift Card",
+    cardText: "thespoonbill Gift Card",
     buttonText: "BUY NOW",
     promoText: "GET & GIFT SOMEONE TODAY"
   };
@@ -381,7 +381,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
 export function CenteredForm({ content }: { content?: any }) {
   const [isMounted, setIsMounted] = useState(false)
   const title = content?.title || "Join our email list"
-  const disclaimer = content?.disclaimer || "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from mamaJos."
+  const disclaimer = content?.disclaimer || "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from thespoonbill."
   const socials = content?.socials || ["Facebook", "Twitter", "Instagram"]
 
   useEffect(() => {
@@ -765,7 +765,7 @@ export function SiteFooter({ content }: { content?: any }) {
     phone: "0748 422 994"
   };
 
-  const copyright = content?.copyright || "© 2025 mamaJos. All Rights Reserved"
+  const copyright = content?.copyright || "© 2025 thespoonbill. All Rights Reserved"
 
   return (
     <footer className="py-20 bg-muted transition-colors duration-500 border-t-8 border-transparent" style={{ borderImage: "linear-gradient(90deg, var(--kente-red), var(--kente-gold), var(--kente-green), var(--kente-black)) 1" }} id="contact">
@@ -798,7 +798,7 @@ export function SiteFooter({ content }: { content?: any }) {
             </div>
             
             <div className="mt-8 text-foreground">
-               <h1 className="text-2xl font-serif italic font-bold text-secondary">mamaJos</h1>
+               <h1 className="text-2xl font-serif italic font-bold text-secondary">thespoonbill</h1>
             </div>
           </div>
         </div>

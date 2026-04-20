@@ -10,7 +10,7 @@ export default function AccountantLayout({ children }: { children: React.ReactNo
       <div className="flex-1 flex flex-col">
         {children}
       </div>
-      <ChatWidget title="MamaJos Finance Assistant" />
+      <ChatWidget title="thespoonbill Finance Assistant" />
     </div>
   )
 }

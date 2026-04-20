@@ -24,7 +24,7 @@ export default async function PressPage() {
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-6xl font-serif mb-4">Press</h1>
           <p className="text-muted-foreground text-lg mb-12">
-            Media resources and press releases for Mama Jos restaurant delivery platform.
+            Media resources and press releases for The Spoonbill restaurant delivery platform.
           </p>
 
           <div className="space-y-8">
@@ -32,7 +32,7 @@ export default async function PressPage() {
               <CardContent className="p-8">
                 <h2 className="text-2xl font-serif mb-3">Press Releases</h2>
                 <p className="text-muted-foreground mb-4">
-                  For latest press releases and media inquiries, please contact: press@mamajos.com
+                  For latest press releases and media inquiries, please contact: press@thespoonbill.com
                 </p>
               </CardContent>
             </Card>
@@ -50,7 +50,7 @@ export default async function PressPage() {
               <CardContent className="p-8">
                 <h2 className="text-2xl font-serif mb-3">Contact</h2>
                 <p className="text-muted-foreground">
-                  Email: press@mamajos.com
+                  Email: press@thespoonbill.com
                   <br />
                   Phone: +254 712 345 678
                 </p>

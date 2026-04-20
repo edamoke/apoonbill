@@ -76,7 +76,7 @@ export function AccountantSidebar() {
     <div className="w-64 border-r bg-card h-screen sticky top-0 hidden md:flex flex-col shadow-sm">
       <div className="p-6 border-b">
         <h2 className="text-xl font-serif font-bold text-primary italic">Finance Portal</h2>
-        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mt-1">mamaJos Accounting</p>
+        <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-black mt-1">thespoonbill Accounting</p>
       </div>
 
       <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
