@@ -14,7 +14,7 @@ export default async function ChefLayout({ children }: { children: React.ReactNo
       <main>
         {children}
       </main>
-      <ChatWidget title="S&G Kitchen Assistant" />
+      <ChatWidget title="Spoonbill Kitchen Assistant" />
     </div>
   )
 }

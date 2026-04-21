@@ -17,13 +17,11 @@ export function ReceiptSettingsCard() {
   const [settings, setSettings] = useState({
     restaurant_name: "The Spoonbill",
     address: "Nairobi, Kenya",
-    phone: "+254 700 000 000",
-    kra_pin: "P051XXXXXXX",
     tax_number: "ETIMS-XXXX-XXXX",
+    phone: "+254 700 000 000",
+    kra_pin: "P000000000X",
     receipt_header: "Welcome to The Spoonbill",
     receipt_footer: "Thank you for dining with us!",
-    show_logo: true,
-    show_qr: true
   })
 
   useEffect(() => {

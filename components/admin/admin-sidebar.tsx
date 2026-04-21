@@ -194,7 +194,7 @@ export function AdminSidebar({ userRole, isAdmin, isChef, isRider, isAccountant 
           <div className="p-6 border-b border-border space-y-4">
             <Link href="/admin" className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-2xl font-serif text-primary-foreground">M</span>
+                <span className="text-2xl font-serif text-primary-foreground">S</span>
               </div>
               <div>
                 <h1 className="text-lg font-serif font-bold">The Spoonbill</h1>

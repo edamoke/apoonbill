@@ -1,31 +1,5 @@
--- Create site_settings table
-CREATE TABLE IF NOT EXISTS site_settings (
-  id TEXT PRIMARY KEY,
-  content JSONB NOT NULL DEFAULT '{}'::jsonb,
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-  updated_by UUID REFERENCES auth.users(id)
-);
 
--- Enable RLS
-ALTER TABLE site_settings ENABLE ROW LEVEL SECURITY;
-
--- Allow public read access
-CREATE POLICY "Allow public read access on site_settings"
-  ON site_settings FOR SELECT
-  USING (true);
-
--- Allow admin write access
-CREATE POLICY "Allow admin write access on site_settings"
-  ON site_settings FOR ALL
-  USING (
-    EXISTS (
-      SELECT 1 FROM profiles
-      WHERE profiles.id = auth.uid()
-      AND (profiles.role = 'admin' OR profiles.is_admin = true)
-    )
-  );
-
--- Insert initial settings
+-- Update initial settings
 INSERT INTO site_settings (id, content) VALUES
 ('hero', '{
   "title": "The Spoonbill",

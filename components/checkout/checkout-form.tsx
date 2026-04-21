@@ -17,8 +17,8 @@ import type { User } from "@supabase/supabase-js"
 import { createOnlineOrder } from "@/app/actions/online-order-actions"
 
 interface CheckoutFormProps {
-  user: User
-  profile: any
+  user?: User | null
+  profile?: any
 }
 
 export function CheckoutForm({ user, profile }: CheckoutFormProps) {
@@ -31,7 +31,7 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
 
   const [formData, setFormData] = useState({
     customerName: profile?.full_name || "",
-    customerEmail: user.email || "",
+    customerEmail: user?.email || "",
     customerPhone: profile?.phone || "",
     deliveryAddress: profile?.address || "",
     orderType: "delivery",
@@ -105,6 +105,13 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
               description: "Please check your phone and enter your M-Pesa PIN to complete the payment.",
             })
 
+            if (result.needsAddressReminder) {
+              toast({
+                title: "Welcome to The Spoonbill!",
+                description: "Provide a valid email to receive gift cards and daily offers.",
+              })
+            }
+
             clearCart()
 
             router.push(`/checkout/success?order_id=${orderId}&payment=processing`)
@@ -119,6 +126,12 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
           return
         }
       } else {
+        if (result.needsAddressReminder) {
+          toast({
+            title: "Welcome to The Spoonbill!",
+            description: "Provide a valid email to receive gift cards and daily offers.",
+          })
+        }
         clearCart()
 
         router.push(`/checkout/success?order_id=${orderId}`)
@@ -272,11 +285,11 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
                 </div>
               </RadioGroup>
 
-              {formData.paymentMethod === "mpesa" && (
+              {formData.paymentMethod === "mpesa" && user && (
                 <div className="space-y-2 pt-2 border-t">
                   <Label htmlFor="password">Verify your password</Label>
                   <p className="text-xs text-muted-foreground">
-                    For your security, please enter your thespoonbill account password to authorize the M-Pesa
+                    For your security, please enter your The Spoonbill account password to authorize the M-Pesa
                     payment.
                   </p>
                   <Input

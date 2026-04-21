@@ -62,21 +62,20 @@ export default async function HomePage() {
         <SiteHeaderWrapper user={user} profile={profile} theme={activeTheme} branding={branding} />
       )}
       <ParallaxHero content={getSetting("hero")} theme={activeTheme} />
-      <RepeatingBanner image="/kentaaa.jpg" />
+      <RepeatingBanner image="/images/hero-new.png" />
       <FloatingDishes theme={activeTheme} />
       <div className="-mt-16 md:-mt-24">
         <FullWidthParallax 
           image="/images/hero-new.png" 
-          title="thespoonbill" 
+          title="The Spoonbill" 
           subtitle="Experience the rich, authentic flavors of African heritage prepared with love and served with elegance."
         />
       </div>
-      <RepeatingBanner image="/kentaaa.jpg" reverse={true} />
+      <RepeatingBanner image="/images/hero-new.png" reverse={true} />
       <GridSplit content={getSetting("grid_split")} theme={activeTheme} />
       <HorizontalMenu content={getSetting("featured_menu")} theme={activeTheme} />
       <CenteredForm content={getSetting("subscription")} theme={activeTheme} />
       <MasonryGrid theme={activeTheme} />
-      <ElegantQuote theme={activeTheme} />
       <SiteFooter content={getSetting("footer")} theme={activeTheme} />
       <ChatWidget />
     </div>

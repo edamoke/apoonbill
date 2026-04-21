@@ -25,9 +25,9 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const redirectUrl = "https://starsandgarters.co.ke/dashboard"
+    const redirectUrl = "/dashboard"
 
-      const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })

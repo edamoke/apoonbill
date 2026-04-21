@@ -1,6 +1,6 @@
-# Stars & Garters - Owner & Administrator Manual
+# The Spoonbill - Owner & Administrator Manual
 
-Welcome to the **Stars & Garters** Restaurant Management System. This guide provides a comprehensive overview of how to manage your restaurant's digital operations, including menu control, staff management, and financial auditing.
+Welcome to the **The Spoonbill** Restaurant Management System. This guide provides a comprehensive overview of how to manage your restaurant's digital operations, including menu control, staff management, and financial auditing.
 
 ---
 

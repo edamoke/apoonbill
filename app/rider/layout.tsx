@@ -14,7 +14,7 @@ export default async function RiderLayout({ children }: { children: React.ReactN
       <main>
         {children}
       </main>
-      <ChatWidget title="S&G Delivery Assistant" />
+      <ChatWidget title="Spoonbill Delivery Assistant" />
     </div>
   )
 }

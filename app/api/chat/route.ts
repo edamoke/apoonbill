@@ -28,7 +28,7 @@ export async function POST(req: Request) {
         // --- ADMIN / STAFF ASSISTANT ---
         const systemState = await getSystemStateDump();
         
-        const systemPrompt = `You are "S&G Operations Strategic Consultant", an elite AI operations partner for thespoonbill. Your mission is to proactively advise the administrator on business health, highlighting risks, losses, and opportunities.
+        const systemPrompt = `You are "Spoonbill Operations Strategic Consultant", an elite AI operations partner for thespoonbill. Your mission is to proactively advise the administrator on business health, highlighting risks, losses, and opportunities.
 
 SYSTEM KNOWLEDGE BASE (REAL-TIME SNAPSHOT):
 ${JSON.stringify(systemState, null, 2)}
@@ -67,7 +67,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
                         const stock = await getStockStatus();
                         return { stock };
                     }
-                }),
+                } as any),
                 getSalesReport: tool({
                     description: "Get detailed sales summary for deep financial analysis.",
                     parameters: z.object({
@@ -78,27 +78,27 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
                         const report = await getDailySalesSummary({ startDate, endDate });
                         return { report };
                     }
-                }),
+                } as any),
                 getLossAnalysis: tool({
                     description: "Fetch analysis of losses incurred through voids, cancellations, and inventory variance.",
                     parameters: z.object({
                         period: z.string().describe("The period to analyze: today, week, or month")
                     }),
-                    execute: async ({ period }) => {
+                    execute: async ({ period }: { period: string }) => {
                         const state = await getSystemStateDump();
                         return { 
                           losses: state.risks,
                           summary: `Identified ${state.risks.potentialLosses.length} voided/cancelled orders and ${state.risks.recentVariances.length} recent inventory discrepancies for the period: ${period}.`
                         };
                     }
-                }),
+                } as any),
                 navigate: tool({
                     description: "Direct the user to the correct URL for an admin section.",
                     parameters: z.object({ section: z.string() }),
-                    execute: async ({ section }) => {
+                    execute: async ({ section }: { section: string }) => {
                         return { url: `/admin/${section.toLowerCase()}` };
                     }
-                })
+                } as any)
             }
         });
 
@@ -135,7 +135,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
         return `CATEGORY: ${category.name}\n${productsList}`
         }).filter(Boolean).join("\n\n")
 
-        const systemPrompt = `You are "S&G Concierge", the expert and persuasive Maître d' at thespoonbill, Malindi's finest dining destination.
+        const systemPrompt = `You are "Spoonbill Concierge", the expert and persuasive Maître d' at thespoonbill, Malindi's finest dining destination.
     Your goal is not just to take orders, but to curate an exceptional dining experience, maximize guest satisfaction, and increase sales through intelligent suggestions.
 
     USER CONTEXT:

@@ -76,7 +76,7 @@ export default function BusinessLeadDetailPage() {
     <div className="bg-white text-black p-8 rounded-lg shadow-sm border max-w-4xl mx-auto print:shadow-none print:border-none print:p-0">
       <div className="flex justify-between items-start mb-8">
         <div>
-          <h1 className="text-4xl font-serif font-bold italic text-primary">Stars & Garters</h1>
+          <h1 className="text-4xl font-serif font-bold italic text-primary">The Spoonbill</h1>
           <p className="text-sm font-black uppercase tracking-widest mt-1">Catering & Events</p>
         </div>
         <div className="text-right">
@@ -140,7 +140,7 @@ export default function BusinessLeadDetailPage() {
       )}
 
       <div className="mt-20 pt-8 border-t-2 border-gray-100 text-center text-[10px] font-black uppercase tracking-tighter text-gray-400">
-        Thank you for choosing Stars & Garters • Stars & Garters Plaza, Nairobi • +254 700 000 000
+        Thank you for choosing The Spoonbill • Malindi, Kenya • +254 700 000 000
       </div>
     </div>
   )

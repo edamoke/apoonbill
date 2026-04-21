@@ -71,7 +71,7 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
   // Use dynamic slides if available, otherwise fallback to exact original static values
   const slides = content?.slides || [
     {
-      mainHeading: content?.mainHeading || "Stars & <br />Gaters",
+      mainHeading: content?.mainHeading || "The <br />Spoonbill",
       buttonText: content?.buttonText || "START ORDER",
       backgroundImage: content?.backgroundImage || "/images/hero-new.png",
       excellenceText: content?.excellenceText || "Certificate of Excellence",
@@ -79,7 +79,7 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
     }
   ]
 
-  const title = content?.title || "thespoonbill"
+  const title = content?.title || "The Spoonbill"
   const subtitle = content?.subtitle || "Malindi"
   const logoUrl = content?.logoUrl || "/placeholder-logo.svg"
 
@@ -381,7 +381,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
 export function CenteredForm({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const [isMounted, setIsMounted] = useState(false)
   const title = content?.title || "Join our email list"
-  const disclaimer = content?.disclaimer || "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from thespoonbill."
+  const disclaimer = content?.disclaimer || "By clicking \"SUBSCRIBE\" I agree to receive news, promotions, information, and offers from The Spoonbill."
   const socials = content?.socials || ["Facebook", "Twitter", "Instagram"]
 
   useEffect(() => {
@@ -765,7 +765,7 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
     phone: "0748 422 994"
   };
 
-  const copyright = content?.copyright || "© 2025 thespoonbill. All Rights Reserved"
+  const copyright = content?.copyright || "© 2025 The Spoonbill. All Rights Reserved"
 
   return (
     <footer className="py-20 bg-muted transition-colors duration-500 border-t-8 border-transparent" style={{ borderImage: "linear-gradient(90deg, var(--kente-red), var(--kente-gold), var(--kente-green), var(--kente-black)) 1" }} id="contact">
@@ -798,7 +798,7 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
             </div>
             
             <div className="mt-8 text-foreground">
-               <h1 className={cn("text-2xl italic font-bold text-secondary", theme?.typography.heading)}>thespoonbill</h1>
+               <h1 className={cn("text-2xl italic font-bold text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
             </div>
           </div>
         </div>

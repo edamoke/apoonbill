@@ -56,8 +56,8 @@ export function StaffHeader({ user, profile }: StaffHeaderProps) {
         {/* Left Section: Logo and Main Nav */}
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-3">
-            <div className="bg-red-600 text-white p-1.5 rounded-sm font-black text-xs leading-none">S&G</div>
-            <span className="font-black tracking-tight text-red-600 text-lg uppercase leading-none">STARS & GARTERS</span>
+            <div className="bg-red-600 text-white p-1.5 rounded-sm font-black text-xs leading-none">SB</div>
+            <span className="font-black tracking-tight text-red-600 text-lg uppercase leading-none">THE SPOONBILL</span>
           </Link>
           
           <nav className="hidden md:flex items-center gap-8">

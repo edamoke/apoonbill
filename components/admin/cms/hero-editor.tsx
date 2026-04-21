@@ -12,12 +12,12 @@ import { Plus, Trash2, Upload, MoveUp, MoveDown, Loader2 } from "lucide-react"
 
 export function HeroEditor({ initialContent }: { initialContent: any }) {
   const [content, setContent] = useState({
-    title: initialContent?.title || "thespoonbill",
+    title: initialContent?.title || "The Spoonbill",
     subtitle: initialContent?.subtitle || "Malindi",
     logoUrl: initialContent?.logoUrl || "/placeholder-logo.svg",
     slides: initialContent?.slides || [
       {
-        mainHeading: initialContent?.mainHeading || "Stars & <br />Gaters",
+        mainHeading: initialContent?.mainHeading || "The <br />Spoonbill",
         buttonText: initialContent?.buttonText || "START ORDER",
         backgroundImage: initialContent?.backgroundImage || "/images/hero-new.png",
         excellenceText: initialContent?.excellenceText || "Certificate of Excellence",
@@ -131,7 +131,7 @@ export function HeroEditor({ initialContent }: { initialContent: any }) {
               <Input 
                 value={content.title} 
                 onChange={(e) => setContent({...content, title: e.target.value})}
-                placeholder="e.g. Stars & Garters"
+                placeholder="e.g. The Spoonbill"
                 className="bg-muted/30"
               />
             </div>

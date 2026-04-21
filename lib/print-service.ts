@@ -10,7 +10,7 @@ export type PrintJob = {
 }
 
 export function formatReceipt(order: any, settings: any = {}) {
-    const businessName = "STARS & GARTERS"
+    const businessName = "THE SPOONBILL"
     const businessAddress = "Nairobi, Kenya"
     const businessPhone = "+254 700 000000"
     

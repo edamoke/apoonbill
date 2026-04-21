@@ -36,7 +36,7 @@ export default function SignUpPage() {
     try {
       const autoConfirm = true // Always auto-confirm for now as requested
 
-      const redirectUrl = "https://starsandgarters.co.ke/dashboard"
+      const redirectUrl = "https://thespoonbill.com/dashboard"
 
       const { error } = await supabase.auth.signUp({
         email,

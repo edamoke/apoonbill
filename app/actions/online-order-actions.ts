@@ -1,6 +1,7 @@
 "use server"
 
 import { createClient, createAdminClient } from "@/lib/supabase/server"
+import { sendOrderConfirmationEmail, sendWelcomeGuestEmail } from "@/lib/email"
 
 interface OrderItem {
   productId: string
@@ -31,15 +32,61 @@ export async function createOnlineOrder(data: OrderData & { user_id?: string }) 
     const supabase = await createClient()
     const adminSupabase = await createAdminClient()
 
-    // 1. Determine target user ID
+    // 1. Determine target user ID or handle guest
     let targetUserId = data.user_id
+    let isGuest = false
 
+    let temporaryPassword = ""
     if (!targetUserId) {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        return { success: false, error: "Authentication required" }
+      const { data: { user: authUser } } = await supabase.auth.getUser()
+      if (authUser) {
+        targetUserId = authUser.id
+      } else {
+        // Handle guest checkout: Check if profile exists by email
+        const email = data.formData.customerEmail.toLowerCase().trim()
+        
+        // 1a. Check if Auth user exists
+        const { data: { users }, error: listError } = await adminSupabase.auth.admin.listUsers()
+        const existingAuthUser = users?.find(u => u.email === email)
+
+        if (existingAuthUser) {
+          targetUserId = existingAuthUser.id
+        } else {
+          // 1b. Create a new Auth account for the guest
+          temporaryPassword = Math.random().toString(36).slice(-8) + "!" // Simple random password
+          const { data: newAuthUser, error: authError } = await adminSupabase.auth.admin.createUser({
+            email,
+            password: temporaryPassword,
+            email_confirm: true,
+            user_metadata: {
+              full_name: data.formData.customerName,
+              phone: data.formData.customerPhone,
+            }
+          })
+
+          if (authError) {
+            console.error("[Order Action] Auth account creation error:", authError)
+            // Fallback to checking profile if auth fails (e.g. user exists but list failed)
+            const { data: existingProfile } = await adminSupabase
+              .from("profiles")
+              .select("id")
+              .eq("email", email)
+              .single()
+            
+            if (existingProfile) {
+              targetUserId = existingProfile.id
+            } else {
+              return { success: false, error: "Failed to create guest account: " + authError.message }
+            }
+          } else {
+            targetUserId = newAuthUser.user.id
+            isGuest = true
+            
+            // Send welcome email with temporary password
+            await sendWelcomeGuestEmail(data.formData.customerName, email, temporaryPassword)
+          }
+        }
       }
-      targetUserId = user.id
     }
 
     // --- SECURITY HARDENING: Server-side Price & Total Validation ---
@@ -69,12 +116,10 @@ export async function createOnlineOrder(data: OrderData & { user_id?: string }) 
       }
     })
 
-    // Fixed delivery fee logic (should ideally be from DB settings)
-    const expectedDeliveryFee = data.formData.orderType === 'delivery' ? 150 : 0 
+    // Fixed delivery fee logic
+    const expectedDeliveryFee = data.formData.orderType === 'delivery' ? 100 : 0 
     const calculatedTotal = calculatedSubtotal + expectedDeliveryFee
 
-    // Tolerance check for floating point if needed, but here we enforce server calculation
-    // We override client provided totals with server calculated ones
     const finalSubtotal = calculatedSubtotal
     const finalDeliveryFee = expectedDeliveryFee
     const finalTotal = calculatedTotal
@@ -127,7 +172,21 @@ export async function createOnlineOrder(data: OrderData & { user_id?: string }) 
       return { success: false, error: itemsError.message, orderId: order.id }
     }
 
-    return { success: true, orderId: order.id }
+    // 4. Send Order Confirmation Email
+    try {
+      await sendOrderConfirmationEmail(order, data.formData.customerEmail)
+    } catch (emailErr) {
+      console.error("[Order Action] Failed to send confirmation email:", emailErr)
+      // Don't fail the order just because of email
+    }
+
+    // If it was a guest checkout and no address provided, notify about rewards (handled by frontend via isGuest flag)
+    return { 
+      success: true, 
+      orderId: order.id, 
+      isGuest,
+      needsAddressReminder: isGuest && !data.formData.deliveryAddress 
+    }
 
   } catch (error: any) {
     console.error("[Order Action] Unexpected error:", error)

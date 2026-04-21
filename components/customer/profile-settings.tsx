@@ -225,7 +225,7 @@ export function ProfileSettings({ profile: initialProfile, user }: ProfileSettin
               <ImageIcon className="h-5 w-5 text-primary" />
               Favorite Meals
             </CardTitle>
-            <CardDescription>Meals you love at thespoonbill.</CardDescription>
+            <CardDescription>Meals you love at The Spoonbill.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6 flex-1">
             <div className="flex flex-wrap gap-2 min-h-[40px]">

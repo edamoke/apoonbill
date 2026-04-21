@@ -60,7 +60,7 @@ export function LoyaltyCard({ profile }: { profile: any }) {
               <Trophy className="h-6 w-6 text-yellow-300 shadow-sm" />
             </div>
             <div>
-              <h3 className="text-xl font-black uppercase tracking-tighter italic">Loyalty Elite</h3>
+              <h3 className="text-xl font-black uppercase tracking-tighter italic">Spoonbill Elite</h3>
               <p className="text-[10px] font-bold uppercase tracking-widest opacity-80">Member Rewards System</p>
             </div>
           </div>

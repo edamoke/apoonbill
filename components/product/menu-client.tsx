@@ -52,7 +52,7 @@ export default function MenuClient({
           </div>
         </section>
 
-        <RepeatingBanner image="/kentaaa.jpg" />
+        <RepeatingBanner image="/images/hero-new.png" />
 
         {/* Categories and Items */}
         <section className="py-12">

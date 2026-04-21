@@ -36,7 +36,7 @@ export default async function CateringPage() {
           </div>
         </section>
 
-        <RepeatingBanner image="/kentaaa.jpg" />
+        <RepeatingBanner image="/images/hero-new.png" />
 
         <div className="container mx-auto py-12 px-4">
           <div className="max-w-4xl mx-auto space-y-8">
