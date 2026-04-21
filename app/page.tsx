@@ -3,6 +3,7 @@ import { ChatWidget } from "@/components/chat/chat-widget"
 import { ParallaxHero, GridSplit, CenteredForm, MasonryGrid, ElegantQuote, FloatingDishes, HorizontalMenu, SiteFooter, FullWidthParallax, RepeatingBanner, VideoScrollSection } from "@/components/home-sections/home-sections"
 import { SiteHeaderWrapper } from "@/components/navigation/site-header-wrapper"
 import { SiteHeader } from "@/components/navigation/site-header"
+import { SmoothScroll } from "@/components/ui/smooth-scroll"
 import { getAllSiteSettings } from "@/app/actions/cms-actions"
 import { FONT_COMBINATIONS } from "@/lib/fonts"
 import { getTheme } from "@/lib/themes"
@@ -44,6 +45,7 @@ export default async function HomePage() {
   }
 
   return (
+    <SmoothScroll>
     <div 
       className={`min-h-screen transition-all duration-500 ${fontCombo.bodyClass} [&_h1]:${fontCombo.headingClass} [&_h2]:${fontCombo.headingClass} [&_h3]:${fontCombo.headingClass} [&_h4]:${fontCombo.headingClass} [&_h5]:${fontCombo.headingClass} [&_h6]:${fontCombo.headingClass}`}
       style={{ 
@@ -81,5 +83,6 @@ export default async function HomePage() {
       <SiteFooter content={getSetting("footer")} theme={activeTheme} />
       <ChatWidget />
     </div>
+    </SmoothScroll>
   )
 }

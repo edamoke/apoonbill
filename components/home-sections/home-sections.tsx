@@ -753,26 +753,30 @@ export function VideoScrollSection({ videoUrl = "/videos/hero-scroll.mp4", theme
 
     const video = videoRef.current
     
-    // Ensure metadata is loaded
+    // Ensure metadata is loaded to get video duration
     const onMetadataLoaded = () => {
       const ctx = gsap.context(() => {
-        gsap.to(video, {
-          currentTime: video.duration || 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-            pin: true,
-            anticipatePin: 1,
-          },
+        // Use ScrollTrigger to scrub through video time
+        ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "+=300%", // Scroll length for the video scrub
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            if (video.duration) {
+              // Smoothly map scroll progress to video time
+              video.currentTime = self.progress * video.duration
+            }
+          }
         })
       }, sectionRef)
 
       return () => ctx.revert()
     }
 
+    // Load metadata if not already available
     if (video.readyState >= 1) {
       onMetadataLoaded()
     } else {
@@ -792,16 +796,9 @@ export function VideoScrollSection({ videoUrl = "/videos/hero-scroll.mp4", theme
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover pointer-events-none"
       />
-      <div className="absolute inset-0 z-10 bg-black/20 flex flex-col items-center justify-center text-center px-4">
-        <h2 className={cn("text-4xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl", theme?.typography.heading)}>
-          Experience the Art of Flavor
-        </h2>
-        <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto drop-shadow-lg font-medium italic">
-          Every movement, every ingredient, a testament to culinary excellence.
-        </p>
-      </div>
+      {/* Text overlay removed as requested */}
     </section>
   )
 }
