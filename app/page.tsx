@@ -67,7 +67,7 @@ export default async function HomePage() {
       <div className="-mt-16 md:-mt-24">
         <FullWidthParallax 
           image="/images/hero-new.png" 
-          title="Taste of Tradition" 
+          title="thespoonbill" 
           subtitle="Experience the rich, authentic flavors of African heritage prepared with love and served with elegance."
         />
       </div>
