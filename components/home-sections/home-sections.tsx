@@ -312,7 +312,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
   }, [])
 
   return (
-    <section ref={containerRef} className="py-20 text-foreground transition-colors duration-500 relative overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
+    <section ref={containerRef} className="py-20 text-slate-900 transition-colors duration-500 relative overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="absolute top-0 left-0 w-full h-1 kente-gradient opacity-30" />
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
         {/* Gift Card */}
@@ -624,9 +624,9 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
   }, [])
 
   return (
-    <div ref={triggerRef} className="overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
+    <div ref={triggerRef} className="overflow-hidden text-slate-900" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="container mx-auto px-4 pt-20 pb-10">
-        <h2 className={cn("text-slate-900 text-5xl md:text-7xl italic font-bold", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-5xl md:text-7xl italic font-bold", theme?.typography.heading)}>{title}</h2>
       </div>
       <div 
         ref={sectionRef} 
@@ -744,6 +744,68 @@ export function FullWidthParallax({ image, title, subtitle }: { image: string, t
   )
 }
 
+export function VideoScrollSection({ videoUrl = "/videos/hero-scroll.mp4", theme }: { videoUrl?: string, theme?: ThemeConfig }) {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (!sectionRef.current || !videoRef.current) return
+
+    const video = videoRef.current
+    
+    // Ensure metadata is loaded
+    const onMetadataLoaded = () => {
+      const ctx = gsap.context(() => {
+        gsap.to(video, {
+          currentTime: video.duration || 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top top",
+            end: "bottom top",
+            scrub: true,
+            pin: true,
+            anticipatePin: 1,
+          },
+        })
+      }, sectionRef)
+
+      return () => ctx.revert()
+    }
+
+    if (video.readyState >= 1) {
+      onMetadataLoaded()
+    } else {
+      video.addEventListener("loadedmetadata", onMetadataLoaded)
+    }
+
+    return () => {
+      video.removeEventListener("loadedmetadata", onMetadataLoaded)
+    }
+  }, [])
+
+  return (
+    <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-black">
+      <video
+        ref={videoRef}
+        src={videoUrl}
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 z-10 bg-black/20 flex flex-col items-center justify-center text-center px-4">
+        <h2 className={cn("text-4xl md:text-7xl font-bold text-white mb-6 drop-shadow-2xl", theme?.typography.heading)}>
+          Experience the Art of Flavor
+        </h2>
+        <p className="text-xl md:text-2xl text-white/90 max-w-2xl mx-auto drop-shadow-lg font-medium italic">
+          Every movement, every ingredient, a testament to culinary excellence.
+        </p>
+      </div>
+    </section>
+  )
+}
+
 export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const location = content?.location || {
     title: "LOCATION",
@@ -771,8 +833,8 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
     <footer className="py-20 bg-muted transition-colors duration-500 border-t-8 border-transparent" style={{ borderImage: "linear-gradient(90deg, var(--kente-red), var(--kente-gold), var(--kente-green), var(--kente-black)) 1" }} id="contact">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
-          <div className="text-foreground">
-            <h4 className="text-secondary font-bold tracking-widest mb-8 uppercase text-secondary border-b border-secondary/10 pb-2 inline-block">{location.title}</h4>
+          <div className="text-slate-900">
+            <h4 className="text-secondary font-bold tracking-widest mb-8 uppercase border-b border-secondary/10 pb-2 inline-block">{location.title}</h4>
             <div className="space-y-4">
               {location.lines.map((line: string, i: number) => (
                 <p key={i} className="text-secondary opacity-70 font-medium">{line}</p>
@@ -780,8 +842,8 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
             </div>
           </div>
           
-          <div className="text-foreground">
-            <h4 className="text-secondary font-bold tracking-widest mb-8 uppercase text-secondary border-b border-secondary/10 pb-2 inline-block">{menu.title}</h4>
+          <div className="text-slate-900">
+            <h4 className="text-secondary font-bold tracking-widest mb-8 uppercase border-b border-secondary/10 pb-2 inline-block">{menu.title}</h4>
             <ul className="space-y-4">
               {menu.items.map((item: any) => (
                 <li key={item.label}>
@@ -792,18 +854,18 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
           </div>
 
           <div className="flex flex-col items-start md:items-end justify-between">
-            <div className="text-left md:text-right text-foreground">
-              <h4 className="text-secondary font-bold tracking-widest mb-4 uppercase text-secondary">{contact.title}</h4>
+            <div className="text-left md:text-right text-slate-900">
+              <h4 className="text-secondary font-bold tracking-widest mb-4 uppercase">{contact.title}</h4>
               <p className="text-4xl font-serif font-bold text-secondary shadow-sm inline-block px-2">{contact.phone}</p>
             </div>
             
-            <div className="mt-8 text-foreground">
+            <div className="mt-8 text-slate-900">
                <h1 className={cn("text-2xl italic font-bold text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-secondary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-foreground">
+        <div className="pt-8 border-t border-secondary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-900">
           <div className="flex flex-wrap justify-center gap-6">
             {["Privacy Policy", "Terms of Use", "Contact Us", "Feedback"].map(item => (
               <Link key={item} href="#" className="text-xs font-bold text-secondary opacity-50 hover:opacity-100 hover:text-primary uppercase tracking-widest transition-colors">

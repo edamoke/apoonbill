@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { ChatWidget } from "@/components/chat/chat-widget"
-import { ParallaxHero, GridSplit, CenteredForm, MasonryGrid, ElegantQuote, FloatingDishes, HorizontalMenu, SiteFooter, FullWidthParallax, RepeatingBanner } from "@/components/home-sections/home-sections"
+import { ParallaxHero, GridSplit, CenteredForm, MasonryGrid, ElegantQuote, FloatingDishes, HorizontalMenu, SiteFooter, FullWidthParallax, RepeatingBanner, VideoScrollSection } from "@/components/home-sections/home-sections"
 import { SiteHeaderWrapper } from "@/components/navigation/site-header-wrapper"
 import { SiteHeader } from "@/components/navigation/site-header"
 import { getAllSiteSettings } from "@/app/actions/cms-actions"
@@ -63,6 +63,7 @@ export default async function HomePage() {
         <SiteHeaderWrapper user={user} profile={profile} theme={activeTheme} branding={branding} />
       )}
       <ParallaxHero content={getSetting("hero")} theme={activeTheme} />
+      <VideoScrollSection theme={activeTheme} />
       <RepeatingBanner image="/images/hero-new.png" />
       <FloatingDishes theme={activeTheme} />
       <div className="-mt-16 md:-mt-24">

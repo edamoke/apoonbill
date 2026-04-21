@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     const isAdmin = profile?.role === 'admin' || profile?.is_admin === true || profile?.role === 'staff' || profile?.role === 'manager' || profile?.role === 'chef' || profile?.role === 'accountant' || profile?.role === 'rider';
 
     if (isAdmin) {
-        // @ts-ignore - Tool types mismatch in AI SDK
+        // @ts-ignore
         // --- ADMIN / STAFF ASSISTANT ---
         const systemState = await getSystemStateDump();
         
@@ -106,7 +106,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
         return result.toTextStreamResponse();
 
     } else {
-        // @ts-ignore - Tool types mismatch in AI SDK
+        // @ts-ignore
         // --- CUSTOMER / GUEST CONCIERGE (Existing Logic) ---
 
         // Fetch contextual data for the system prompt
