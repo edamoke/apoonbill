@@ -23,7 +23,6 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
-import { AdminHeader } from "@/components/admin/admin-header"
 import {
   Select,
   SelectContent,
@@ -101,8 +100,6 @@ export default function InventoryClient({
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-background">
-      <AdminHeader user={user} profile={profile} />
-      
       <div className="p-8 space-y-8">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

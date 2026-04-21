@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { StaffHeader } from "@/components/navigation/staff-header"
 import { CustomerSidebar } from "@/components/customer/customer-sidebar"
 
 export default async function DashboardLayout({
@@ -22,11 +21,9 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <StaffHeader user={user} profile={profile} />
-
       <div className="flex flex-1 relative">
         <CustomerSidebar profile={profile} />
-        <main className="flex-1 min-w-0 bg-muted/20">
+        <main className="flex-1 min-w-0" style={{ backgroundColor: '#EBE3D8' }}>
           <div className="container mx-auto p-4 md:p-8">
             {children}
           </div>

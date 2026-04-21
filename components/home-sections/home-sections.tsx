@@ -312,7 +312,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
   }, [])
 
   return (
-    <section ref={containerRef} className="py-20 bg-background text-foreground transition-colors duration-500 relative overflow-hidden">
+    <section ref={containerRef} className="py-20 text-foreground transition-colors duration-500 relative overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="absolute top-0 left-0 w-full h-1 kente-gradient opacity-30" />
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
         {/* Gift Card */}
@@ -624,9 +624,9 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
   }, [])
 
   return (
-    <div ref={triggerRef} className="bg-black overflow-hidden">
+    <div ref={triggerRef} className="overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="container mx-auto px-4 pt-20 pb-10">
-        <h2 className={cn("text-white text-5xl md:text-7xl italic font-bold", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-slate-900 text-5xl md:text-7xl italic font-bold", theme?.typography.heading)}>{title}</h2>
       </div>
       <div 
         ref={sectionRef} 

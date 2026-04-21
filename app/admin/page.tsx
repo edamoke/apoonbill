@@ -11,7 +11,6 @@ import { format, subDays } from "date-fns"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { AdminHeader } from "@/components/admin/admin-header"
 import { LowStockAlerts } from "@/components/admin/low-stock-alerts"
 import { StockCountDialog } from "@/components/admin/stock-count-dialog"
 import { ShiftReportDialog } from "@/components/admin/shift-report-dialog"
@@ -111,8 +110,6 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <AdminHeader user={user} profile={profile} />
-
       <main className="container mx-auto px-4 py-10 space-y-10 font-sans antialiased flex-1">
       {/* Header Area */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

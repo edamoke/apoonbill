@@ -118,9 +118,9 @@ export function UserRoleManager({ userId, currentRole, isAdmin, isChef, isRider,
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => updateRole("bartender", {})}
-            disabled={currentRole === "bartender"}
+            disabled={currentRole === "bartender" || currentRole === "barman"}
           >
-            {currentRole === "bartender" && <Check className="mr-2 h-4 w-4" />}
+            {(currentRole === "bartender" || currentRole === "barman") && <Check className="mr-2 h-4 w-4" />}
             Bartender
           </DropdownMenuItem>
         </DropdownMenuContent>
