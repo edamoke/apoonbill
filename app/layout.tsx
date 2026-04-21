@@ -57,6 +57,7 @@ export const metadata: Metadata = {
     icon: "/icon-light-32x32.png",
     apple: "/apple-icon.png",
   },
+  metadataBase: new URL('https://thespoonbill.com'),
 }
 
 export default function RootLayout({

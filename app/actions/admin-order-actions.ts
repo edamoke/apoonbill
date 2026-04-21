@@ -24,16 +24,16 @@ export async function updateOrderStatus(orderId: string, newStatus: string, addi
     }
 
     // Check permissions based on role
-    const canUpdate = profile.is_admin || ["admin", "chef", "rider", "accountant"].includes(profile.role)
-    if (!canUpdate) {
-      return { success: false, error: "Not authorized to update orders" }
-    }
+  const canUpdate = profile.is_admin || ["admin", "chef", "rider", "accountant"].includes(profile.role)
+  if (!canUpdate) {
+    return { success: false, error: "Not authorized to update orders" }
+  }
 
-    const updateData: any = {
-      status: newStatus,
-      updated_at: new Date().toISOString(),
-      ...additionalUpdates,
-    }
+  const updateData: Record<string, any> = {
+    status: newStatus,
+    updated_at: new Date().toISOString(),
+    ...additionalUpdates,
+  }
 
     // Add default timestamp fields based on status if not provided in additionalUpdates
     switch (newStatus) {
@@ -113,7 +113,7 @@ export async function assignStaff(orderId: string, staffType: "chef" | "rider" |
     }
 
     // Prepare update data
-    const fieldMap = {
+    const fieldMap: Record<string, string> = {
       chef: "assigned_chef_id",
       rider: "assigned_rider_id",
       accountant: "assigned_accountant_id",

@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/navigation/site-header"
 import { getAllSiteSettings } from "@/app/actions/cms-actions"
 import { FONT_COMBINATIONS } from "@/lib/fonts"
 import { getTheme } from "@/lib/themes"
+import { CSSProperties } from "react"
 
 export const dynamic = 'force-dynamic'
 
@@ -17,7 +18,7 @@ export default async function HomePage() {
   } = await supabase.auth.getUser()
 
   const { data: profile } = user
-    ? await supabase.from("profiles").select("id, full_name, role, email_confirmed").eq("id", user.id).single()
+    ? await supabase.from("profiles").select("id, full_name, role, is_admin, email_confirmed").eq("id", user.id).single()
     : { data: null }
 
   const settings = await getAllSiteSettings()
@@ -49,12 +50,12 @@ export default async function HomePage() {
         color: activeTheme.palette.foreground,
         backgroundColor: styles.backgroundColor || activeTheme.palette.background,
         fontSize: fontSizeMap[styles.fontSize as string] || '1rem',
-        ['--primary' as any]: styles.primaryColor || activeTheme.palette.primary,
-        ['--secondary' as any]: styles.secondaryColor || activeTheme.palette.secondary,
-        ['--accent' as any]: activeTheme.palette.accent,
-        ['--foreground' as any]: activeTheme.palette.foreground,
-        ['--muted' as any]: activeTheme.palette.muted,
-      }}
+        '--primary': styles.primaryColor || activeTheme.palette.primary,
+        '--secondary': styles.secondaryColor || activeTheme.palette.secondary,
+        '--accent': activeTheme.palette.accent,
+        '--foreground': activeTheme.palette.foreground,
+        '--muted': activeTheme.palette.muted,
+      } as CSSProperties}
     >
       {activeTheme.layout.header === 'centered' ? (
         <SiteHeader user={user} profile={profile} theme={activeTheme} branding={branding} />

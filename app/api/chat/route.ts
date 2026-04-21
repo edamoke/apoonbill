@@ -25,6 +25,7 @@ export async function POST(req: Request) {
     const isAdmin = profile?.role === 'admin' || profile?.is_admin === true || profile?.role === 'staff' || profile?.role === 'manager' || profile?.role === 'chef' || profile?.role === 'accountant' || profile?.role === 'rider';
 
     if (isAdmin) {
+        // @ts-ignore - Tool types mismatch in AI SDK
         // --- ADMIN / STAFF ASSISTANT ---
         const systemState = await getSystemStateDump();
         
@@ -105,6 +106,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
         return result.toTextStreamResponse();
 
     } else {
+        // @ts-ignore - Tool types mismatch in AI SDK
         // --- CUSTOMER / GUEST CONCIERGE (Existing Logic) ---
 
         // Fetch contextual data for the system prompt
@@ -172,15 +174,14 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
             trackOrder: tool({
             description: "Track the status of active orders",
             parameters: z.object({ orderId: z.string().optional() }),
-            // @ts-ignore
-            execute: async ({ orderId }: any) => {
+            execute: async ({ orderId }: { orderId?: string }) => {
                 if (!user) return { error: "User not logged in" }
                 let query = supabase.from("orders").select("id, status, total, created_at").eq("user_id", user.id).order("created_at", { ascending: false })
                 if (orderId) query = query.eq("id", orderId)
                 const { data: orders } = await query.limit(3)
-                return { orders: orders as any }
+                return { orders: orders || [] }
             },
-            }),
+            } as any),
             createOrder: tool({
             description: "Place a new order and initiate payment",
             parameters: z.object({
@@ -190,8 +191,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
                 orderType: z.enum(["delivery", "pickup"]).default("delivery"),
                 address: z.string().optional(),
             }),
-            // @ts-ignore
-            execute: async ({ items, paymentMethod, password, orderType, address }: any) => {
+            execute: async ({ items, paymentMethod, password, orderType, address }: { items: any[], paymentMethod: "mpesa" | "cash", password?: string, orderType: "delivery" | "pickup", address?: string }) => {
                 if (!user) return { error: "Please log in to place an order." }
 
                 const subtotal = items.reduce((sum: number, i: any) => sum + i.price * i.quantity, 0)
@@ -266,7 +266,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
 
                 return { success: true, orderId: order.id, message: "Order placed successfully." }
             },
-            }),
+            } as any),
         },
         })
 
