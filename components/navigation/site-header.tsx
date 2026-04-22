@@ -31,6 +31,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const isCheckout = pathname === "/checkout"
   const isCatering = pathname.startsWith("/catering")
   const headerLayout = theme?.layout.header || 'classic'
 
@@ -63,7 +64,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                   key={item.href}
                   href={item.href}
                   className={cn("block text-3xl font-staytion transition-colors",
-                    scrolled ? "text-gray-700 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
+                    scrolled ? "text-red-600 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
                     theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                   )}
                   onClick={() => setMobileMenuOpen(false)}
@@ -89,8 +90,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 className={cn(
                   scrolled ? "h-12" : "h-20", // Scale logo down on scroll
                   "w-auto transition-all",
-                  !branding?.logoUrl && (theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100")),
-                  scrolled && theme?.palette.background !== '#000000' && "brightness-0" // Make placeholder logo dark on white background
+                  !branding?.logoUrl && (theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100"))
                 )} 
               />
             </div>
@@ -98,7 +98,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               <div className={cn("flex flex-col transition-all", scrolled ? "scale-75 origin-top" : "scale-100")}>
                 <span className={cn(
                   "text-2xl font-bold tracking-tight leading-none",
-                  scrolled ? "text-gray-800" : "text-white",
+                  scrolled ? "text-red-600" : "text-white",
                   theme?.typography.heading || "font-staytion"
                 )}>
                   {branding?.title || "THE SPOONBILL"}
@@ -125,7 +125,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                     key={item.href}
                     href={item.href}
                     className={cn("block text-3xl font-staytion transition-colors",
-                      scrolled ? "text-gray-700 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
+                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
                       theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                     )}
                     onClick={() => setMobileMenuOpen(false)}
@@ -140,15 +140,15 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
              href="/orders" 
              className={cn(
                "hidden md:block text-sm font-staytion transition-colors",
-               scrolled ? "text-gray-700 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]"
+               scrolled ? "text-red-600 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]"
              )}
            >
              Orders
            </Link>
           )}
-          <Button variant="ghost" size="icon" className={cn("relative transition-colors", scrolled ? "text-gray-700 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
+          <Button variant="ghost" size="icon" className={cn("relative transition-colors", scrolled ? "text-red-600 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
             <Link href="/cart">
-              <ShoppingCart className={cn("h-5 w-5", scrolled ? "text-gray-700" : "text-white")} />
+              <ShoppingCart className={cn("h-5 w-5", scrolled ? "text-red-600" : "text-white")} />
               {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[var(--primary)] text-white text-xs flex items-center justify-center">
                   {cartItemCount}
@@ -160,14 +160,16 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           {user ? (
             <UserNav user={user} profile={profile} />
           ) : (
-            <div className="hidden md:flex items-center gap-2">
-              <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-gray-700 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
-                <Link href="/auth/login">Login</Link>
-              </Button>
-              <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
-                <Link href="/auth/sign-up">Sign Up</Link>
-              </Button>
-            </div>
+            !isCheckout && (
+              <div className="hidden md:flex items-center gap-2">
+                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
+                  <Link href="/auth/login">Login</Link>
+                </Button>
+                <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
+                  <Link href="/auth/sign-up">Sign Up</Link>
+                </Button>
+              </div>
+            )
           )}
 
           {/* Mobile Menu Button */}
@@ -251,20 +253,22 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 Orders
               </Link>
             ) : (
-              <div className={cn("flex flex-col gap-4 pt-4 border-t border-white/10",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "border-[var(--foreground)]/10"
-              )}>
-                <Button variant="ghost" className={cn("text-white hover:bg-white/10 w-full font-staytion",
-                  theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10"
-                )} asChild onClick={() => setMobileMenuOpen(false)}>
-                  <Link href="/auth/login">Login</Link>
-                </Button>
-                <Button className={cn("bg-[var(--primary)] text-white w-full font-staytion",
-                  theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90"
-                )} asChild onClick={() => setMobileMenuOpen(false)}>
-                  <Link href="/auth/sign-up">Sign Up</Link>
-                </Button>
-              </div>
+              !isCheckout && (
+                <div className={cn("flex flex-col gap-4 pt-4 border-t border-white/10",
+                  theme?.id === 'marco-good' && headerLayout === 'centered' && "border-[var(--foreground)]/10"
+                )}>
+                  <Button variant="ghost" className={cn("text-white hover:bg-white/10 w-full font-staytion",
+                    theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10"
+                  )} asChild onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/auth/login">Login</Link>
+                  </Button>
+                  <Button className={cn("bg-[var(--primary)] text-white w-full font-staytion",
+                    theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90"
+                  )} asChild onClick={() => setMobileMenuOpen(false)}>
+                    <Link href="/auth/sign-up">Sign Up</Link>
+                  </Button>
+                </div>
+              )
             )}
           </nav>
         )}
