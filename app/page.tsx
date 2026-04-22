@@ -34,6 +34,7 @@ export default async function HomePage() {
   }
 
   const heroSetting = getSetting("hero")
+  const friesSetting = getSetting("fries_section")
   const branding = heroSetting ? {
     title: heroSetting.title,
     subtitle: heroSetting.subtitle,
@@ -69,6 +70,9 @@ export default async function HomePage() {
         <SiteHeaderWrapper user={user} profile={profile} theme={activeTheme} branding={branding} />
       )}
       <ParallaxHero content={getSetting("hero")} theme={activeTheme} />
+      {friesSetting && (
+        <HorizontalMenu content={friesSetting} theme={activeTheme} />
+      )}
       <RepeatingBanner image="/images/hero-new.png" />
       <FloatingDishes theme={activeTheme} />
       <div className="-mt-16 md:-mt-24">
