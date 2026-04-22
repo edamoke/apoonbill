@@ -11,6 +11,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Staytion';
+  src: url('/fonts/Staytion.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: oklch(0.985 0 0);
   --foreground: oklch(0.145 0 0);
@@ -94,6 +102,7 @@
 }
 
 @theme inline {
+  --font-staytion: 'Staytion', cursive;
   --font-jelligun: 'Jelligun', serif;
   --font-geist: var(--font-geist);
   --font-kanit: var(--font-kanit);
@@ -190,14 +199,18 @@
   h2,
   h3,
   h4,
-  h5,
+  h5 {
+    @apply font-staytion;
+    letter-spacing: -0.02em;
+    text-transform: none;
+  }
   h6 {
     @apply font-jelligun;
     letter-spacing: -0.02em;
     text-transform: uppercase;
   }
   button {
-    @apply font-jelligun;
+    @apply font-staytion;
   }
 }
 

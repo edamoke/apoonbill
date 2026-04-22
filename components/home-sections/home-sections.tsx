@@ -609,7 +609,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <h3 className={cn("absolute bottom-10 left-10 text-white text-4xl italic font-jelligun", theme?.typography.heading)}>{item.title}</h3>
+            <h3 className={cn("absolute bottom-10 left-10 text-white text-4xl font-staytion", theme?.typography.heading)}>{item.title}</h3>
           </div>
         ))}
       </div>
@@ -766,8 +766,8 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
               <p className="text-4xl font-serif font-bold text-secondary shadow-sm inline-block px-2">{contact.phone}</p>
             </div>
             
-          <div className="mt-8 text-slate-900">
-               <h1 className={cn("text-2xl italic font-jelligun text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
+            <div className="mt-8 text-slate-900">
+               <h1 className={cn("text-2xl font-staytion text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
             </div>
           </div>
         </div>

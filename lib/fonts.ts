@@ -252,11 +252,11 @@ export const FONT_COMBINATIONS = [
   {
     id: "african-heritage",
     name: "African Heritage",
-    heading: "Kanit",
+    heading: "Staytion",
     body: "Work Sans",
-    headingGoogle: "Kanit:wght@800;900",
+    headingGoogle: "", // Custom font
     bodyGoogle: "Work+Sans:wght@400;500;600",
-    headingClass: "font-kanit",
+    headingClass: "font-staytion",
     bodyClass: "font-worksans"
   },
   {
@@ -272,11 +272,21 @@ export const FONT_COMBINATIONS = [
   {
     id: "jelligun-serif",
     name: "Jelligun + Sans Serif",
-    heading: "Jelligun",
+    heading: "Staytion",
     body: "Geist",
     headingGoogle: "", // Custom font
     bodyGoogle: "Geist:wght@100..900",
-    headingClass: "font-jelligun",
+    headingClass: "font-staytion",
+    bodyClass: "font-geist"
+  },
+  {
+    id: "staytion-custom",
+    name: "Staytion Custom",
+    heading: "Staytion",
+    body: "Geist",
+    headingGoogle: "", // Custom font
+    bodyGoogle: "Geist:wght@100..900",
+    headingClass: "font-staytion",
     bodyClass: "font-geist"
   },
 ];
