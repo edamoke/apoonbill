@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { ChatWidget } from "@/components/chat/chat-widget"
 import { ParallaxHero, GridSplit, CenteredForm, MasonryGrid, ElegantQuote, FloatingDishes, HorizontalMenu, SiteFooter, FullWidthParallax, RepeatingBanner } from "@/components/home-sections/home-sections"
+import { OffersPopup } from "@/components/home-sections/offers-popup"
 import { SiteHeaderWrapper } from "@/components/navigation/site-header-wrapper"
 import { SiteHeader } from "@/components/navigation/site-header"
 import { getAllSiteSettings } from "@/app/actions/cms-actions"
@@ -77,10 +78,11 @@ export default async function HomePage() {
 
       <GridSplit content={getSetting("grid_split")} theme={activeTheme} />
       <HorizontalMenu content={getSetting("featured_menu")} theme={activeTheme} />
-      <CenteredForm content={getSetting("subscription")} theme={activeTheme} />
+      {/* <CenteredForm content={getSetting("subscription")} theme={activeTheme} /> */}
       <MasonryGrid theme={activeTheme} />
       <SiteFooter content={getSetting("footer")} theme={activeTheme} />
       <ChatWidget />
+      <OffersPopup />
     </div>
   )
 }

@@ -606,6 +606,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
   }, [])
 
   const isFriesSection = title.toLowerCase().includes('fries');
+  const isFeaturedMenu = title.toLowerCase().includes('featured');
 
   return (
     <div 
@@ -617,7 +618,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
       style={{ backgroundColor: isFriesSection ? '#EBE3D8' : '#EBE3D8' }}
     >
       <div className="container mx-auto px-4 pt-20 pb-10">
-        <h2 className={cn("text-5xl md:text-7xl italic font-staytion", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-5xl md:text-7xl font-staytion", theme?.typography.heading)}>{title}</h2>
       </div>
       <div 
         ref={sectionRef} 
