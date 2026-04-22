@@ -74,15 +74,7 @@ export default async function HomePage() {
       {friesSetting && (
         <HorizontalMenu content={friesSetting} theme={activeTheme} />
       )}
-      <RepeatingBanner image="/images/hero-new.png" />
-      <div className="-mt-16 md:-mt-24">
-        <FullWidthParallax 
-          image="/images/hero-new.png" 
-          title="The Spoonbill" 
-          subtitle="Experience the rich, authentic flavors of African heritage prepared with love and served with elegance."
-        />
-      </div>
-      <RepeatingBanner image="/images/hero-new.png" reverse={true} />
+
       <GridSplit content={getSetting("grid_split")} theme={activeTheme} />
       <HorizontalMenu content={getSetting("featured_menu")} theme={activeTheme} />
       <CenteredForm content={getSetting("subscription")} theme={activeTheme} />

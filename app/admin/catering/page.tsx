@@ -36,8 +36,8 @@ export default async function AdminCateringPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Outside Catering</h1>
-          <p className="text-muted-foreground">Manage quotation requests for outside catering.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Cook outs</h1>
+          <p className="text-muted-foreground">Manage quotation requests for Cook outs.</p>
         </div>
       </div>
 

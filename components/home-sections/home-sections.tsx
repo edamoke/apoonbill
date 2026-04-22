@@ -554,11 +554,11 @@ export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
             </Button>
           </div>
 
-          <div className="relative h-[500px] mt-12 md:mt-0">
-            <div ref={dish1Ref} className="absolute top-0 right-0 w-64 h-64 md:w-80 md:h-80 z-20">
+          <div className="relative h-[600px] mt-12 md:mt-0">
+            <div ref={dish1Ref} className="absolute top-0 -right-12 w-80 h-80 md:w-96 md:h-96 z-20">
               <img src="/images/pxl-20251209-123701932.jpg" alt="Dish 1" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
             </div>
-            <div ref={dish2Ref} className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 z-10 opacity-90">
+            <div ref={dish2Ref} className="absolute bottom-0 right-20 w-72 h-72 md:w-80 md:h-80 z-10 opacity-90">
               <img src="/images/pxl-20251209-115244688.jpg" alt="Dish 2" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
             </div>
           </div>
@@ -605,8 +605,17 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
     return () => ctx.revert()
   }, [])
 
+  const isFriesSection = title.toLowerCase().includes('fries');
+
   return (
-    <div ref={triggerRef} className="overflow-hidden text-slate-900" style={{ backgroundColor: '#EBE3D8' }}>
+    <div 
+      ref={triggerRef} 
+      className={cn(
+        "overflow-hidden transition-colors duration-500",
+        isFriesSection ? "text-slate-900" : "text-slate-900"
+      )} 
+      style={{ backgroundColor: isFriesSection ? '#EBE3D8' : '#EBE3D8' }}
+    >
       <div className="container mx-auto px-4 pt-20 pb-10">
         <h2 className={cn("text-5xl md:text-7xl italic font-staytion", theme?.typography.heading)}>{title}</h2>
       </div>
@@ -615,7 +624,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
         className="flex gap-8 px-4 pb-20 w-fit"
       >
         {items.map((item: any, idx: number) => (
-          <div key={idx} className="relative w-[300px] md:w-[450px] aspect-[4/5] flex-shrink-0 group overflow-hidden rounded-2xl">
+          <div key={idx} className="relative w-[210px] md:w-[315px] aspect-[4/5] flex-shrink-0 group overflow-hidden rounded-2xl">
             <img 
               src={item.img} 
               alt={item.title} 

@@ -117,7 +117,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           )}>
                 {[
                   { label: "Diary", href: "/diary" },
-                  { label: "Outside Catering", href: "/catering" },
+                  { label: "Cook outs", href: "/catering" },
                 ].map((item) => (
                   <Link
                     key={item.href}
@@ -218,7 +218,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               )}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Outside Catering
+              Cook outs
             </Link>
             {user ? (
               <Link

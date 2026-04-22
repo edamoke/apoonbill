@@ -85,7 +85,7 @@ export default function BusinessLeadsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-serif font-bold italic">Business Leads</h1>
-          <p className="text-muted-foreground">Comprehensive tracking for outside catering and events.</p>
+          <p className="text-muted-foreground">Comprehensive tracking for Cook outs and events.</p>
         </div>
         <Button asChild className="bg-primary hover:bg-primary/90">
           <Link href="/admin/business-leads/new">

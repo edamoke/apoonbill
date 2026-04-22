@@ -28,7 +28,7 @@ export default async function CateringPage() {
         <section className="py-20 md:py-32 bg-white border-b border-gray-100">
           <div className="container mx-auto px-4 text-center max-w-4xl">
             <h1 className="text-5xl md:text-7xl font-serif italic font-bold mb-8 text-primary">
-              Outside Catering Request
+              Cook outs Request
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed">
               Planning an event? Let us handle the food and equipment. Fill out the form below and we'll send you a quotation.

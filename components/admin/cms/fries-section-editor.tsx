@@ -12,7 +12,7 @@ import { Plus, Trash2, Upload, MoveUp, MoveDown, Loader2, Utensils } from "lucid
 
 export function FriesSectionEditor({ initialContent }: { initialContent: any }) {
   const [content, setContent] = useState({
-    title: initialContent?.title || "Our Signature Fries",
+    title: initialContent?.title || "-",
     items: initialContent?.items || [
       { title: "Masala Fries", img: "/placeholder.jpg" },
       { title: "Plain Fries", img: "/placeholder.jpg" }

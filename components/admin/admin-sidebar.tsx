@@ -135,7 +135,7 @@ export function AdminSidebar({ userRole, isAdmin, isChef, isRider, isAccountant 
       roles: ["admin", "accountant"],
     },
     {
-      name: "Outside Catering",
+      name: "Cook outs",
       href: "/admin/catering",
       icon: Truck,
       roles: ["admin", "manager"],

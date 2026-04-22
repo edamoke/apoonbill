@@ -1,4 +1,4 @@
--- Outside Catering Schema
+-- Cook outs Schema
 CREATE TYPE catering_request_status AS ENUM ('pending', 'quoted', 'confirmed', 'cancelled', 'completed');
 
 CREATE TABLE IF NOT EXISTS catering_requests (
