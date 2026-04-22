@@ -52,18 +52,16 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
       )}>
         {/* Desktop Navigation - Left */}
         <nav className={cn(
-          "hidden md:flex items-center gap-6 justify-start"
+          "hidden md:flex items-center gap-8 justify-end"
         )}>
               {[
                 { label: "Menu", href: "/menu" },
                 { label: "Offers & Events", href: "/offers-events" },
-                { label: "Diary", href: "/diary" },
-                { label: "Outside Catering", href: "/catering" },
               ].map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("block text-lg font-jelligun transition-colors",
+                  className={cn("block text-3xl font-staytion transition-colors",
                     scrolled ? "text-gray-700 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
                     theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                   )}
@@ -95,28 +93,51 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 )} 
               />
             </div>
-            <div className={cn("flex flex-col transition-all", scrolled ? "scale-75 origin-top" : "scale-100")}>
-              <span className={cn(
-                "text-2xl font-bold tracking-tight leading-none",
-                scrolled ? "text-gray-800" : "text-white",
-                theme?.typography.heading || "font-serif italic"
-              )}>
-                {branding?.title || "THE SPOONBILL"}
-              </span>
-              <span className={cn("text-xs font-bold text-[var(--primary)] tracking-[0.2em] uppercase")}>
-                {branding?.subtitle || "Malindi"}
-              </span>
-            </div>
+            {!branding?.logoUrl && (
+              <div className={cn("flex flex-col transition-all", scrolled ? "scale-75 origin-top" : "scale-100")}>
+                <span className={cn(
+                  "text-2xl font-bold tracking-tight leading-none",
+                  scrolled ? "text-gray-800" : "text-white",
+                  theme?.typography.heading || "font-staytion"
+                )}>
+                  {branding?.title || "THE SPOONBILL"}
+                </span>
+                <span className={cn("text-xs font-bold text-[var(--primary)] tracking-[0.2em] uppercase")}>
+                  {branding?.subtitle || "Malindi"}
+                </span>
+              </div>
+            )}
           </Link>
         </div>
 
-        {/* Right Side Actions */}
-        <div className="flex items-center gap-4 justify-end">
+        {/* Desktop Navigation - Right & Actions */}
+        <div className="flex items-center gap-8 justify-start">
+          <nav className={cn(
+            "hidden md:flex items-center gap-8"
+          )}>
+                {[
+                  { label: "Diary", href: "/diary" },
+                  { label: "Outside Catering", href: "/catering" },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={cn("block text-3xl font-staytion transition-colors",
+                      scrolled ? "text-gray-700 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
+                      theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+                    )}
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+          </nav>
+
           {user && (
              <Link 
              href="/orders" 
              className={cn(
-               "hidden md:block text-sm font-jelligun transition-colors",
+               "hidden md:block text-sm font-staytion transition-colors",
                scrolled ? "text-gray-700 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]"
              )}
            >
@@ -138,10 +159,10 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             <UserNav user={user} profile={profile} />
           ) : (
             <div className="hidden md:flex items-center gap-2">
-              <Button variant="ghost" className={cn("font-jelligun", scrolled ? "text-gray-700 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
+              <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-gray-700 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
                 <Link href="/auth/login">Login</Link>
               </Button>
-              <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-jelligun")} asChild>
+              <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
                 <Link href="/auth/sign-up">Sign Up</Link>
               </Button>
             </div>
@@ -202,7 +223,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             {user ? (
               <Link
                 href="/orders"
-                className={cn("block text-lg font-jelligun text-white/90 hover:text-[var(--primary)] transition-colors",
+                className={cn("block text-lg font-staytion text-white/90 hover:text-[var(--primary)] transition-colors",
                   theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                 )}
                 onClick={() => setMobileMenuOpen(false)}
@@ -213,12 +234,12 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               <div className={cn("flex flex-col gap-4 pt-4 border-t border-white/10",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "border-[var(--foreground)]/10"
               )}>
-                <Button variant="ghost" className={cn("text-white hover:bg-white/10 w-full font-jelligun",
+                <Button variant="ghost" className={cn("text-white hover:bg-white/10 w-full font-staytion",
                   theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10"
                 )} asChild onClick={() => setMobileMenuOpen(false)}>
                   <Link href="/auth/login">Login</Link>
                 </Button>
-                <Button className={cn("bg-[var(--primary)] text-white w-full font-jelligun",
+                <Button className={cn("bg-[var(--primary)] text-white w-full font-staytion",
                   theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90"
                 )} asChild onClick={() => setMobileMenuOpen(false)}>
                   <Link href="/auth/sign-up">Sign Up</Link>

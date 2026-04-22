@@ -182,7 +182,7 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
             <div className="kente-gradient h-2 w-24 mb-6 rounded-full" />
             <h2 
               className={cn(
-                "text-4xl md:text-6xl font-jelligun mb-8 leading-tight text-white/90", // Reduced size and slightly softened white
+                "text-5xl md:text-8xl font-staytion mb-8 leading-tight text-white/90", // Bold hero heading
                 theme?.typography.heading
               )}
               dangerouslySetInnerHTML={{ __html: slides[currentSlide].mainHeading }}
@@ -196,7 +196,7 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
                 <Button 
                   asChild 
                   className={cn(
-                    "text-sm font-jelligun px-8 py-4 bg-primary text-white hover:opacity-90 transition-all rounded-md", // Smaller font, standard padding, minimalistic rounded-md
+                    "text-lg font-staytion px-10 py-6 bg-primary text-white hover:opacity-90 transition-all rounded-md", // Larger font and padding for button
                     theme?.id === 'fast-food' ? "rounded-full" : ""
                   )}
                 >
@@ -302,10 +302,10 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
               <span className="bg-white/90 text-secondary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-6 inline-block uppercase">
                 {giftCard.tag}
               </span>
-              <p className="font-bold tracking-widest mb-2 uppercase italic opacity-80 text-foreground font-jelligun">{giftCard.intro}</p>
+              <p className="font-bold tracking-widest mb-2 uppercase italic opacity-80 text-foreground font-staytion">{giftCard.intro}</p>
               <h3 
                 className={cn(
-                  "text-4xl md:text-5xl font-jelligun mb-8 leading-tight text-foreground",
+                  "text-4xl md:text-5xl font-staytion mb-8 leading-tight text-foreground",
                   theme?.typography.heading
                 )}
                 dangerouslySetInnerHTML={{ __html: giftCard.title }}
@@ -317,7 +317,7 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
               "aspect-[1.6/1] rounded-xl shadow-2xl flex items-center justify-center p-8 text-center transition-transform hover:rotate-0 border border-white/10",
               theme?.id === 'fast-food' ? "bg-primary rotate-0" : "bg-gradient-to-r from-primary to-secondary rotate-3"
             )}>
-               <span className={cn("text-white text-2xl italic font-jelligun", theme?.typography.heading)}>{giftCard.cardText}</span>
+               <span className={cn("text-white text-2xl italic font-staytion", theme?.typography.heading)}>{giftCard.cardText}</span>
             </div>
             <div className="absolute -top-4 -right-4 bg-primary text-white text-[10px] font-bold p-4 rounded-full w-24 h-24 flex items-center justify-center text-center leading-tight rotate-12 shadow-lg border-2 border-white/20">
               {giftCard.promoText}
@@ -342,8 +342,8 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
             <span className="bg-white/20 backdrop-blur-md text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-4 inline-block uppercase border border-white/20">
               {seafoodCard.tag}
             </span>
-            <p className="text-white/80 font-bold tracking-widest mb-2 uppercase italic font-jelligun">{seafoodCard.intro}</p>
-            <h3 className={cn("text-4xl md:text-5xl font-jelligun leading-tight", theme?.typography.heading)}>
+            <p className="text-white/80 font-bold tracking-widest mb-2 uppercase italic font-staytion">{seafoodCard.intro}</p>
+            <h3 className={cn("text-4xl md:text-5xl font-staytion leading-tight", theme?.typography.heading)}>
               {seafoodCard.title}
             </h3>
           </div>
@@ -367,7 +367,7 @@ export function CenteredForm({ content, theme }: { content?: any; theme?: ThemeC
     return (
       <section className="bg-background py-24 border-y border-border">
         <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className={cn("text-4xl italic font-jelligun mb-12", theme?.typography.heading)}>{title}</h2>
+          <h2 className={cn("text-4xl italic font-staytion mb-12", theme?.typography.heading)}>{title}</h2>
           <div className="flex flex-col md:flex-row gap-4 mb-8 min-h-[60px]">
             {/* Placeholder to maintain layout during hydration */}
           </div>
@@ -380,7 +380,7 @@ export function CenteredForm({ content, theme }: { content?: any; theme?: ThemeC
   return (
     <section className="py-24 border-y border-border bg-background transition-colors duration-500">
       <div className="container mx-auto px-4 max-w-3xl text-center text-foreground">
-        <h2 className={cn("text-4xl italic font-jelligun mb-12 opacity-80 text-foreground", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-4xl italic font-staytion mb-12 opacity-80 text-foreground", theme?.typography.heading)}>{title}</h2>
         
         <form className="flex flex-col md:flex-row gap-4 mb-8">
           <input 
@@ -444,8 +444,8 @@ export function MasonryGrid({ theme }: { theme?: ThemeConfig }) {
     <section className="py-24 bg-background transition-colors duration-500">
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
-          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-jelligun">Visual Journey</p>
-          <h2 className={cn("text-5xl md:text-6xl italic font-jelligun text-foreground", theme?.typography.heading)}>The Experience</h2>
+          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-staytion">Visual Journey</p>
+          <h2 className={cn("text-5xl md:text-6xl italic font-staytion text-foreground", theme?.typography.heading)}>The Experience</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
@@ -482,7 +482,7 @@ export function ElegantQuote({ theme }: { theme?: ThemeConfig }) {
       />
       <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
         <div className="w-20 h-1 bg-primary mx-auto mb-12" />
-        <blockquote className={cn("text-3xl md:text-5xl italic font-jelligun leading-tight mb-8", theme?.typography.heading)}>
+        <blockquote className={cn("text-3xl md:text-5xl italic font-staytion leading-tight mb-8", theme?.typography.heading)}>
           "Every meal here is a journey through Kenya's finest culinary traditions, presented with an elegance that matches the warmth of our hospitality."
         </blockquote>
         <cite className="text-primary font-bold tracking-[0.2em] uppercase not-italic">
@@ -595,7 +595,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
   return (
     <div ref={triggerRef} className="overflow-hidden text-slate-900" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="container mx-auto px-4 pt-20 pb-10">
-        <h2 className={cn("text-5xl md:text-7xl italic font-jelligun", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-5xl md:text-7xl italic font-staytion", theme?.typography.heading)}>{title}</h2>
       </div>
       <div 
         ref={sectionRef} 

@@ -52,7 +52,7 @@ export default async function HomePage() {
 
   return (
     <div 
-      className={`min-h-screen transition-all duration-500 ${fontCombo.bodyClass} [&_h1]:${fontCombo.headingClass} [&_h2]:${fontCombo.headingClass} [&_h3]:${fontCombo.headingClass} [&_h4]:${fontCombo.headingClass} [&_h5]:${fontCombo.headingClass} [&_h6]:${fontCombo.headingClass} [&_button]:${fontCombo.headingClass}`}
+      className={`min-h-screen transition-all duration-500 ${fontCombo.bodyClass} [&_h1]:${fontCombo.headingClass} [&_h2]:${fontCombo.headingClass} [&_h3]:${fontCombo.headingClass} [&_h4]:${fontCombo.headingClass} [&_h5]:${fontCombo.headingClass} [&_h6]:font-staytion [&_button]:${fontCombo.headingClass}`}
       style={{ 
         color: activeTheme.palette.foreground,
         backgroundColor: styles.backgroundColor || activeTheme.palette.background,

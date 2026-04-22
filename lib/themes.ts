@@ -36,7 +36,7 @@ export const THEMES: Record<string, ThemeConfig> = {
       muted: '#a8b5a0'
     },
     typography: {
-      heading: 'font-serif',
+      heading: 'font-staytion',
       body: 'font-sans',
       baseSize: 'base'
     },

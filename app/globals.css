@@ -209,8 +209,10 @@
     letter-spacing: -0.02em;
     text-transform: uppercase;
   }
-  button {
-    @apply font-staytion;
+  button,
+  .btn,
+  [role="button"] {
+    font-family: 'Staytion', cursive !important;
   }
 }
 

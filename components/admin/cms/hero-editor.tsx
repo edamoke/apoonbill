@@ -189,7 +189,7 @@ export function HeroEditor({ initialContent }: { initialContent: any }) {
       <div className="space-y-4 pt-6">
         <div className="flex items-center justify-between border-b pb-4">
           <div>
-            <h3 className="text-2xl font-serif font-bold">Hero Slides</h3>
+            <h3 className="text-2xl font-staytion font-bold">Hero Slides</h3>
             <p className="text-sm text-muted-foreground">Customize the main attraction slides on your home page</p>
           </div>
           <Button onClick={addSlide} size="lg" className="bg-primary text-white shadow-md">
@@ -239,6 +239,7 @@ export function HeroEditor({ initialContent }: { initialContent: any }) {
                     value={slide.mainHeading} 
                     onChange={(e) => updateSlide(index, 'mainHeading', e.target.value)}
                     placeholder="Supports <br /> for line breaks"
+                    className="font-staytion text-2xl"
                   />
                 </div>
                 <div className="grid gap-2">
