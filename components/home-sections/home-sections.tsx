@@ -111,9 +111,9 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
     <section 
       ref={heroRef}
       className={cn(
-      "relative min-h-[85vh] flex items-center overflow-hidden transition-colors duration-500",
+      "relative min-h-[105vh] flex items-center overflow-hidden transition-colors duration-500", // Increased from 85vh to 105vh (approx 20%+)
       heroLayout === 'centered' && "justify-center text-center",
-      heroLayout === 'minimal' && "min-h-[62.5vh]"
+      heroLayout === 'minimal' && "min-h-[75vh]"
     )}>
       {/* Slides */}
       {slides.map((slide: any, index: number) => (
@@ -147,35 +147,11 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
         ref={contentRef}
         className={cn(
         "container mx-auto px-4 relative z-20 flex flex-col items-center text-white",
-        heroLayout === 'parallax' && "md:items-start",
+        heroLayout === 'parallax' && "md:items-start md:pl-20", // Shifted right with md:pl-20 (approx 15-20 steps)
         heroLayout === 'split' && "md:flex-row md:justify-between",
         heroLayout === 'minimal' && "items-center"
       )}>
-        {/* Logo Branding */}
-        <div className={cn(
-          "absolute top-8 right-8 text-right hidden md:block",
-          heroLayout === 'centered' && "relative top-0 right-0 text-center mb-8",
-          heroLayout === 'minimal' && "hidden"
-        )}>
-          <div className="flex flex-col items-end">
-            <div className="relative group">
-              <div className={cn(
-                "absolute -inset-2 rounded-full opacity-0 transition-opacity group-hover:opacity-20",
-                "bg-gradient-to-r from-primary to-secondary"
-              )} />
-              <img 
-                src={logoUrl} 
-                alt={title} 
-                className={cn(
-                  "h-12 w-auto mb-2 transition-all",
-                  theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100")
-                )} 
-              />
-            </div>
-            <h1 className={cn("text-3xl font-bold", theme?.typography.heading || "font-serif italic")}>{title}</h1>
-            <p className="text-xl tracking-widest uppercase">{subtitle}</p>
-          </div>
-        </div>
+        {/* Logo Branding - REMOVED per task request to only appear in menu */}
 
         {/* Navigation (Vertical Right) */}
         <nav className="fixed right-8 top-1/2 -translate-y-1/2 flex flex-col gap-6 z-50 hidden lg:flex">
@@ -206,8 +182,8 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
             <div className="kente-gradient h-2 w-24 mb-6 rounded-full" />
             <h2 
               className={cn(
-                "text-6xl md:text-8xl font-bold mb-8 leading-tight text-white drop-shadow-2xl",
-                theme?.typography.heading || "font-kanit"
+                "text-4xl md:text-6xl font-jelligun mb-8 leading-tight text-white/90", // Reduced size and slightly softened white
+                theme?.typography.heading
               )}
               dangerouslySetInnerHTML={{ __html: slides[currentSlide].mainHeading }}
             />
@@ -218,10 +194,9 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
             )}>
               <div className="btn-group">
                 <Button 
-                  size="lg" 
                   asChild 
                   className={cn(
-                    "text-xl font-bold shadow-2xl px-12 py-8 h-auto bg-primary text-white hover:opacity-90 border-none rounded-none kente-border",
+                    "text-sm font-jelligun px-8 py-4 bg-primary text-white hover:opacity-90 transition-all rounded-md", // Smaller font, standard padding, minimalistic rounded-md
                     theme?.id === 'fast-food' ? "rounded-full" : ""
                   )}
                 >
@@ -230,15 +205,15 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
               </div>
 
               <div className={cn(
-                "flex flex-wrap gap-4 badges",
+                "flex flex-wrap gap-3 badges", // Reduced gap
                 heroLayout === 'centered' && "justify-center"
               )}>
-                <div className="flex items-center gap-2 bg-accent px-4 py-2 rounded text-sm font-bold text-white">
-                  <Star className="h-4 w-4 fill-current" />
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-[10px] font-bold text-white/80 border border-white/10">
+                  <Star className="h-3 w-3 fill-current" />
                   <span>{slides[currentSlide].excellenceText}</span>
                 </div>
-                <div className="flex items-center gap-2 bg-accent px-4 py-2 rounded text-sm font-bold text-white">
-                  <Star className="h-4 w-4 fill-current" />
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-[10px] font-bold text-white/80 border border-white/10">
+                  <Star className="h-3 w-3 fill-current" />
                   <span>{slides[currentSlide].choiceText}</span>
                 </div>
               </div>
@@ -314,35 +289,35 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
   return (
     <section ref={containerRef} className="py-20 text-slate-900 transition-colors duration-500 relative overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="absolute top-0 left-0 w-full h-1 kente-gradient opacity-30" />
-      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
-        {/* Gift Card */}
-        <div 
-          className={cn(
-            "grid-item rounded-none p-12 flex flex-col justify-between items-start relative overflow-hidden min-h-[500px] transition-all duration-500 shadow-xl kente-border",
-            theme?.id === 'pizza' ? "border-4 border-primary bg-transparent" : "bg-secondary"
-          )}
-        >
-          <div className="absolute top-0 right-0 w-32 h-32 kente-pattern opacity-10 -rotate-12 translate-x-12 -translate-y-12" />
-          <div>
-            <span className="bg-white/90 text-secondary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-6 inline-block uppercase">
-              {giftCard.tag}
-            </span>
-            <p className="font-bold tracking-widest mb-2 uppercase italic opacity-80 text-foreground">{giftCard.intro}</p>
-            <h3 
-              className={cn(
-                "text-4xl md:text-5xl font-bold mb-8 leading-tight text-foreground",
-                theme?.typography.heading
-              )}
-              dangerouslySetInnerHTML={{ __html: giftCard.title }}
-            />
-          </div>
+        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
+          {/* Gift Card */}
+          <div 
+            className={cn(
+              "grid-item rounded-none p-12 flex flex-col justify-between items-start relative overflow-hidden min-h-[500px] transition-all duration-500 shadow-xl kente-border",
+              theme?.id === 'pizza' ? "border-4 border-primary bg-transparent" : "bg-secondary"
+            )}
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 kente-pattern opacity-10 -rotate-12 translate-x-12 -translate-y-12" />
+            <div>
+              <span className="bg-white/90 text-secondary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-6 inline-block uppercase">
+                {giftCard.tag}
+              </span>
+              <p className="font-bold tracking-widest mb-2 uppercase italic opacity-80 text-foreground font-jelligun">{giftCard.intro}</p>
+              <h3 
+                className={cn(
+                  "text-4xl md:text-5xl font-jelligun mb-8 leading-tight text-foreground",
+                  theme?.typography.heading
+                )}
+                dangerouslySetInnerHTML={{ __html: giftCard.title }}
+              />
+            </div>
           
           <div className="relative z-10 w-full max-w-sm mx-auto my-8">
             <div className={cn(
               "aspect-[1.6/1] rounded-xl shadow-2xl flex items-center justify-center p-8 text-center transition-transform hover:rotate-0 border border-white/10",
               theme?.id === 'fast-food' ? "bg-primary rotate-0" : "bg-gradient-to-r from-primary to-secondary rotate-3"
             )}>
-               <span className={cn("text-white text-2xl italic", theme?.typography.heading)}>{giftCard.cardText}</span>
+               <span className={cn("text-white text-2xl italic font-jelligun", theme?.typography.heading)}>{giftCard.cardText}</span>
             </div>
             <div className="absolute -top-4 -right-4 bg-primary text-white text-[10px] font-bold p-4 rounded-full w-24 h-24 flex items-center justify-center text-center leading-tight rotate-12 shadow-lg border-2 border-white/20">
               {giftCard.promoText}
@@ -367,8 +342,8 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
             <span className="bg-white/20 backdrop-blur-md text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-4 inline-block uppercase border border-white/20">
               {seafoodCard.tag}
             </span>
-            <p className="text-white/80 font-bold tracking-widest mb-2 uppercase italic">{seafoodCard.intro}</p>
-            <h3 className={cn("text-4xl md:text-5xl font-bold leading-tight", theme?.typography.heading)}>
+            <p className="text-white/80 font-bold tracking-widest mb-2 uppercase italic font-jelligun">{seafoodCard.intro}</p>
+            <h3 className={cn("text-4xl md:text-5xl font-jelligun leading-tight", theme?.typography.heading)}>
               {seafoodCard.title}
             </h3>
           </div>
@@ -392,7 +367,7 @@ export function CenteredForm({ content, theme }: { content?: any; theme?: ThemeC
     return (
       <section className="bg-background py-24 border-y border-border">
         <div className="container mx-auto px-4 max-w-3xl text-center">
-          <h2 className={cn("text-4xl italic font-bold mb-12", theme?.typography.heading)}>{title}</h2>
+          <h2 className={cn("text-4xl italic font-jelligun mb-12", theme?.typography.heading)}>{title}</h2>
           <div className="flex flex-col md:flex-row gap-4 mb-8 min-h-[60px]">
             {/* Placeholder to maintain layout during hydration */}
           </div>
@@ -405,7 +380,7 @@ export function CenteredForm({ content, theme }: { content?: any; theme?: ThemeC
   return (
     <section className="py-24 border-y border-border bg-background transition-colors duration-500">
       <div className="container mx-auto px-4 max-w-3xl text-center text-foreground">
-        <h2 className={cn("text-4xl italic font-bold mb-12 opacity-80 text-foreground", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-4xl italic font-jelligun mb-12 opacity-80 text-foreground", theme?.typography.heading)}>{title}</h2>
         
         <form className="flex flex-col md:flex-row gap-4 mb-8">
           <input 
@@ -469,8 +444,8 @@ export function MasonryGrid({ theme }: { theme?: ThemeConfig }) {
     <section className="py-24 bg-background transition-colors duration-500">
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
-          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2">Visual Journey</p>
-          <h2 className={cn("text-5xl md:text-6xl italic font-bold text-foreground", theme?.typography.heading)}>The Experience</h2>
+          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-jelligun">Visual Journey</p>
+          <h2 className={cn("text-5xl md:text-6xl italic font-jelligun text-foreground", theme?.typography.heading)}>The Experience</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
@@ -507,7 +482,7 @@ export function ElegantQuote({ theme }: { theme?: ThemeConfig }) {
       />
       <div className="container mx-auto px-4 relative z-10 max-w-4xl text-center">
         <div className="w-20 h-1 bg-primary mx-auto mb-12" />
-        <blockquote className={cn("text-3xl md:text-5xl italic leading-tight mb-8", theme?.typography.heading)}>
+        <blockquote className={cn("text-3xl md:text-5xl italic font-jelligun leading-tight mb-8", theme?.typography.heading)}>
           "Every meal here is a journey through Kenya's finest culinary traditions, presented with an elegance that matches the warmth of our hospitality."
         </blockquote>
         <cite className="text-primary font-bold tracking-[0.2em] uppercase not-italic">
@@ -547,39 +522,33 @@ export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
           scrub: 1,
         },
       })
-      
-      gsap.from(".reveal-text", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%",
-        }
-      })
     }, containerRef)
 
     return () => ctx.revert()
   }, [])
 
   return (
-    <section ref={containerRef} className="py-32 bg-background overflow-hidden relative border-b border-border">
-      <div className="container mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
-        <div className="relative z-10">
-          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-4 reveal-text">Fast Food & Asian Cuisine</p>
-          <h2 className={cn("text-5xl md:text-7xl italic font-bold mb-8 reveal-text", theme?.typography.heading)}>Deliciously Fast, <br />Authentically Asian</h2>
-          <p className="text-xl text-muted-foreground max-w-md reveal-text">
-            The Spoonbill specializes in mouth-watering burgers, hotdogs, and a curated selection of Chinese takeaway. Available for dine-in and to-go.
-          </p>
-        </div>
-        <div className="relative min-h-[500px]">
-          <div ref={dish1Ref} className="absolute top-0 right-0 w-64 h-64 md:w-80 md:h-80 z-20">
-             <img src="/images/pxl-20251209-123701932.jpg" alt="Beans and Greens" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
+    <section ref={containerRef} className="relative min-h-[80vh] flex items-center overflow-hidden">
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/images/0421.mp4" type="video/mp4" />
+      </video>
+      <div className="absolute inset-0 bg-black/30 z-10" />
+      <div className="container mx-auto px-4 relative z-20">
+        <div className="flex justify-end items-center min-h-[60vh]">
+          <div className="relative w-full max-w-2xl h-[500px]">
+            <div ref={dish1Ref} className="absolute top-0 right-0 w-64 h-64 md:w-80 md:h-80 z-20">
+              <img src="/images/pxl-20251209-123701932.jpg" alt="Dish 1" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
+            </div>
+            <div ref={dish2Ref} className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 z-10 opacity-90">
+              <img src="/images/pxl-20251209-115244688.jpg" alt="Dish 2" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
+            </div>
           </div>
-          <div ref={dish2Ref} className="absolute bottom-0 left-0 w-56 h-56 md:w-72 md:h-72 z-10 opacity-90">
-             <img src="/images/pxl-20251209-115244688.jpg" alt="Chapati" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
-          </div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10" />
         </div>
       </div>
     </section>
@@ -626,7 +595,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
   return (
     <div ref={triggerRef} className="overflow-hidden text-slate-900" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="container mx-auto px-4 pt-20 pb-10">
-        <h2 className={cn("text-5xl md:text-7xl italic font-bold", theme?.typography.heading)}>{title}</h2>
+        <h2 className={cn("text-5xl md:text-7xl italic font-jelligun", theme?.typography.heading)}>{title}</h2>
       </div>
       <div 
         ref={sectionRef} 
@@ -640,7 +609,7 @@ export function HorizontalMenu({ content, theme }: { content?: any; theme?: Them
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <h3 className={cn("absolute bottom-10 left-10 text-white text-4xl italic font-bold", theme?.typography.heading)}>{item.title}</h3>
+            <h3 className={cn("absolute bottom-10 left-10 text-white text-4xl italic font-jelligun", theme?.typography.heading)}>{item.title}</h3>
           </div>
         ))}
       </div>
@@ -744,65 +713,6 @@ export function FullWidthParallax({ image, title, subtitle }: { image: string, t
   )
 }
 
-export function VideoScrollSection({ videoUrl = "/videos/hero-scroll.mp4", theme }: { videoUrl?: string, theme?: ThemeConfig }) {
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (!sectionRef.current || !videoRef.current) return
-
-    const video = videoRef.current
-    
-    // Ensure metadata is loaded to get video duration
-    const onMetadataLoaded = () => {
-      const ctx = gsap.context(() => {
-        // Use ScrollTrigger to scrub through video time
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top top",
-          end: "+=300%", // Scroll length for the video scrub
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          onUpdate: (self) => {
-            if (video.duration) {
-              // Smoothly map scroll progress to video time
-              video.currentTime = self.progress * video.duration
-            }
-          }
-        })
-      }, sectionRef)
-
-      return () => ctx.revert()
-    }
-
-    // Load metadata if not already available
-    if (video.readyState >= 1) {
-      onMetadataLoaded()
-    } else {
-      video.addEventListener("loadedmetadata", onMetadataLoaded)
-    }
-
-    return () => {
-      video.removeEventListener("loadedmetadata", onMetadataLoaded)
-    }
-  }, [])
-
-  return (
-    <section ref={sectionRef} className="relative h-screen w-full overflow-hidden bg-black">
-      <video
-        ref={videoRef}
-        src={videoUrl}
-        muted
-        playsInline
-        preload="auto"
-        className="absolute inset-0 h-full w-full object-cover pointer-events-none"
-      />
-      {/* Text overlay removed as requested */}
-    </section>
-  )
-}
-
 export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const location = content?.location || {
     title: "LOCATION",
@@ -856,8 +766,8 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
               <p className="text-4xl font-serif font-bold text-secondary shadow-sm inline-block px-2">{contact.phone}</p>
             </div>
             
-            <div className="mt-8 text-slate-900">
-               <h1 className={cn("text-2xl italic font-bold text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
+          <div className="mt-8 text-slate-900">
+               <h1 className={cn("text-2xl italic font-jelligun text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
             </div>
           </div>
         </div>
