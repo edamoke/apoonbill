@@ -2,6 +2,7 @@ import { getAllSiteSettings } from "@/app/actions/cms-actions"
 import { AdminHeader } from "@/components/admin/admin-header"
 import { HeroEditor } from "@/components/admin/cms/hero-editor"
 import { FeaturedMenuEditor } from "@/components/admin/cms/featured-menu-editor"
+import { FriesSectionEditor } from "@/components/admin/cms/fries-section-editor"
 import { GridSplitEditor } from "@/components/admin/cms/grid-editor"
 import { FooterEditor } from "@/components/admin/cms/footer-editor"
 import { StylesEditor } from "@/components/admin/cms/styles-editor"
@@ -45,6 +46,7 @@ export default async function AdminCMSPage() {
           <TabsList className="bg-muted p-1 rounded-xl">
             <TabsTrigger value="themes" className="rounded-lg">Themes</TabsTrigger>
             <TabsTrigger value="hero" className="rounded-lg">Hero & Logo</TabsTrigger>
+            <TabsTrigger value="fries" className="rounded-lg">Fries Section</TabsTrigger>
             <TabsTrigger value="featured" className="rounded-lg">Featured Menu</TabsTrigger>
             <TabsTrigger value="grid" className="rounded-lg">Grid & Cards</TabsTrigger>
             <TabsTrigger value="footer" className="rounded-lg">Footer</TabsTrigger>
@@ -61,6 +63,10 @@ export default async function AdminCMSPage() {
 
           <TabsContent value="featured">
             <FeaturedMenuEditor initialContent={getSetting("featured_menu")} />
+          </TabsContent>
+
+          <TabsContent value="fries">
+            <FriesSectionEditor initialContent={getSetting("fries_section")} />
           </TabsContent>
 
           <TabsContent value="grid">

@@ -10,9 +10,11 @@ export default async function CheckoutPage() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  const profile = user 
-    ? (await supabase.from("profiles").select("*").eq("id", user.id).single()).data 
-    : null
+  let profile = null
+  if (user) {
+    const { data } = await supabase.from("profiles").select("*").eq("id", user.id).single()
+    profile = data
+  }
 
   return (
     <div className="min-h-screen bg-background">

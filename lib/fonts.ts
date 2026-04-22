@@ -269,4 +269,14 @@ export const FONT_COMBINATIONS = [
     headingClass: "font-worksans",
     bodyClass: "font-worksans",
   },
+  {
+    id: "jelligun-serif",
+    name: "Jelligun + Sans Serif",
+    heading: "Jelligun",
+    body: "Geist",
+    headingGoogle: "", // Custom font
+    bodyGoogle: "Geist:wght@100..900",
+    headingClass: "font-jelligun",
+    bodyClass: "font-geist"
+  },
 ];

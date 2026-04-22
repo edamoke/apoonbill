@@ -285,23 +285,7 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
                 </div>
               </RadioGroup>
 
-              {formData.paymentMethod === "mpesa" && user && (
-                <div className="space-y-2 pt-2 border-t">
-                  <Label htmlFor="password">Verify your password</Label>
-                  <p className="text-xs text-muted-foreground">
-                    For your security, please enter your The Spoonbill account password to authorize the M-Pesa
-                    payment.
-                  </p>
-                  <Input
-                    id="password"
-                    type="password"
-                    required
-                    placeholder="Enter your account password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  />
-                </div>
-              )}
+              {/* Password verification removed for guest checkout flow */}
             </CardContent>
           </Card>
         </div>
