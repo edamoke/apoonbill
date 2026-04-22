@@ -544,15 +544,13 @@ export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
           <div className="text-white space-y-8">
             <div className="kente-gradient h-1.5 w-24 rounded-full" />
             <h2 className={cn("text-5xl md:text-7xl font-staytion leading-tight", theme?.typography.heading)}>
-              Loaded Fries <br /> & Epic Burgers
+              Pure Sugarcane <br /> Juice
             </h2>
             <p className="text-xl text-white/80 max-w-lg leading-relaxed">
-              Experience fast food with a twist. Our legendary loaded fries and 
-              towering gourmet burgers are crafted with premium ingredients and 
-              bold flavors that redefine comfort food.
+              Experience nature's nectar with our freshly pressed sugarcane juice, infused with vibrant flavors including Pineapple, Lime, Ginger Lime, Tamarind, Passion, Beetroot, and Beetroot Ginger. Refreshment redefined.
             </p>
             <Button asChild className="bg-primary hover:opacity-90 text-white font-bold px-10 py-6 text-lg h-auto">
-              <Link href="/menu">Explore Menu</Link>
+              <Link href="/menu?category=ice stone cold ones">ORDER NOW</Link>
             </Button>
           </div>
 
