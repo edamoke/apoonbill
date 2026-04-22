@@ -41,16 +41,7 @@ export default function MenuClient({
 
       <main>
         {/* Menu Hero */}
-        <section className="py-20 md:py-32 bg-white border-b border-gray-100">
-          <div className="container mx-auto px-4 text-center max-w-4xl">
-            <h1 className="text-5xl md:text-7xl font-serif italic font-bold mb-8 text-[#2d5a4a]">
-              Our Delicious Menu
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed mb-12">
-              From our Authentic Pizzeria to our Signature Cocktails, explore our carefully curated selection.
-            </p>
-          </div>
-        </section>
+       
 
         <RepeatingBanner image="/images/hero-new.png" />
 
