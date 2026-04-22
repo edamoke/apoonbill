@@ -56,7 +56,8 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         )}>
               {[
                 { label: "Menu", href: "/menu" },
-                { label: "Offers & Events", href: "/offers-events" },
+                { label: "Drinks", href: "/drinks" },
+                { label: "Burgers", href: "/burgers" },
               ].map((item) => (
                 <Link
                   key={item.href}
@@ -116,8 +117,9 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             "hidden md:flex items-center gap-8"
           )}>
                 {[
-                  { label: "Diary", href: "/diary" },
-                  { label: "Cook outs", href: "/catering" },
+                  { label: "Chicken", href: "/chicken" },
+                  { label: "Combo", href: "/combo" },
+                  { label: "Loaded", href: "/loaded" },
                 ].map((item) => (
                   <Link
                     key={item.href}
@@ -194,31 +196,49 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Menu
             </Link>
             <Link
-              href="/offers-events"
+              href="/drinks"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Offers & Events
+              Drinks
             </Link>
             <Link
-              href="/diary"
+              href="/burgers"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Diary
+              Burgers
             </Link>
             <Link
-              href="/catering"
+              href="/chicken"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Cook outs
+              Chicken
+            </Link>
+            <Link
+              href="/combo"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Combo
+            </Link>
+            <Link
+              href="/loaded"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Loaded
             </Link>
             {user ? (
               <Link
