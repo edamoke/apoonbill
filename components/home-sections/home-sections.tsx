@@ -528,7 +528,7 @@ export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
   }, [])
 
   return (
-    <section ref={containerRef} className="relative min-h-[80vh] flex items-center overflow-hidden">
+    <section ref={containerRef} className="relative min-h-[80vh] flex items-center overflow-hidden py-24">
       <video
         autoPlay
         loop
@@ -538,10 +538,25 @@ export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
       >
         <source src="/images/0421.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-black/30 z-10" />
+      <div className="absolute inset-0 bg-black/40 z-10" />
       <div className="container mx-auto px-4 relative z-20">
-        <div className="flex justify-end items-center min-h-[60vh]">
-          <div className="relative w-full max-w-2xl h-[500px]">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="text-white space-y-8">
+            <div className="kente-gradient h-1.5 w-24 rounded-full" />
+            <h2 className={cn("text-5xl md:text-7xl font-staytion leading-tight", theme?.typography.heading)}>
+              Loaded Fries <br /> & Epic Burgers
+            </h2>
+            <p className="text-xl text-white/80 max-w-lg leading-relaxed">
+              Experience fast food with a twist. Our legendary loaded fries and 
+              towering gourmet burgers are crafted with premium ingredients and 
+              bold flavors that redefine comfort food.
+            </p>
+            <Button asChild className="bg-primary hover:opacity-90 text-white font-bold px-10 py-6 text-lg h-auto">
+              <Link href="/menu">Explore Menu</Link>
+            </Button>
+          </div>
+
+          <div className="relative h-[500px] mt-12 md:mt-0">
             <div ref={dish1Ref} className="absolute top-0 right-0 w-64 h-64 md:w-80 md:h-80 z-20">
               <img src="/images/pxl-20251209-123701932.jpg" alt="Dish 1" className="w-full h-full object-cover rounded-2xl drop-shadow-2xl border-4 border-white" />
             </div>

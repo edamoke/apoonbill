@@ -70,11 +70,11 @@ export default async function HomePage() {
         <SiteHeaderWrapper user={user} profile={profile} theme={activeTheme} branding={branding} />
       )}
       <ParallaxHero content={getSetting("hero")} theme={activeTheme} />
+      <FloatingDishes theme={activeTheme} />
       {friesSetting && (
         <HorizontalMenu content={friesSetting} theme={activeTheme} />
       )}
       <RepeatingBanner image="/images/hero-new.png" />
-      <FloatingDishes theme={activeTheme} />
       <div className="-mt-16 md:-mt-24">
         <FullWidthParallax 
           image="/images/hero-new.png" 
