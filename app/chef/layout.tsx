@@ -9,7 +9,7 @@ export default async function ChefLayout({ children }: { children: React.ReactNo
   const { data: profile } = await supabase.from("profiles").select("*").eq("id", user?.id).single()
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background admin-theme">
       {user && <StaffHeader user={user} profile={profile} />}
       <main>
         {children}

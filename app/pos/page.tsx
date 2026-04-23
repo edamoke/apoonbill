@@ -46,13 +46,15 @@ export default async function POSPage() {
     .select("*");
 
   return (
-    <POSClient 
-      categories={categories || []} 
-      menuItems={menuItems || []} 
-      tables={tables || []}
-      userProfile={profile}
-      modifierGroups={modifierGroups || []}
-      productModifiers={productModifiers || []}
-    />
+    <div className="admin-theme">
+      <POSClient 
+        categories={categories || []} 
+        menuItems={menuItems || []} 
+        tables={tables || []}
+        userProfile={profile}
+        modifierGroups={modifierGroups || []}
+        productModifiers={productModifiers || []}
+      />
+    </div>
   )
 }

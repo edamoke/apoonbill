@@ -444,8 +444,8 @@ export function MasonryGrid({ theme }: { theme?: ThemeConfig }) {
     <section className="py-24 bg-background transition-colors duration-500">
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
-          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-staytion">Visual Journey</p>
-          <h2 className={cn("text-5xl md:text-6xl italic font-staytion text-foreground", theme?.typography.heading)}>Everyday offers</h2>
+          <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-staytion">Get spoonbill offers</p>
+          <h2 className={cn("text-5xl md:text-6xl italic font-staytion text-foreground", theme?.typography.heading)}>10 % off Everyday offers</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
@@ -760,51 +760,51 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
   const copyright = content?.copyright || "© 2025 The Spoonbill. All Rights Reserved"
 
   return (
-    <footer className="py-20 bg-muted transition-colors duration-500 border-t-8 border-transparent" style={{ borderImage: "linear-gradient(90deg, var(--kente-red), var(--kente-gold), var(--kente-green), var(--kente-black)) 1" }} id="contact">
-      <div className="container mx-auto px-4">
+    <footer className="py-20 transition-colors duration-500 border-t-8 border-transparent" style={{ backgroundColor: '#A21523', borderImage: "linear-gradient(90deg, var(--kente-red), var(--kente-gold), var(--kente-green), var(--kente-black)) 1" }} id="contact">
+      <div className="container mx-auto px-4 text-white">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mb-16">
-          <div className="text-slate-900">
-            <h4 className="text-secondary font-bold tracking-widest mb-8 uppercase border-b border-secondary/10 pb-2 inline-block">{location.title}</h4>
+          <div>
+            <h4 className="text-white font-bold tracking-widest mb-8 uppercase border-b border-white/20 pb-2 inline-block">{location.title}</h4>
             <div className="space-y-4">
               {location.lines.map((line: string, i: number) => (
-                <p key={i} className="text-secondary opacity-70 font-medium">{line}</p>
+                <p key={i} className="text-white/80 font-medium">{line}</p>
               ))}
             </div>
           </div>
           
-          <div className="text-slate-900">
-            <h4 className="text-secondary font-bold tracking-widest mb-8 uppercase border-b border-secondary/10 pb-2 inline-block">{menu.title}</h4>
+          <div>
+            <h4 className="text-white font-bold tracking-widest mb-8 uppercase border-b border-white/20 pb-2 inline-block">{menu.title}</h4>
             <ul className="space-y-4">
               {menu.items.map((item: any) => (
                 <li key={item.label}>
-                  <Link href={item.href} className="text-secondary opacity-70 font-medium hover:opacity-100 hover:text-primary transition-colors">{item.label}</Link>
+                  <Link href={item.href} className="text-white/80 font-medium hover:text-white transition-colors">{item.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="flex flex-col items-start md:items-end justify-between">
-            <div className="text-left md:text-right text-slate-900">
-              <h4 className="text-secondary font-bold tracking-widest mb-4 uppercase">{contact.title}</h4>
-              <p className="text-4xl font-serif font-bold text-secondary shadow-sm inline-block px-2">{contact.phone}</p>
+            <div className="text-left md:text-right">
+              <h4 className="text-white font-bold tracking-widest mb-4 uppercase">{contact.title}</h4>
+              <p className="text-4xl font-serif font-bold text-white shadow-sm inline-block px-2">{contact.phone}</p>
             </div>
             
-            <div className="mt-8 text-slate-900">
-               <h1 className={cn("text-2xl font-staytion text-secondary", theme?.typography.heading)}>The Spoonbill</h1>
+            <div className="mt-8">
+               <h1 className={cn("text-2xl font-staytion text-white", theme?.typography.heading)}>The Spoonbill</h1>
             </div>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-secondary/10 flex flex-col md:flex-row justify-between items-center gap-4 text-slate-900">
+        <div className="pt-8 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex flex-wrap justify-center gap-6">
             {["Privacy Policy", "Terms of Use", "Contact Us", "Feedback"].map(item => (
-              <Link key={item} href="#" className="text-xs font-bold text-secondary opacity-50 hover:opacity-100 hover:text-primary uppercase tracking-widest transition-colors">
+              <Link key={item} href="#" className="text-xs font-bold text-white/50 hover:text-white uppercase tracking-widest transition-colors">
                 {item}
               </Link>
             ))}
           </div>
-          <p className="text-xs font-bold text-secondary opacity-50 uppercase tracking-widest">
-            {copyright} By <a href="https://www.linkedin.com/in/eddy-akurwa-0965153a/" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 hover:text-primary transition-colors underline underline-offset-2">Akurwa</a>
+          <p className="text-xs font-bold text-white/50 uppercase tracking-widest">
+            {copyright} By <a href="https://www.linkedin.com/in/eddy-akurwa-0965153a/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline underline-offset-2">Akurwa</a>
           </p>
         </div>
       </div>

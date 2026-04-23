@@ -209,7 +209,13 @@
   .admin-theme h2,
   .admin-theme h3,
   .admin-theme h4,
-  .admin-theme h5 {
+  .admin-theme h5,
+  .admin-theme h6,
+  .admin-theme button,
+  .admin-theme .btn,
+  .admin-theme [role="button"],
+  .admin-theme .font-staytion,
+  .admin-theme [class*="font-staytion"] {
     font-family: var(--font-geist), sans-serif !important;
     text-transform: none;
   }
@@ -220,21 +226,10 @@
     text-transform: uppercase;
   }
 
-  .admin-theme h6 {
-    font-family: var(--font-geist), sans-serif !important;
-    text-transform: uppercase;
-  }
-
   button,
   .btn,
   [role="button"] {
     font-family: 'Staytion', cursive !important;
-  }
-
-  .admin-theme button,
-  .admin-theme .btn,
-  .admin-theme [role="button"] {
-    font-family: var(--font-geist), sans-serif !important;
   }
 }
 

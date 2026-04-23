@@ -28,30 +28,37 @@ export function OffersPopup() {
         const supabase = createClient()
         
         // Fetch first 3 fries products
+        // Check for 'category_id' vs 'category' based on project standard
         const { data: friesData, error: friesError } = await supabase
           .from("products")
           .select("*")
-          .eq("category", "Fries")
+          .ilike("name", "%fries%")
           .limit(3)
 
-        if (friesError) throw friesError
+        if (friesError) {
+          console.error("Fries fetch error:", friesError)
+          throw friesError
+        }
 
         // Fetch other products to fill up to 10
         const { data: otherData, error: otherError } = await supabase
           .from("products")
           .select("*")
-          .neq("category", "Fries")
+          .not("name", "ilike", "%fries%")
           .limit(7)
 
-        if (otherError) throw otherError
+        if (otherError) {
+          console.error("Other products fetch error:", otherError)
+          throw otherError
+        }
 
         const combinedData = [...(friesData || []), ...(otherData || [])]
         
         if (combinedData.length > 0) {
           setProducts(combinedData)
         }
-      } catch (err) {
-        console.error("Error fetching products for popup:", err)
+      } catch (err: any) {
+        console.error("Error fetching products for popup:", err?.message || err)
       } finally {
         setLoading(false)
       }

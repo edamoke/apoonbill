@@ -5,7 +5,7 @@ import { AccountantSidebar } from "@/components/accountant/accountant-sidebar"
 
 export default function AccountantLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background admin-theme">
       <AccountantSidebar />
       <div className="flex-1 flex flex-col">
         {children}
