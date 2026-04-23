@@ -445,7 +445,7 @@ export function MasonryGrid({ theme }: { theme?: ThemeConfig }) {
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
           <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-staytion">Get spoonbill offers</p>
-          <h2 className={cn("text-5xl md:text-6xl italic font-staytion text-foreground", theme?.typography.heading)}>10 % off Everyday offers</h2>
+          <h2 className={cn("text-5xl md:text-6xl italic font-staytion", theme?.typography.heading)} style={{ color: '#4D7AFF' }}>10 % off Everyday offers</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
