@@ -39,7 +39,7 @@ export default function MenuClient({
     <div className="min-h-screen bg-[#f5f5f5] text-[#1a1a1a]">
       <SiteHeaderWrapper user={user} profile={profile} />
 
-      <main>
+      <main className="pt-24 md:pt-32">
         {/* Menu Hero */}
        
 

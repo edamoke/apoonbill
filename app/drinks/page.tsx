@@ -29,7 +29,7 @@ export default async function DrinksPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeaderWrapper user={user} profile={profile} />
-      <main className="flex-1 container mx-auto px-4 py-12">
+      <main className="flex-1 container mx-auto px-4 py-12 mt-24 md:mt-32">
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4">Drinks</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
