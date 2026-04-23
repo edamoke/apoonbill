@@ -50,8 +50,8 @@ const karla = Karla({ subsets: ["latin"], variable: "--font-karla" })
 const kanit = Kanit({ subsets: ["latin"], variable: "--font-kanit", weight: ["400", "500", "600", "700", "800", "900"] })
 
 export const metadata: Metadata = {
-  title: "The Spoonbill - Restaurant & Delivery",
-  description: "Premium restaurant ordering and delivery platform with real-time tracking",
+  title: "Malindi food delivery as an SEO, fastest food delivery, Food delivery, Burgers, Crispy Fries, Garlic fries, Fast food, SEO 2",
+  description: "Experience the fastest food delivery in Malindi. The Spoonbill offers the best Burgers, Crispy Fries, Garlic fries, and Fast food. SEO 2 optimized delivery platform.",
   generator: "v0.app",
   icons: {
     icon: "/icon-light-32x32.png",
