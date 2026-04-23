@@ -49,11 +49,11 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
       scrolled ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-transparent py-4"
     )}>
       <div className={cn(
-        "container mx-auto grid grid-cols-3 items-center transition-all duration-500 px-4 xl:px-6",
+        "container mx-auto flex items-center justify-between transition-all duration-500 px-2 lg:px-4 xl:px-6 gap-2 lg:gap-4",
       )}>
         {/* Desktop Navigation - Left */}
         <nav className={cn(
-          "hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8 justify-end"
+          "hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5 flex-1 justify-start"
         )}>
       {[
         { label: "Menu", href: "/menu" },
@@ -64,7 +64,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("block text-xl lg:text-2xl xl:text-3xl font-staytion transition-colors whitespace-nowrap",
+                  className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
                     scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-300 hover:text-[var(--primary)]"),
                     theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                   )}
@@ -76,7 +76,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         </nav>
 
         {/* Logo - Center */}
-        <div className="flex justify-center">
+        <div className="flex justify-center flex-shrink-0">
           <Link href="/" className={cn(
             "flex items-center gap-4 group transition-all flex-col text-center"
           )}>
@@ -89,7 +89,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 src={branding?.logoUrl || (theme?.id === 'swahili' ? "/placeholder-logo.svg" : (theme?.palette.background === '#000000' ? "/placeholder-logo.svg" : "/placeholder-logo.png"))} 
                 alt={branding?.title || "The Spoonbill"} 
                 className={cn(
-                  scrolled ? "h-10 lg:h-12" : "h-12 md:h-14 lg:h-16 xl:h-20", // Scale logo down on scroll
+                  scrolled ? "h-8 lg:h-10" : "h-10 md:h-12 lg:h-14 xl:h-18", // Reduced height slightly to save vertical and horizontal space
                   "w-auto transition-all",
                   !branding?.logoUrl && (theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100"))
                 )} 
@@ -100,9 +100,9 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         </div>
 
         {/* Desktop Navigation - Right & Actions */}
-        <div className="flex items-center gap-2 lg:gap-3 xl:gap-8 justify-start">
+        <div className="flex items-center gap-1 lg:gap-2 xl:gap-4 flex-1 justify-end">
           <nav className={cn(
-            "hidden md:flex items-center gap-2 lg:gap-4 xl:gap-8"
+            "hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5"
           )}>
         {[
         { label: "Toppings", href: "/menu?category=toppings" },
@@ -112,7 +112,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={cn("block text-xl lg:text-2xl xl:text-3xl font-staytion transition-colors whitespace-nowrap",
+                    className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
                       scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-300 hover:text-[var(--primary)]"),
                       theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                     )}
