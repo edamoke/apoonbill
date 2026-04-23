@@ -59,6 +59,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 { label: "Menu", href: "/menu" },
                 { label: "Drinks", href: "/drinks" },
                 { label: "Burgers", href: "/burgers" },
+                { label: "Fries", href: "/menu" },
               ].map((item) => (
                 <Link
                   key={item.href}
@@ -117,6 +118,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             "hidden md:flex items-center gap-8"
           )}>
                 {[
+                  { label: "Toppings", href: "/menu" },
                   { label: "Chicken", href: "/chicken" },
                   { label: "Combo", href: "/combo" },
                   { label: "Loaded", href: "/loaded" },
@@ -214,6 +216,24 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               onClick={() => setMobileMenuOpen(false)}
             >
               Burgers
+            </Link>
+            <Link
+              href="/menu"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Fries
+            </Link>
+            <Link
+              href="/menu"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Toppings
             </Link>
             <Link
               href="/chicken"
