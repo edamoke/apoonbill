@@ -445,7 +445,7 @@ export function MasonryGrid({ theme }: { theme?: ThemeConfig }) {
       <div className="container mx-auto px-4">
         <div className="mb-16 text-center">
           <p className="text-primary font-bold tracking-[0.3em] uppercase mb-2 font-staytion">Visual Journey</p>
-          <h2 className={cn("text-5xl md:text-6xl italic font-staytion text-foreground", theme?.typography.heading)}>The Experience</h2>
+          <h2 className={cn("text-5xl md:text-6xl italic font-staytion text-foreground", theme?.typography.heading)}>Everyday offers</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[250px]">
@@ -550,7 +550,7 @@ export function FloatingDishes({ theme }: { theme?: ThemeConfig }) {
               Experience nature's nectar with our freshly pressed sugarcane juice, infused with vibrant flavors including Pineapple, Lime, Ginger Lime, Tamarind, Passion, Beetroot, and Beetroot Ginger. Refreshment redefined.
             </p>
             <Button asChild className="bg-primary hover:opacity-90 text-white font-bold px-10 py-6 text-lg h-auto">
-              <Link href="/menu?category=ice stone cold ones">ORDER NOW</Link>
+              <Link href="https://www.thespoonbill.co.ke/menu?category=drinks">ORDER NOW</Link>
             </Button>
           </div>
 
@@ -745,10 +745,10 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
   const menu = content?.menu || {
     title: "OUR MENU",
     items: [
-      { label: "BREAKFAST", href: "/menu" },
-      { label: "DRINKS", href: "/menu" },
-      { label: "MAINS", href: "/menu" },
-      { label: "DESSERTS", href: "/menu" }
+      { label: "BREAKFAST", href: "/menu?category=breakfast" },
+      { label: "DRINKS", href: "/menu?category=drinks" },
+      { label: "MAINS", href: "/menu?category=mains" },
+      { label: "DESSERTS", href: "/menu?category=desserts" }
     ]
   };
 

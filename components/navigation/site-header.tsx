@@ -49,23 +49,23 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
       scrolled ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-transparent py-4"
     )}>
       <div className={cn(
-        "container mx-auto grid grid-cols-3 items-center transition-all duration-500 px-6",
+        "container mx-auto grid grid-cols-3 items-center transition-all duration-500 px-4 xl:px-6",
       )}>
         {/* Desktop Navigation - Left */}
         <nav className={cn(
-          "hidden md:flex items-center gap-8 justify-end"
+          "hidden md:flex items-center gap-4 lg:gap-6 xl:gap-8 justify-end"
         )}>
-              {[
-                { label: "Menu", href: "/menu" },
-                { label: "Drinks", href: "/drinks" },
-                { label: "Burgers", href: "/burgers" },
-                { label: "Fries", href: "/menu?category=fries" },
-              ].map((item) => (
+      {[
+        { label: "Menu", href: "/menu" },
+        { label: "Drinks", href: "/menu?category=drinks" },
+        { label: "Burgers", href: "/menu?category=burgers" },
+        { label: "Fries", href: "/menu?category=fries" },
+      ].map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn("block text-3xl font-staytion transition-colors",
-                    scrolled ? "text-red-600 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
+                  className={cn("block text-xl lg:text-2xl xl:text-3xl font-staytion transition-colors whitespace-nowrap",
+                    scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-300 hover:text-[var(--primary)]"),
                     theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                   )}
                   onClick={() => setMobileMenuOpen(false)}
@@ -89,7 +89,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 src={branding?.logoUrl || (theme?.id === 'swahili' ? "/placeholder-logo.svg" : (theme?.palette.background === '#000000' ? "/placeholder-logo.svg" : "/placeholder-logo.png"))} 
                 alt={branding?.title || "The Spoonbill"} 
                 className={cn(
-                  scrolled ? "h-12" : "h-20", // Scale logo down on scroll
+                  scrolled ? "h-10 lg:h-12" : "h-12 md:h-14 lg:h-16 xl:h-20", // Scale logo down on scroll
                   "w-auto transition-all",
                   !branding?.logoUrl && (theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100"))
                 )} 
@@ -100,20 +100,20 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         </div>
 
         {/* Desktop Navigation - Right & Actions */}
-        <div className="flex items-center gap-8 justify-start">
+        <div className="flex items-center gap-2 lg:gap-3 xl:gap-8 justify-start">
           <nav className={cn(
-            "hidden md:flex items-center gap-8"
+            "hidden md:flex items-center gap-2 lg:gap-4 xl:gap-8"
           )}>
-                {[
-                { label: "Toppings", href: "/toppings" },
-                { label: "Chicken", href: "/chicken" },
-                { label: "Combo", href: "/combo" },
-              ].map((item) => (
+        {[
+        { label: "Toppings", href: "/menu?category=toppings" },
+        { label: "Chicken", href: "/menu?category=chicken" },
+        { label: "Combo", href: "/menu?category=combo" },
+      ].map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={cn("block text-3xl font-staytion transition-colors",
-                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]",
+                    className={cn("block text-xl lg:text-2xl xl:text-3xl font-staytion transition-colors whitespace-nowrap",
+                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-300 hover:text-[var(--primary)]"),
                       theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                     )}
                     onClick={() => setMobileMenuOpen(false)}
@@ -124,19 +124,25 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           </nav>
 
           {user && (
-             <Link 
-             href="/orders" 
-             className={cn(
-               "hidden md:block text-sm font-staytion transition-colors",
-               scrolled ? "text-red-600 hover:text-[var(--primary)]" : "text-white hover:text-[var(--primary)]"
-             )}
-           >
-             Orders
-           </Link>
+            <Link
+              href="/orders"
+              className={cn(
+                "hidden md:block text-xs lg:text-base font-staytion transition-colors relative group/orders px-1 lg:px-4 py-2",
+                scrolled
+                  ? "text-red-600 hover:text-[var(--primary)]"
+                  : pathname === "/"
+                  ? "text-white hover:text-[var(--primary)]"
+                  : "text-gray-300 hover:text-[var(--primary)]"
+              )}
+            >
+              <span className="relative z-10">Orders</span>
+              <div className="absolute inset-0 bg-primary/20 rounded-full blur-md scale-0 group-hover/orders:scale-110 transition-transform duration-500 animate-pulse" />
+              <div className="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover/orders:scale-100 transition-transform duration-300" />
+            </Link>
           )}
-          <Button variant="ghost" size="icon" className={cn("relative transition-colors", scrolled ? "text-red-600 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
+          <Button variant="ghost" size="icon" className={cn("relative transition-colors", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-300 hover:bg-white/10"))} asChild>
             <Link href="/cart">
-              <ShoppingCart className={cn("h-5 w-5", scrolled ? "text-red-600" : "text-white")} />
+              <ShoppingCart className={cn("h-5 w-5", scrolled ? "text-red-600" : (pathname === "/" ? "text-white" : "text-gray-300"))} />
               {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[var(--primary)] text-white text-xs flex items-center justify-center">
                   {cartItemCount}
@@ -150,7 +156,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           ) : (
             !isCheckout && (
               <div className="hidden md:flex items-center gap-2">
-                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : "text-white hover:bg-white/10")} asChild>
+                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-300 hover:bg-white/10"))} asChild>
                   <Link href="/auth/login">Login</Link>
                 </Button>
                 <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
@@ -186,7 +192,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Menu
             </Link>
             <Link
-              href="/drinks"
+              href="/menu?category=drinks"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -195,7 +201,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Drinks
             </Link>
             <Link
-              href="/burgers"
+              href="/menu?category=burgers"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -213,7 +219,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Fries
             </Link>
             <Link
-              href="/toppings"
+              href="/menu?category=toppings"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -222,7 +228,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Toppings
             </Link>
             <Link
-              href="/chicken"
+              href="/menu?category=chicken"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -231,7 +237,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Chicken
             </Link>
             <Link
-              href="/combo"
+              href="/menu?category=combo"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
