@@ -8,11 +8,11 @@ import Link from "next/link"
 
 const OFFERS = [
   {
-    title: "Tilapia Large",
-    description: "Freshly caught and prepared to perfection. A local favorite!",
-    image: "/images/pxl-20251209-123652576.jpg",
-    price: "Ksh 850",
-    link: "/menu?category=fresh water fish"
+    title: "Crispy Fries",
+    description: "Golden-brown, perfectly seasoned fries. The ultimate side dish!",
+    image: "/images/hero-new.png",
+    price: "Ksh 250",
+    link: "/fries"
   },
   {
     title: "Kuku Choma",

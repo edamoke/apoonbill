@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { useRef } from "react"
 import { RepeatingBanner, SiteFooter } from "@/components/home-sections/home-sections"
 
+import { useSearchParams } from "next/navigation"
+
 export default function MenuClient({ 
   user, 
   profile, 
@@ -23,7 +25,10 @@ export default function MenuClient({
   footerContent?: any
 }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const defaultCategory = categories?.[0]?.slug || ""
+  const searchParams = useSearchParams()
+  const categoryParam = searchParams.get('category')
+  
+  const defaultCategory = categoryParam || categories?.[0]?.slug || ""
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {

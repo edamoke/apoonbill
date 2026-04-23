@@ -59,7 +59,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 { label: "Menu", href: "/menu" },
                 { label: "Drinks", href: "/drinks" },
                 { label: "Burgers", href: "/burgers" },
-                { label: "Fries", href: "/menu" },
+                { label: "Fries", href: "/menu?category=fries" },
               ].map((item) => (
                 <Link
                   key={item.href}
@@ -95,20 +95,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 )} 
               />
             </div>
-            {!branding?.logoUrl && (
-              <div className={cn("flex flex-col transition-all", scrolled ? "scale-75 origin-top" : "scale-100")}>
-                <span className={cn(
-                  "text-2xl font-bold tracking-tight leading-none",
-                  scrolled ? "text-red-600" : "text-white",
-                  theme?.typography.heading || "font-staytion"
-                )}>
-                  {branding?.title || "THE SPOONBILL"}
-                </span>
-                <span className={cn("text-xs font-bold text-[var(--primary)] tracking-[0.2em] uppercase")}>
-                  {branding?.subtitle || "Malindi"}
-                </span>
-              </div>
-            )}
+            {/* Branding text hidden as per request */}
           </Link>
         </div>
 
@@ -118,11 +105,10 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             "hidden md:flex items-center gap-8"
           )}>
                 {[
-                  { label: "Toppings", href: "/menu" },
-                  { label: "Chicken", href: "/chicken" },
-                  { label: "Combo", href: "/combo" },
-                  { label: "Loaded", href: "/loaded" },
-                ].map((item) => (
+                { label: "Toppings", href: "/toppings" },
+                { label: "Chicken", href: "/chicken" },
+                { label: "Combo", href: "/combo" },
+              ].map((item) => (
                   <Link
                     key={item.href}
                     href={item.href}
@@ -218,7 +204,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Burgers
             </Link>
             <Link
-              href="/menu"
+              href="/menu?category=fries"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -227,7 +213,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               Fries
             </Link>
             <Link
-              href="/menu"
+              href="/toppings"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -252,15 +238,6 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               onClick={() => setMobileMenuOpen(false)}
             >
               Combo
-            </Link>
-            <Link
-              href="/loaded"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Loaded
             </Link>
             {user ? (
               <Link
