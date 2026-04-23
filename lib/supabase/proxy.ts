@@ -37,7 +37,6 @@ export async function updateSession(request: NextRequest) {
     !user &&
     (request.nextUrl.pathname.startsWith("/dashboard") ||
       request.nextUrl.pathname.startsWith("/orders") ||
-      request.nextUrl.pathname.startsWith("/checkout") ||
       request.nextUrl.pathname.startsWith("/chef") ||
       request.nextUrl.pathname.startsWith("/accountant") ||
       (request.nextUrl.pathname.startsWith("/admin") && request.nextUrl.pathname !== "/admin/sign-in") ||
@@ -68,8 +67,7 @@ export async function updateSession(request: NextRequest) {
         request.nextUrl.pathname.startsWith("/chef") ||
         request.nextUrl.pathname.startsWith("/rider") ||
         request.nextUrl.pathname.startsWith("/dashboard") ||
-        request.nextUrl.pathname.startsWith("/orders") ||
-        request.nextUrl.pathname.startsWith("/checkout"))
+        request.nextUrl.pathname.startsWith("/orders"))
     ) {
       // Redirect to login with verification error
       return NextResponse.redirect(new URL("/auth/login?error=verify_email", request.url))

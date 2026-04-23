@@ -15,12 +15,10 @@ export default async function CheckoutSuccessPage({
   const supabase = await createClient()
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  if (!user) {
-    redirect("/auth/login")
-  }
+  const user = session?.user
 
   // Use admin client for initial fetch to ensure data is available regardless of session propagation
   const { createAdminClient } = await import("@/lib/supabase/server")
@@ -81,9 +79,11 @@ export default async function CheckoutSuccessPage({
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
-              <Button className="flex-1" asChild>
-                <Link href={`/orders/${order.id}`}>View Full Details</Link>
-              </Button>
+              {user && (
+                <Button className="flex-1" asChild>
+                  <Link href={`/orders/${order.id}`}>View Full Details</Link>
+                </Button>
+              )}
               <Button variant="outline" className="flex-1 bg-transparent" asChild>
                 <Link href="/menu">Continue Shopping</Link>
               </Button>
