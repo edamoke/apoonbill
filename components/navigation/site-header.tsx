@@ -56,6 +56,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           "hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5 flex-1 justify-start"
         )}>
       {[
+        { label: "Home", href: "/" },
         { label: "Menu", href: "/menu" },
         { label: "Drinks", href: "/menu?category=drinks" },
         { label: "Burgers", href: "/menu?category=burgers" },
@@ -182,6 +183,15 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           <nav className={cn("absolute top-full left-0 right-0 mt-4 md:hidden py-6 px-4 space-y-4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl animate-in fade-in slide-in-from-top-4",
             theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--background)]/90 border-[var(--foreground)]/10"
           )}>
+            <Link
+              href="/"
+              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
             <Link
               href="/menu"
               className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",

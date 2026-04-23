@@ -44,12 +44,10 @@ export default function MenuClient({
     <div className="min-h-screen bg-[#f5f5f5] text-[#1a1a1a]">
       <SiteHeaderWrapper user={user} profile={profile} />
 
-      <main className="pt-24 md:pt-32">
+      <main className="pt-2 md:pt-3">
         {/* Menu Hero */}
        
-
-        <RepeatingBanner image="/images/hero-new.png" />
-
+  
         {/* Categories and Items */}
         <section className="py-12">
           <div className="container mx-auto px-4">

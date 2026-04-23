@@ -89,10 +89,10 @@ export function OffersPopup() {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-      <div className="relative w-full max-w-lg bg-white rounded-2xl overflow-hidden shadow-2xl border-4 border-primary/20">
+      <div className="relative w-full max-w-lg bg-white rounded-2xl overflow-hidden shadow-2xl border-4 border-primary/20 flex flex-col">
         <button 
           onClick={() => setIsOpen(false)}
-          className="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur-md rounded-full text-slate-900 hover:bg-white transition-colors"
+          className="absolute top-2 right-2 z-20 p-2 bg-white/80 backdrop-blur-md rounded-full text-slate-900 hover:bg-white transition-colors"
           title="Close"
           aria-label="Close"
         >
@@ -121,22 +121,22 @@ export function OffersPopup() {
           />
         </div>
 
-        <div className="p-8 text-center bg-white">
-          <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-widest mb-4 uppercase">
+        <div className="p-4 md:p-6 text-center bg-white overflow-hidden flex flex-col items-center">
+          <span className="inline-block px-4 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-bold tracking-widest mb-2 uppercase">
             Special Offer
           </span>
-          <h2 className="text-4xl md:text-5xl font-staytion text-slate-900 mb-4 leading-tight">
+          <h2 className="text-xl md:text-3xl font-staytion text-slate-900 mb-2 leading-tight">
             {product.name}
           </h2>
-          <p className="text-slate-600 mb-6 text-sm line-clamp-2">
+          <p className="text-slate-600 mb-3 text-xs line-clamp-1">
             {product.description}
           </p>
-          <div className="text-3xl font-bold text-primary mb-8 font-staytion">
+          <div className="text-lg md:text-2xl font-bold text-primary mb-4 font-staytion">
             Ksh {product.price}
           </div>
           
-          <div className="flex flex-col gap-3">
-            <Button asChild className="w-full bg-primary hover:opacity-90 text-white font-bold py-6 text-lg rounded-xl shadow-lg border-none">
+          <div className="flex flex-col gap-2 w-full">
+            <Button asChild className="w-full bg-primary hover:opacity-90 text-white font-bold py-4 text-base rounded-xl shadow-lg border-none">
               <Link href={getCategoryLink(product.category)} onClick={() => setIsOpen(false)}>Order Now</Link>
             </Button>
             <Button 
@@ -144,7 +144,7 @@ export function OffersPopup() {
               onClick={() => {
                 setCurrentOffer((prev) => (prev + 1) % products.length)
               }}
-              className="text-slate-400 hover:text-primary transition-colors font-bold text-xs uppercase tracking-widest"
+              className="text-slate-400 hover:text-primary transition-colors font-bold text-[10px] uppercase tracking-widest"
             >
               See Next Offer
             </Button>
