@@ -20,7 +20,7 @@ export default async function DashboardLayout({
   const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single()
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col admin-theme">
       <div className="flex flex-1 relative">
         <CustomerSidebar profile={profile} />
         <main className="flex-1 min-w-0" style={{ backgroundColor: '#EBE3D8' }}>

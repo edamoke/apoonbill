@@ -54,7 +54,6 @@ export default function CRMReportPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      {user && <AdminHeader user={user} profile={profile} />}
 
       <main className="flex-1 space-y-8 p-8 pt-6">
         <div className="flex items-center justify-between">

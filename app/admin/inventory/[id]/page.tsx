@@ -44,7 +44,6 @@ export default async function InventoryItemDetailPage({ params }: { params: { id
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-background">
-      <AdminHeader user={user} profile={profile} />
       
       <div className="p-8 space-y-8 max-w-7xl mx-auto w-full">
         {/* Breadcrumbs & Back */}

@@ -47,7 +47,6 @@ export default async function HRMPage() {
 
   return (
     <div className="min-h-screen bg-background pb-10">
-      <AdminHeader user={user} profile={profile} />
 
       <main className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">

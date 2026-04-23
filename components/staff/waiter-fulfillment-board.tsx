@@ -44,8 +44,23 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
         event: '*', 
         schema: 'public', 
         table: 'orders' 
-      }, () => {
-        router.refresh()
+      }, (payload) => {
+        console.log("[Fulfillment] Real-time update received:", payload)
+        
+        if (payload.eventType === 'INSERT') {
+          // New order ready for fulfillment
+          router.refresh()
+        } else if (payload.eventType === 'UPDATE') {
+          setOrders(currentOrders => 
+            currentOrders.map(order => 
+              order.id === payload.new.id ? { ...order, ...payload.new } : order
+            )
+          )
+        } else if (payload.eventType === 'DELETE') {
+          setOrders(currentOrders => 
+            currentOrders.filter(order => order.id !== payload.old.id)
+          )
+        }
       })
       .subscribe()
 
@@ -65,6 +80,16 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
        ? 'on_transit' 
        : 'ready_for_collection'
 
+    // Optimistic update
+    setOrders(current => 
+      current.map(o => o.id === orderId ? { 
+        ...o, 
+        status: nextStatus,
+        delivery_started_at: new Date().toISOString(),
+        rider_picked_at: new Date().toISOString()
+      } : o)
+    )
+
     const result = await updateOrderStatus(orderId, nextStatus, {
        delivery_started_at: new Date().toISOString(),
        rider_picked_at: new Date().toISOString(),
@@ -76,9 +101,10 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
         title: order?.delivery_type === 'delivery' ? "Trip Started" : "Collection Started", 
         description: order?.delivery_type === 'delivery' ? "Safe travels! You have started the delivery trip." : "Order is being brought to the table." 
       })
-      router.refresh()
+      // No router.refresh() needed
     } else {
       toast({ title: "Error", description: result.error, variant: "destructive" })
+      router.refresh() // Revert on error
     }
     setLoading(null)
   }
@@ -90,6 +116,15 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
        ? 'served' 
        : 'delivered'
 
+    // Optimistic update
+    setOrders(current => 
+      current.map(o => o.id === orderId ? { 
+        ...o, 
+        status: finalStatus,
+        rider_delivered_at: new Date().toISOString()
+      } : o)
+    )
+
     const result = await updateOrderStatus(orderId, finalStatus, {
        rider_delivered_at: new Date().toISOString(),
        status: finalStatus // Ensure status is explicitly passed
@@ -99,9 +134,10 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
         title: order?.delivery_type === 'delivery' ? "Trip Completed" : "Service Completed", 
         description: order?.delivery_type === 'delivery' ? "Great job! Delivery successfully completed." : "Order served to table." 
       })
-      router.refresh()
+      // No router.refresh() needed
     } else {
       toast({ title: "Error", description: result.error, variant: "destructive" })
+      router.refresh() // Revert on error
     }
     setLoading(null)
   }

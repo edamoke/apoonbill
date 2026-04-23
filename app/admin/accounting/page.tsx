@@ -61,7 +61,6 @@ export default async function AccountingPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <AdminHeader user={user} profile={profile} />
       
       <div className="p-8 space-y-8">
         {/* Header */}

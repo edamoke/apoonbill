@@ -279,8 +279,8 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
                 <div className="flex items-center space-x-2 p-3 border rounded-lg">
                   <RadioGroupItem value="cash" id="cash" />
                   <Label htmlFor="cash" className="cursor-pointer flex-1">
-                    <div className="font-medium">Cash on Delivery</div>
-                    <div className="text-xs text-muted-foreground">Pay with cash when your order arrives</div>
+                    <div className="font-medium">Pay via Till - 5614033</div>
+                    <div className="text-xs text-muted-foreground">Pay via Lipa na M-Pesa Till Number</div>
                   </Label>
                 </div>
               </RadioGroup>

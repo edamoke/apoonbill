@@ -35,7 +35,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background admin-theme">
       <AdminSidebar
         userRole={profile?.role || "user"}
         isAdmin={profile?.is_admin || profile?.role === "admin"}

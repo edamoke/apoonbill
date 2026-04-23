@@ -41,8 +41,24 @@ export function KitchenDisplaySystem({ initialOrders }: { initialOrders: Order[]
         event: '*', 
         schema: 'public', 
         table: 'orders' 
-      }, () => {
-        router.refresh()
+      }, (payload) => {
+        console.log("[KDS] Real-time update received:", payload)
+        
+        if (payload.eventType === 'INSERT') {
+          // Note: In a real app, you might need to fetch the full order with items here
+          // For now, we'll wait for the next full refresh or manual update
+          router.refresh()
+        } else if (payload.eventType === 'UPDATE') {
+          setOrders(currentOrders => 
+            currentOrders.map(order => 
+              order.id === payload.new.id ? { ...order, ...payload.new } : order
+            )
+          )
+        } else if (payload.eventType === 'DELETE') {
+          setOrders(currentOrders => 
+            currentOrders.filter(order => order.id !== payload.old.id)
+          )
+        }
       })
       .subscribe()
 
@@ -57,24 +73,38 @@ export function KitchenDisplaySystem({ initialOrders }: { initialOrders: Order[]
 
   const handleStartCooking = async (orderId: string) => {
     setLoading(orderId)
+    // Optimistic update
+    setOrders(current => 
+      current.map(o => o.id === orderId ? { ...o, status: 'cooking' } : o)
+    )
+    
     const result = await startCooking(orderId)
     if (result.success) {
       toast({ title: "Kitchen Notified", description: "Order preparation started." })
-      router.refresh()
+      // No router.refresh() needed as state is updated locally and sync'd via subscription
     } else {
       toast({ title: "Error", description: result.error, variant: "destructive" })
+      // Revert optimistic update on error
+      router.refresh()
     }
     setLoading(null)
   }
 
   const handleMarkReady = async (orderId: string) => {
     setLoading(orderId)
+    // Optimistic update
+    setOrders(current => 
+      current.map(o => o.id === orderId ? { ...o, status: 'ready' } : o)
+    )
+
     const result = await markOrderReady(orderId)
     if (result.success) {
       toast({ title: "Order Ready", description: "Fulfillment team has been notified." })
-      router.refresh()
+      // No router.refresh() needed
     } else {
       toast({ title: "Error", description: result.error, variant: "destructive" })
+      // Revert optimistic update
+      router.refresh()
     }
     setLoading(null)
   }

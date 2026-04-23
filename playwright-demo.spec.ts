@@ -39,11 +39,11 @@ test('demo checkout workflow', async ({ page }) => {
       await addressField.fill('123 Test St, Nairobi');
   }
   
-  // Select "Pay with Cash"
+  // Select "Pay via Till"
   const payWithCashRadio = page.locator('#cash');
   await expect(payWithCashRadio).toBeVisible();
   await payWithCashRadio.click();
-  console.log('Selected Cash on Delivery');
+  console.log('Selected Pay via Till');
 
   // Submit order
   const placeOrderButton = page.getByRole('button', { name: /Place Order/i });

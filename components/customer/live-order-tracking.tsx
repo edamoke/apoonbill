@@ -28,8 +28,12 @@ export function LiveOrderTracking({ order: initialOrder }: LiveOrderTrackingProp
           filter: `id=eq.${initialOrder.id}`,
         },
         (payload) => {
-          console.log("[v0] Order updated:", payload.new)
-          setOrder(payload.new)
+          console.log("[LiveOrderTracking] Order updated:", payload.new)
+          // Merge the new order data with existing data to preserve fields not in payload (like items)
+          setOrder((prevOrder: any) => ({
+            ...prevOrder,
+            ...payload.new,
+          }))
         },
       )
       .subscribe()

@@ -204,15 +204,37 @@
     letter-spacing: -0.02em;
     text-transform: none;
   }
+
+  .admin-theme h1,
+  .admin-theme h2,
+  .admin-theme h3,
+  .admin-theme h4,
+  .admin-theme h5 {
+    font-family: var(--font-geist), sans-serif !important;
+    text-transform: none;
+  }
+
   h6 {
     @apply font-jelligun;
     letter-spacing: -0.02em;
     text-transform: uppercase;
   }
+
+  .admin-theme h6 {
+    font-family: var(--font-geist), sans-serif !important;
+    text-transform: uppercase;
+  }
+
   button,
   .btn,
   [role="button"] {
     font-family: 'Staytion', cursive !important;
+  }
+
+  .admin-theme button,
+  .admin-theme .btn,
+  .admin-theme [role="button"] {
+    font-family: var(--font-geist), sans-serif !important;
   }
 }
 

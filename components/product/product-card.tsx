@@ -3,6 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { AddToCartButton } from "@/components/product/add-to-cart-button"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 interface Product {
   id: string
@@ -45,12 +46,12 @@ export function ProductCard({ product }: { product: Product }) {
           )}
         </div>
       </Link>
-      <CardContent className="p-8 flex-1 flex flex-col">
-        <div className="mb-4">
-          <h3 className="text-2xl font-serif font-bold text-[#0A2D4A] mb-2 group-hover:text-[#d62828] transition-colors duration-300">
+      <CardContent className="p-6 flex-1 flex flex-col">
+        <div className="mb-3">
+          <h3 className="text-xl font-serif font-bold text-[#0A2D4A] mb-1 group-hover:text-[#d62828] transition-colors duration-300 line-clamp-1">
             {product.name}
           </h3>
-          <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 italic">
+          <p className="text-gray-500 text-xs leading-snug line-clamp-2 italic">
             {product.description}
           </p>
         </div>

@@ -47,7 +47,18 @@ export function AdminOrdersDashboard({ initialOrders }: { initialOrders: any[] }
         },
         (payload) => {
           console.log("[Admin Dashboard] Order change received:", payload)
-          router.refresh()
+          
+          if (payload.eventType === 'INSERT') {
+            router.refresh()
+          } else if (payload.eventType === 'UPDATE') {
+            setOrders(current => 
+              current.map(o => o.id === payload.new.id ? { ...o, ...payload.new } : o)
+            )
+          } else if (payload.eventType === 'DELETE') {
+            setOrders(current => 
+              current.filter(o => o.id !== payload.old.id)
+            )
+          }
         }
       )
       .subscribe()
