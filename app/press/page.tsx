@@ -50,9 +50,8 @@ export default async function PressPage() {
               <CardContent className="p-8">
                 <h2 className="text-2xl font-serif mb-3">Contact</h2>
                 <p className="text-muted-foreground">
-                  Email: press@thespoonbill.co
-                  <br />.ke
-                  Phone: +254 719719203, 0710268295
+                  Email: sales@thespoonbill.co.ke
+                  Phone: +2540112471717
                 </p>
               </CardContent>
             </Card>

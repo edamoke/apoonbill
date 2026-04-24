@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { MessageCircle, X, Send, Loader2, User, Bot, ShoppingBag, Truck, Heart, Lock } from "lucide-react"
+import { MessageCircle, X, Send, Loader2, User, Bot, ShoppingBag, Truck, Heart, Lock, Tag } from "lucide-react"
 import Link from "next/link"
 
 export function ChatWidget({ title = "Spoonbill Concierge" }: { title?: string }) {
@@ -147,17 +147,25 @@ export function ChatWidget({ title = "Spoonbill Concierge" }: { title?: string }
                 <div className="space-y-2">
                   <p className="font-serif text-xl">Welcome to The Spoonbill</p>
                   <p className="text-muted-foreground text-sm max-w-[250px] mx-auto">
-                    I'm your personal concierge. I can help you explore our menu, track your orders, or place a new one for you.
+                    I'm your elite dining consultant. I'll help you find the best deals, navigate our delicious menu, and handle your orders with coastal elegance.
                   </p>
                 </div>
                   <div className="grid grid-cols-2 gap-2 pt-4">
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      className="text-[10px] h-auto py-2 px-1" 
-                      onClick={() => safeAppend("What's on the menu?")}
+                      className="text-[10px] h-auto py-2 px-1 font-semibold text-primary border-primary/30" 
+                      onClick={() => safeAppend("What are the current offers?")}
                     >
-                      <ShoppingBag className="h-3 w-3 mr-1" /> View Menu
+                      <Tag className="h-3 w-3 mr-1" /> Best Offers
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="text-[10px] h-auto py-2 px-1" 
+                      onClick={() => safeAppend("Show me the menu!")}
+                    >
+                      <ShoppingBag className="h-3 w-3 mr-1" /> Full Menu
                     </Button>
                     <Button 
                       variant="outline" 
@@ -165,7 +173,15 @@ export function ChatWidget({ title = "Spoonbill Concierge" }: { title?: string }
                       className="text-[10px] h-auto py-2 px-1" 
                       onClick={() => safeAppend("Where is my order?")}
                     >
-                      <Truck className="h-3 w-3 mr-1" /> Track Order
+                      <Truck className="h-3 w-3 mr-1" /> My Orders
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="text-[10px] h-auto py-2 px-1" 
+                      onClick={() => safeAppend("Tell me about the Spoonbill experience.")}
+                    >
+                      <Heart className="h-3 w-3 mr-1" /> About Us
                     </Button>
                   </div>
               </div>

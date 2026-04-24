@@ -106,8 +106,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
         return result.toTextStreamResponse();
 
     } else {
-        // @ts-ignore
-        // --- CUSTOMER / GUEST CONCIERGE (Existing Logic) ---
+        // --- CUSTOMER / GUEST CONCIERGE ---
 
         // Fetch contextual data for the system prompt
         const { data: activeProducts } = await supabase
@@ -117,12 +116,24 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
 
         const { data: categories } = await supabase.from("categories").select("id, name, description")
 
+        // Fetch active offers and events
+        const { data: events } = await supabase
+        .from("events")
+        .select("title, description, type, status, event_date")
+        .eq("status", "ongoing")
+
+        const activeOffers = events?.filter(e => e.type === 'offer') || []
+        
+        const offersContext = activeOffers.length > 0 
+            ? activeOffers.map(o => `- **${o.title}**: ${o.description}`).join("\n")
+            : "No specific offers at the moment, but our prices are already unbeatable!"
+
         // Structure menu data by category for the AI
         const menuStructure = categories?.map(category => {
-        const categoryProducts = activeProducts?.filter(p => p.category_id === category.id) || []
-        if (categoryProducts.length === 0) return null
-        
-        const productsList = categoryProducts.map(p => `
+            const categoryProducts = activeProducts?.filter(p => p.category_id === category.id) || []
+            if (categoryProducts.length === 0) return null
+            
+            const productsList = categoryProducts.map(p => `
     - **${p.name}** (KES ${p.price})
     - Description: ${p.description || "Freshly prepared"}
     - Ingredients: ${Array.isArray(p.ingredients) ? p.ingredients.join(", ") : "Premium ingredients"}
@@ -134,140 +145,149 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
     ].filter(Boolean).join(" | ") || "Standard"}
     - Prep Time: ${p.preparation_time}m | Calories: ${p.calories || "N/A"}`).join("\n")
 
-        return `CATEGORY: ${category.name}\n${productsList}`
+            return `CATEGORY: ${category.name}\n${productsList}`
         }).filter(Boolean).join("\n\n")
 
-        const systemPrompt = `You are "Spoonbill Concierge", the expert and persuasive Maître d' at thespoonbill, Malindi's finest dining destination.
-    Your goal is not just to take orders, but to curate an exceptional dining experience, maximize guest satisfaction, and increase sales through intelligent suggestions.
+        const systemPrompt = `You are "Spoonbill Concierge", the elite Sales Consultant and Maître d' at thespoonbill, Malindi's premier dining destination. 
+Your primary objective is to maximize sales while ensuring every guest feels like royalty. You are pleasant, persuasive, and highly knowledgeable.
 
-    USER CONTEXT:
-    ${user ? `- User: ${profile?.full_name || "Valued Guest"}\n- Phone: ${profile?.phone || "Not provided"}\n- Status: Authenticated` : "- Guest Status: Anonymous. Invite them to join the thespoonbill family for a personalized experience."}
+CURRENT OFFERS & PROMOTIONS:
+${offersContext}
 
-    RESTAURANT IDENTITY:
-    - Vibe: Coastal elegance, premium ingredients, warm hospitality.
-    - Location: Malindi, Kenya.
+USER CONTEXT:
+${user ? `- User: ${profile?.full_name || "Valued Guest"}\n- Phone: ${profile?.phone || "Not provided"}\n- Status: Authenticated` : "- Guest Status: Anonymous. Persuade them to join the thespoonbill family for exclusive member offers."}
 
-    MENU KNOWLEDGE BASE:
-    ${menuStructure}
+RESTAURANT IDENTITY:
+- Vibe: Coastal elegance, premium ingredients, warm hospitality.
+- Location: Malindi, Kenya.
 
-    YOUR MISSION:
-    1. **Sales-Driven Gastronomic Guide**: 
-    - Use the rich menu data to describe dishes vividly (e.g., "succulent", "aromatic", "freshly caught").
-    - **Upsell & Cross-sell**: If a user orders a main, enthusiastically suggest a matching starter or side. If they pick a spicy dish, suggest a cooling drink.
-    - **Dietary Guardian**: Proactively check for dietary preferences if not stated, and use the vegetarian/vegan/allergen tags to guide users safely.
+MENU KNOWLEDGE BASE:
+${menuStructure}
 
-    2. **Order Assistant**: Once a user chooses a meal, use the createOrder tool to place it. Confirm details clearly.
+YOUR SALES MISSION:
+1. **Active Selling**: 
+   - Always recommend the "CURRENT OFFERS" first if they fit the user's inquiry.
+   - Use evocative language: "Our signature gold-dusted burgers," "The crispest, hand-cut coastal fries," "Refreshingly chilled tropical juices."
+   - **Direct Sales Up**: When a user selects an item, proactively suggest an upgrade or a pairing. (e.g., "That Burger pairs divinely with our Loaded Masala Fries—shall I add those for you?")
 
-    3. **M-Pesa Flow**: If a user chooses M-Pesa, you MUST explicitly ask: "For your security, please provide your account password to authorize the M-Pesa STK push."
+2. **Navigation & Guidance**:
+   - Guide users to sections: /burgers, /chicken, /drinks, /fries, /loaded, /combo.
+   - If they seem undecided, ask about their mood or dietary preferences to narrow down high-margin recommendations.
 
-    4. **Smart Assistant**: Use tools to track orders or browse the menu efficiently.
+3. **Order Closing**: 
+   - Be the bridge to the sale. Use the createOrder tool as soon as the guest is ready.
+   - If they choose M-Pesa, use the mandatory security prompt: "For your security, please provide your account password to authorize the M-Pesa STK push."
 
-    CONSTRAINTS:
-    - **Accuracy**: Never make up prices or ingredients. Use the MENU KNOWLEDGE BASE strictly.
-    - **Login Gate**: If a guest is not logged in and wants to order, politely but firmly guide them to sign in to ensure secure payment and order tracking.`
+4. **Customer Retention**:
+   - If they are anonymous, mention that members get points and special discounts.
+
+CONSTRAINTS:
+- **No Hallucinations**: Only sell what is in the MENU KNOWLEDGE BASE.
+- **Pleasant Personality**: Always be polite, using phrases like "It would be my pleasure," "Excellent choice," and "A fine selection."
+- **Login Requirement**: Orders require login. Guide them to /auth/login if needed.`
 
         const result = streamText({
-        model: google("gemini-1.5-flash"),
-        system: systemPrompt,
-        messages,
-        tools: {
-            trackOrder: tool({
-            description: "Track the status of active orders",
-            parameters: z.object({ orderId: z.string().optional() }),
-            execute: async ({ orderId }: { orderId?: string }) => {
-                if (!user) return { error: "User not logged in" }
-                let query = supabase.from("orders").select("id, status, total, created_at").eq("user_id", user.id).order("created_at", { ascending: false })
-                if (orderId) query = query.eq("id", orderId)
-                const { data: orders } = await query.limit(3)
-                return { orders: orders || [] }
-            },
-            } as any),
-            createOrder: tool({
-            description: "Place a new order and initiate payment",
-            parameters: z.object({
-                items: z.array(z.object({ productId: z.string(), quantity: z.number(), name: z.string(), price: z.number() })),
-                paymentMethod: z.enum(["mpesa", "cash"]),
-                password: z.string().optional(),
-                orderType: z.enum(["delivery", "pickup"]).default("delivery"),
-                address: z.string().optional(),
-            }),
-            execute: async ({ items, paymentMethod, password, orderType, address }: { items: any[], paymentMethod: "mpesa" | "cash", password?: string, orderType: "delivery" | "pickup", address?: string }) => {
-                if (!user) return { error: "Please log in to place an order." }
-
-                const subtotal = items.reduce((sum: number, i: any) => sum + i.price * i.quantity, 0)
-                const deliveryFee = orderType === "delivery" ? 100 : 0
-                const total = subtotal + deliveryFee
-
-                // 1. Create Order
-                const { data: order, error: orderError } = await supabase
-                .from("orders")
-                .insert({
-                    user_id: user.id,
-                    customer_name: profile?.full_name || "Guest",
-                    customer_email: user.email,
-                    customer_phone: profile?.phone || "",
-                    delivery_address: address || profile?.address || "",
-                    order_type: orderType,
-                    subtotal,
-                    delivery_fee: deliveryFee,
-                    total,
-                    status: "pending",
-                    payment_method: paymentMethod,
-                    payment_status: "pending",
-                })
-                .select()
-                .single()
-
-                if (orderError) return { error: orderError.message }
-
-                // 2. Add Items
-                const { error: itemsError } = await supabase.from("order_items").insert(
-                items.map((i: any) => ({
-                    order_id: order.id,
-                    product_id: i.productId,
-                    item_name: i.name,
-                    quantity: i.quantity,
-                    price: i.price,
-                    unit_price: i.price,
-                    total_price: i.price * i.quantity,
-                }))
-                )
-                if (itemsError) return { error: itemsError.message, orderId: order.id }
-
-                // 3. Handle M-Pesa STK Push
-                if (paymentMethod === "mpesa") {
-                if (!password) return { error: "Password required for M-Pesa", orderId: order.id }
-                
-                const { error: authError } = await supabase.auth.signInWithPassword({
-                    email: user.email!,
-                    password: password,
-                })
-                if (authError) return { error: "Invalid password. STK Push cancelled.", orderId: order.id }
-
-                try {
-                    const baseUrl = req.url.split('/api/chat')[0]
-                    const response = await fetch(`${baseUrl}/api/mpesa/initiate`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        phoneNumber: profile?.phone || "",
-                        amount: total,
-                        orderId: order.id,
-                        accountReference: `ORDER-${order.id}`,
+            model: google("gemini-1.5-flash"),
+            system: systemPrompt,
+            messages,
+            tools: {
+                trackOrder: tool({
+                    description: "Track the status of active orders",
+                    parameters: z.object({ orderId: z.string().optional() }),
+                    execute: async ({ orderId }: { orderId?: string }) => {
+                        if (!user) return { error: "User not logged in" }
+                        let query = supabase.from("orders").select("id, status, total, created_at").eq("user_id", user.id).order("created_at", { ascending: false })
+                        if (orderId) query = query.eq("id", orderId)
+                        const { data: orders } = await query.limit(3)
+                        return { orders: orders || [] }
+                    },
+                } as any),
+                createOrder: tool({
+                    description: "Place a new order and initiate payment",
+                    parameters: z.object({
+                        items: z.array(z.object({ productId: z.string(), quantity: z.number(), name: z.string(), price: z.number() })),
+                        paymentMethod: z.enum(["mpesa", "cash"]),
+                        password: z.string().optional(),
+                        orderType: z.enum(["delivery", "pickup"]).default("delivery"),
+                        address: z.string().optional(),
                     }),
-                    })
-                    const data = await response.json()
-                    if (data.success) return { success: true, orderId: order.id, message: "STK Push initiated. Check your phone." }
-                    return { error: data.error || "STK Push failed", orderId: order.id }
-                } catch (e: any) {
-                    return { error: "Failed to connect to payment gateway", orderId: order.id }
-                }
-                }
+                    execute: async ({ items, paymentMethod, password, orderType, address }: { items: any[], paymentMethod: "mpesa" | "cash", password?: string, orderType: "delivery" | "pickup", address?: string }) => {
+                        if (!user) return { error: "Please log in to place an order." }
 
-                return { success: true, orderId: order.id, message: "Order placed successfully." }
+                        const subtotal = items.reduce((sum: number, i: any) => sum + i.price * i.quantity, 0)
+                        const deliveryFee = orderType === "delivery" ? 100 : 0
+                        const total = subtotal + deliveryFee
+
+                        // 1. Create Order
+                        const { data: order, error: orderError } = await supabase
+                        .from("orders")
+                        .insert({
+                            user_id: user.id,
+                            customer_name: profile?.full_name || "Guest",
+                            customer_email: user.email,
+                            customer_phone: profile?.phone || "",
+                            delivery_address: address || profile?.address || "",
+                            order_type: orderType,
+                            subtotal,
+                            delivery_fee: deliveryFee,
+                            total,
+                            status: "pending",
+                            payment_method: paymentMethod,
+                            payment_status: "pending",
+                        })
+                        .select()
+                        .single()
+
+                        if (orderError) return { error: orderError.message }
+
+                        // 2. Add Items
+                        const { error: itemsError } = await supabase.from("order_items").insert(
+                        items.map((i: any) => ({
+                            order_id: order.id,
+                            product_id: i.productId,
+                            item_name: i.name,
+                            quantity: i.quantity,
+                            price: i.price,
+                            unit_price: i.price,
+                            total_price: i.price * i.quantity,
+                        }))
+                        )
+                        if (itemsError) return { error: itemsError.message, orderId: order.id }
+
+                        // 3. Handle M-Pesa STK Push
+                        if (paymentMethod === "mpesa") {
+                            if (!password) return { error: "Password required for M-Pesa", orderId: order.id }
+                            
+                            const { error: authError } = await supabase.auth.signInWithPassword({
+                                email: user.email!,
+                                password: password,
+                            })
+                            if (authError) return { error: "Invalid password. STK Push cancelled.", orderId: order.id }
+
+                            try {
+                                const baseUrl = req.url.split('/api/chat')[0]
+                                const response = await fetch(`${baseUrl}/api/mpesa/initiate`, {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                        phoneNumber: profile?.phone || "",
+                                        amount: total,
+                                        orderId: order.id,
+                                        accountReference: `ORDER-${order.id}`,
+                                    }),
+                                })
+                                const data = await response.json()
+                                if (data.success) return { success: true, orderId: order.id, message: "STK Push initiated. Check your phone." }
+                                return { error: data.error || "STK Push failed", orderId: order.id }
+                            } catch (e: any) {
+                                return { error: "Failed to connect to payment gateway", orderId: order.id }
+                            }
+                        }
+
+                        return { success: true, orderId: order.id, message: "Order placed successfully." }
+                    },
+                } as any),
             },
-            } as any),
-        },
         })
 
         return result.toTextStreamResponse()

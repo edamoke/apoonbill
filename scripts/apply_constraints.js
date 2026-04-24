@@ -1,8 +1,12 @@
 
-const { createClient } = require('@supabase/supabase-js');
-const fs = require('fs');
-const path = require('path');
-const dotenv = require('dotenv');
+import { createClient } from '@supabase/supabase-js';
+import fs from 'fs';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: '.env.local' });
 
@@ -25,6 +29,15 @@ async function applyConstraints() {
   const { data, error } = await supabase.rpc('exec_sql', { sql_query: sql });
 
   if (error) {
+    console.log('Public RPC failed, trying postgres scheme...');
+    const { data: data2, error: error2 } = await supabase.rpc('exec_sql', { sql_query: sql }, { head: false });
+    if (error2) {
+      console.error('Error applying fix (v2):', error2);
+      return;
+    }
+    console.log('Successfully applied (v2)');
+    return;
+  } else if (data && !data.success) {
     console.error('Error applying fix:', error);
   } else if (data && !data.success) {
     console.error('SQL execution failed:', data.error);
