@@ -131,7 +131,7 @@ export function OffersPopup() {
           <p className="text-slate-600 mb-3 text-xs line-clamp-1">
             {product.description}
           </p>
-          <div className="text-lg md:text-2xl font-bold text-primary mb-4 font-staytion">
+          <div className="text-lg md:text-2xl font-black text-primary mb-4">
             Ksh {product.price}
           </div>
           

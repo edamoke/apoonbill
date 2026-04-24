@@ -66,7 +66,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                   key={item.href}
                   href={item.href}
                     className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
-                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-[#4D7AFF] hover:text-[var(--primary)]"),
+                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
                       theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                     )}
                   onClick={() => setMobileMenuOpen(false)}
@@ -114,7 +114,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                     key={item.href}
                     href={item.href}
                     className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
-                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-[#4D7AFF] hover:text-[var(--primary)]"),
+                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
                       theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                     )}
                     onClick={() => setMobileMenuOpen(false)}
@@ -133,7 +133,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                   ? "text-red-600 hover:text-[var(--primary)]"
                   : pathname === "/"
                   ? "text-white hover:text-[var(--primary)]"
-                  : "text-[#4D7AFF] hover:text-[var(--primary)]"
+                  : "text-gray-700 hover:text-[var(--primary)]"
               )}
             >
               <span className="relative z-10">Orders</span>
@@ -141,9 +141,9 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               <div className="absolute inset-0 bg-primary/10 rounded-full scale-0 group-hover/orders:scale-100 transition-transform duration-300" />
             </Link>
           )}
-          <Button variant="ghost" size="icon" className={cn("relative transition-colors", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-[#4D7AFF] hover:bg-white/10"))} asChild>
+          <Button variant="ghost" size="icon" className={cn("relative transition-colors", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-black/5"))} asChild>
             <Link href="/cart">
-              <ShoppingCart className={cn("h-5 w-5", scrolled ? "text-red-600" : (pathname === "/" ? "text-white" : "text-[#4D7AFF]"))} />
+              <ShoppingCart className={cn("h-5 w-5", scrolled ? "text-red-600" : (pathname === "/" ? "text-white" : "text-gray-700"))} />
               {cartItemCount > 0 && (
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-[var(--primary)] text-white text-xs flex items-center justify-center">
                   {cartItemCount}
@@ -157,7 +157,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           ) : (
             !isCheckout && (
               <div className="hidden md:flex items-center gap-2">
-                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-[#4D7AFF] hover:bg-white/10"))} asChild>
+                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-black/5"))} asChild>
                   <Link href="/auth/login">Login</Link>
                 </Button>
                 <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
