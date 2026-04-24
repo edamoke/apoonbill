@@ -1,11 +1,13 @@
-FROM node:20-alpine AS base
+FROM node:20-slim AS base
 
 # Install dependencies and build the application
 FROM base AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 # We are not copying .env files directly as they are handled by docker-compose.yml env_file
-RUN apk add --no-cache libc6-compat
+# For node:slim, we might need some build essentials if there were native modules to compile,
+# but usually lightningcss provides prebuilt binaries for glibc (debian) more reliably than musl (alpine).
+RUN apt-get update && apt-get install -y libc6 && rm -rf /var/lib/apt/lists/*
 RUN npm install
 COPY . .
 

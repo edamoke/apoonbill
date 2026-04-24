@@ -57,7 +57,6 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         )}>
       {[
         { label: "Home", href: "/" },
-        { label: "Menu", href: "/menu" },
         { label: "Drinks", href: "/menu?category=drinks" },
         { label: "Burgers", href: "/menu?category=burgers" },
         { label: "Fries", href: "/menu?category=fries" },
@@ -191,15 +190,6 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               onClick={() => setMobileMenuOpen(false)}
             >
               Home
-            </Link>
-            <Link
-              href="/menu"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Menu
             </Link>
             <Link
               href="/menu?category=drinks"
