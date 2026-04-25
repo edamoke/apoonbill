@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { OrderTrackingCanvas } from "./order-tracking-canvas"
 import { CheckCircle2, Clock, ChefHat, Truck, Package } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useToast } from "@/hooks/use-toast"
 
 interface LiveOrderTrackingProps {
   order: any
@@ -13,6 +14,7 @@ interface LiveOrderTrackingProps {
 
 export function LiveOrderTracking({ order: initialOrder }: LiveOrderTrackingProps) {
   const [order, setOrder] = useState(initialOrder)
+  const { toast } = useToast()
 
   useEffect(() => {
     const supabase = createClient()
@@ -29,6 +31,25 @@ export function LiveOrderTracking({ order: initialOrder }: LiveOrderTrackingProp
         },
         (payload) => {
           console.log("[LiveOrderTracking] Order updated:", payload.new)
+          
+          const oldStatus = order.status
+          const newStatus = payload.new.status
+
+          if (oldStatus !== newStatus) {
+            let message = "Order status updated!"
+            if (newStatus === 'approved') message = "Order confirmed! We're starting soon."
+            if (newStatus === 'cooking') message = "Chef is now preparing your food!"
+            if (newStatus === 'ready') message = "Your order is ready!"
+            if (newStatus === 'on_transit') message = "Your order is on the way!"
+            if (newStatus === 'delivered') message = "Enjoy your meal!"
+            
+            toast({
+              title: "Order Update",
+              description: message,
+              duration: 5000,
+            })
+          }
+
           // Merge the new order data with existing data to preserve fields not in payload (like items)
           setOrder((prevOrder: any) => ({
             ...prevOrder,
@@ -41,7 +62,7 @@ export function LiveOrderTracking({ order: initialOrder }: LiveOrderTrackingProp
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [initialOrder.id])
+  }, [initialOrder.id, order.status, toast])
 
   const stages = [
     {
