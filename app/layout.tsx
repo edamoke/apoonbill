@@ -6,6 +6,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/toaster"
 import { SmoothScroll } from "@/components/ui/smooth-scroll"
+import { MobileBottomNav } from "@/components/navigation/mobile-bottom-nav"
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist" })
 const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
@@ -84,8 +85,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SmoothScroll>
-            {children}
+            <div className="pb-20 md:pb-0">
+              {children}
+            </div>
           </SmoothScroll>
+          <MobileBottomNav />
           <Toaster />
         </ThemeProvider>
         <Analytics />

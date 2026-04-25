@@ -166,19 +166,18 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             )
           )}
 
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn("md:hidden transition-colors", scrolled ? "text-gray-600 hover:bg-gray-100" : "text-white hover:bg-white/10", theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10")}
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </Button>
+          {/* Mobile Actions - Simplified since bottom nav handles links */}
+          <div className="md:hidden flex items-center gap-2">
+            {!user && !isCheckout && (
+              <Button size="sm" className="bg-red-600 text-white rounded-full text-xs" asChild>
+                <Link href="/auth/login">Login</Link>
+              </Button>
+            )}
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
+        {/* Mobile Navigation - Hidden as we use Bottom Nav now */}
+        {false && mobileMenuOpen && (
           <nav className={cn("absolute top-full left-0 right-0 mt-4 md:hidden py-6 px-4 space-y-4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl animate-in fade-in slide-in-from-top-4",
             theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--background)]/90 border-[var(--foreground)]/10"
           )}>
