@@ -5,6 +5,7 @@ import Link from "next/link"
 import { CheckCircle } from "lucide-react"
 import { redirect } from "next/navigation"
 import { LiveOrderTracking } from "@/components/customer/live-order-tracking"
+import { SocialSubmissionForm } from "@/components/loyalty/social-submission-form"
 
 export default async function CheckoutSuccessPage({
   searchParams,
@@ -90,6 +91,8 @@ export default async function CheckoutSuccessPage({
             </div>
           </CardContent>
         </Card>
+
+        <SocialSubmissionForm />
       </div>
     </div>
   )

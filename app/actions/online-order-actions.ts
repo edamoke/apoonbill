@@ -2,6 +2,7 @@
 
 import { createClient, createAdminClient } from "@/lib/supabase/server"
 import { sendOrderConfirmationEmail, sendWelcomeGuestEmail } from "@/lib/email"
+import { awardPointsForPurchase } from "./loyalty-actions"
 
 interface OrderItem {
   productId: string
@@ -172,7 +173,16 @@ export async function createOnlineOrder(data: OrderData & { user_id?: string }) 
       return { success: false, error: itemsError.message, orderId: order.id }
     }
 
-    // 4. Send Order Confirmation Email
+    // 4. Award Loyalty Points
+    if (targetUserId) {
+      try {
+        await awardPointsForPurchase(targetUserId, finalTotal, order.id)
+      } catch (loyaltyErr) {
+        console.error("[Order Action] Failed to award loyalty points:", loyaltyErr)
+      }
+    }
+
+    // 5. Send Order Confirmation Email
     try {
       await sendOrderConfirmationEmail(order, data.formData.customerEmail)
     } catch (emailErr) {

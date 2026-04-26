@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/server"
 import { revalidatePath } from "next/cache"
+import { awardPointsForPurchase } from "./loyalty-actions"
 
 export async function authorizeAction(pin: string, requiredRoles: string[]) {
   try {
@@ -460,6 +461,15 @@ export async function createPOSOrder(data: any) {
 
     const { error: itemsError } = await supabase.from("order_items").insert(orderItems)
     if (itemsError) throw itemsError
+
+    // Award Loyalty Points if customer is linked
+    if (data.user_id) {
+      try {
+        await awardPointsForPurchase(data.user_id, data.total, order.id)
+      } catch (loyaltyErr) {
+        console.error("[POS Action] Failed to award loyalty points:", loyaltyErr)
+      }
+    }
 
     revalidatePath("/pos")
     revalidatePath("/admin/orders")

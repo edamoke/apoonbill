@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { startCooking, markOrderReady } from "@/app/actions/chef-actions"
 import { useRouter } from "next/navigation"
-import { Clock, CheckCircle, ChefHat, Timer, AlertCircle, Utensils } from "lucide-react"
+import { Clock, CheckCircle, ChefHat, Timer, AlertCircle, Utensils, Volume2, BellRing } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { useToast } from "@/hooks/use-toast"
+import { useAudioAlert } from "@/hooks/use-audio-alert"
 
 interface Order {
   id: string
@@ -30,8 +31,10 @@ export function KitchenDisplaySystem({ initialOrders }: { initialOrders: Order[]
   const router = useRouter()
   const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [loading, setLoading] = useState<string | null>(null)
+  const [hasNewOrder, setHasNewOrder] = useState(false)
   const supabase = createClient()
   const { toast } = useToast()
+  const { playAlert, unlock, isUnlocked } = useAudioAlert()
 
   // Real-time updates
   useEffect(() => {
@@ -47,6 +50,9 @@ export function KitchenDisplaySystem({ initialOrders }: { initialOrders: Order[]
         if (payload.eventType === 'INSERT') {
           // Note: In a real app, you might need to fetch the full order with items here
           // For now, we'll wait for the next full refresh or manual update
+          console.log("[KDS] New order detected, triggering alert")
+          playAlert()
+          setHasNewOrder(true)
           router.refresh()
         } else if (payload.eventType === 'UPDATE') {
           setOrders(currentOrders => 
@@ -170,7 +176,37 @@ export function KitchenDisplaySystem({ initialOrders }: { initialOrders: Order[]
   const inProgress = orders.filter(o => o.status === 'cooking' || o.status === 'processing')
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)] gap-6">
+    <div className="flex flex-col gap-6">
+      {/* Audio Unlock Overlay */}
+      {!isUnlocked && (
+        <div className="bg-primary/10 border-2 border-primary border-dashed rounded-3xl p-8 text-center animate-in fade-in zoom-in duration-500">
+          <BellRing className="h-12 w-12 text-primary mx-auto mb-4 animate-bounce" />
+          <h3 className="text-xl font-bold mb-2">Enable Kitchen Notifications</h3>
+          <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+            To ensure the kitchen hears a loud bell when a new order arrives, please click the button below.
+          </p>
+          <Button size="lg" onClick={unlock} className="font-bold gap-2">
+            <Volume2 className="h-5 w-5" /> ENABLE KITCHEN ALERTS
+          </Button>
+        </div>
+      )}
+
+      {/* New Order Visual Alert */}
+      {hasNewOrder && (
+        <div className="bg-red-600 text-white p-6 rounded-2xl text-center font-bold animate-pulse flex items-center justify-center gap-6 shadow-2xl border-4 border-white/20">
+          <BellRing className="h-8 w-8" />
+          <span className="text-2xl tracking-tighter">NEW ORDER INCOMING!</span>
+          <Button 
+            variant="outline" 
+            size="lg" 
+            className="bg-white text-red-600 hover:bg-white/90 border-none font-black"
+            onClick={() => setHasNewOrder(false)}
+          >
+            ACKNOWLEDGE
+          </Button>
+        </div>
+      )}
+
        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
           {/* INCOMING QUEUE */}
           <div className="flex flex-col gap-4">

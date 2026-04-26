@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { updateOrderStatus } from "@/app/actions/admin-order-actions"
 import { useRouter } from "next/navigation"
-import { MapPin, Phone, CheckCircle, Package, Utensils, Navigation } from "lucide-react"
+import { MapPin, Phone, CheckCircle, Package, Utensils, Navigation, Volume2, BellRing } from "lucide-react"
 import { createClient } from "@/lib/supabase/client"
 import { useToast } from "@/hooks/use-toast"
+import { useAudioAlert } from "@/hooks/use-audio-alert"
 
 interface Order {
   id: string
@@ -34,8 +35,10 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
   const router = useRouter()
   const [orders, setOrders] = useState<Order[]>(initialOrders)
   const [loading, setLoading] = useState<string | null>(null)
+  const [hasNewOrder, setHasNewOrder] = useState(false)
   const supabase = createClient()
   const { toast } = useToast()
+  const { playAlert, unlock, isUnlocked } = useAudioAlert()
 
   useEffect(() => {
     const channel = supabase
@@ -49,6 +52,9 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
         
         if (payload.eventType === 'INSERT') {
           // New order ready for fulfillment
+          console.log("[Fulfillment] New order detected, triggering alert")
+          playAlert()
+          setHasNewOrder(true)
           router.refresh()
         } else if (payload.eventType === 'UPDATE') {
           setOrders(currentOrders => 
@@ -67,7 +73,7 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [supabase, router])
+  }, [supabase, router, playAlert])
 
   useEffect(() => {
     setOrders(initialOrders)
@@ -143,7 +149,38 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="space-y-8">
+      {/* Audio Unlock Overlay */}
+      {!isUnlocked && (
+        <div className="bg-primary/10 border-2 border-primary border-dashed rounded-3xl p-8 text-center animate-in fade-in zoom-in duration-500">
+          <BellRing className="h-12 w-12 text-primary mx-auto mb-4 animate-bounce" />
+          <h3 className="text-xl font-bold mb-2">Enable Order Notifications</h3>
+          <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+            To ensure you hear a loud bell when a new order arrives, please click the button below to enable audio.
+          </p>
+          <Button size="lg" onClick={unlock} className="font-bold gap-2">
+            <Volume2 className="h-5 w-5" /> ENABLE AUDIO ALERTS
+          </Button>
+        </div>
+      )}
+
+      {/* New Order Visual Alert */}
+      {hasNewOrder && (
+        <div className="bg-red-600 text-white p-4 rounded-xl text-center font-bold animate-pulse flex items-center justify-center gap-4 shadow-xl">
+          <BellRing className="h-6 w-6" />
+          <span>NEW ORDER RECEIVED!</span>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            className="bg-white text-red-600 hover:bg-white/90 border-none"
+            onClick={() => setHasNewOrder(false)}
+          >
+            DISMISS
+          </Button>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
        {orders.map((order) => (
          <Card key={order.id} className="border-t-4 border-t-primary">
             <CardHeader className="pb-3">
@@ -207,6 +244,7 @@ export function WaiterFulfillmentBoard({ initialOrders }: { initialOrders: Order
             </CardContent>
          </Card>
        ))}
+      </div>
 
        {orders.length === 0 && (
          <div className="col-span-full py-20 text-center space-y-4 bg-muted/20 border-2 border-dashed rounded-3xl">
