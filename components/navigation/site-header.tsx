@@ -55,24 +55,24 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         <nav className={cn(
           "hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5 flex-1 justify-start"
         )}>
-      {[
-        { label: "Home", href: "/" },
-        { label: "Drinks", href: "/menu?category=drinks" },
-        { label: "Burgers", href: "/menu?category=burgers" },
-        { label: "Fries", href: "/menu?category=fries" },
-      ].map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                    className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
-                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
-                      theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-                    )}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
+          {[
+            { label: "Home", href: "/" },
+            { label: "Drinks", href: "/menu?category=drinks" },
+            { label: "Burgers", href: "/menu?category=burgers" },
+            { label: "Fries", href: "/menu?category=fries" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn("block text-lg lg:text-xl xl:text-2xl font-bold transition-colors whitespace-nowrap",
+                scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
+                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+              )}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Logo - Center */}
@@ -89,13 +89,12 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
                 src={branding?.logoUrl || (theme?.id === 'swahili' ? "/placeholder-logo.svg" : (theme?.palette.background === '#000000' ? "/placeholder-logo.svg" : "/placeholder-logo.png"))} 
                 alt={branding?.title || "The Spoonbill"} 
                 className={cn(
-                  scrolled ? "h-8 lg:h-10" : "h-10 md:h-12 lg:h-14 xl:h-18", // Reduced height slightly to save vertical and horizontal space
+                  scrolled ? "h-8 lg:h-10" : "h-10 md:h-12 lg:h-14 xl:h-18",
                   "w-auto transition-all",
                   !branding?.logoUrl && (theme?.id === 'swahili' ? "brightness-100" : (theme?.palette.background === '#000000' ? "brightness-0 invert" : "brightness-100"))
                 )} 
               />
             </div>
-            {/* Branding text hidden as per request */}
           </Link>
         </div>
 
@@ -104,30 +103,30 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           <nav className={cn(
             "hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5"
           )}>
-        {[
-        { label: "Toppings", href: "/menu?category=toppings" },
-        { label: "Chicken", href: "/menu?category=chicken" },
-        { label: "Combo", href: "/menu?category=combo" },
-      ].map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
-                      scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
-                      theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-                    )}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+            {[
+              { label: "Toppings", href: "/menu?category=toppings" },
+              { label: "Chicken", href: "/menu?category=chicken" },
+              { label: "Combo", href: "/menu?category=combo" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn("block text-lg lg:text-xl xl:text-2xl font-bold transition-colors whitespace-nowrap",
+                  scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
+                  theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
+                )}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           {user && (
             <Link
               href="/orders"
               className={cn(
-                "hidden md:block text-xs lg:text-base font-staytion transition-colors relative group/orders px-1 lg:px-4 py-2",
+                "hidden md:block text-xs lg:text-base font-bold transition-colors relative group/orders px-1 lg:px-4 py-2",
                 scrolled
                   ? "text-red-600 hover:text-[var(--primary)]"
                   : pathname === "/"
@@ -156,10 +155,10 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           ) : (
             !isCheckout && (
               <div className="hidden md:flex items-center gap-2">
-                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-black/5"))} asChild>
+                <Button variant="ghost" className={cn("font-bold", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-black/5"))} asChild>
                   <Link href="/auth/login">Login</Link>
                 </Button>
-                <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
+                <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-bold")} asChild>
                   <Link href="/auth/sign-up">Sign Up</Link>
                 </Button>
               </div>
@@ -190,88 +189,6 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             >
               Home
             </Link>
-            <Link
-              href="/menu?category=drinks"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Drinks
-            </Link>
-            <Link
-              href="/menu?category=burgers"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Burgers
-            </Link>
-            <Link
-              href="/menu?category=fries"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Fries
-            </Link>
-            <Link
-              href="/menu?category=toppings"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Toppings
-            </Link>
-            <Link
-              href="/menu?category=chicken"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Chicken
-            </Link>
-            <Link
-              href="/menu?category=combo"
-              className={cn("block text-lg font-medium text-white/90 hover:text-[var(--primary)] transition-colors",
-                theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-              )}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Combo
-            </Link>
-            {user ? (
-              <Link
-                href="/orders"
-                className={cn("block text-lg font-staytion text-white/90 hover:text-[var(--primary)] transition-colors",
-                  theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
-                )}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Orders
-              </Link>
-            ) : (
-              !isCheckout && (
-                <div className={cn("flex flex-col gap-4 pt-4 border-t border-white/10",
-                  theme?.id === 'marco-good' && headerLayout === 'centered' && "border-[var(--foreground)]/10"
-                )}>
-                  <Button variant="ghost" className={cn("text-white hover:bg-white/10 w-full font-staytion",
-                    theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)] hover:bg-[var(--foreground)]/10"
-                  )} asChild onClick={() => setMobileMenuOpen(false)}>
-                    <Link href="/auth/login">Login</Link>
-                  </Button>
-                  <Button className={cn("bg-[var(--primary)] text-white w-full font-staytion",
-                    theme?.id === 'marco-good' && headerLayout === 'centered' && "bg-[var(--accent)] text-white hover:bg-[var(--accent)]/90"
-                  )} asChild onClick={() => setMobileMenuOpen(false)}>
-                    <Link href="/auth/sign-up">Sign Up</Link>
-                  </Button>
-                </div>
-              )
-            )}
           </nav>
         )}
       </div>

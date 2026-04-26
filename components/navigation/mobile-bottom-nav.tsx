@@ -4,9 +4,25 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Home, UtensilsCrossed, ShoppingCart, User, Search } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useEffect, useState } from "react"
+import { useCart } from "@/lib/cart"
 
-export function MobileBottomNav({ cartItemCount = 0 }: { cartItemCount?: number }) {
+export function MobileBottomNav() {
   const pathname = usePathname()
+  const { getTotalItems } = useCart()
+  const cartItemCount = getTotalItems()
+  const [isPulsing, setIsPulsing] = useState(false)
+  const [lastCount, setLastCount] = useState(cartItemCount)
+
+  useEffect(() => {
+    if (cartItemCount > lastCount) {
+      setIsPulsing(true)
+      const timer = setTimeout(() => setIsPulsing(false), 1000)
+      setLastCount(cartItemCount)
+      return () => clearTimeout(timer)
+    }
+    setLastCount(cartItemCount)
+  }, [cartItemCount, lastCount])
 
   const navItems = [
     {
@@ -20,18 +36,19 @@ export function MobileBottomNav({ cartItemCount = 0 }: { cartItemCount?: number 
       icon: UtensilsCrossed,
     },
     {
-      label: "Search",
-      href: "/menu?focus=search",
-      icon: Search,
-    },
-    {
       label: "Cart",
       href: "/cart",
       icon: ShoppingCart,
       badge: cartItemCount > 0 ? cartItemCount : undefined,
+      isCart: true,
     },
     {
-      label: "Account",
+      label: "Orders",
+      href: "/orders",
+      icon: Search,
+    },
+    {
+      label: "Profile",
       href: "/orders",
       icon: User,
     },
@@ -39,43 +56,59 @@ export function MobileBottomNav({ cartItemCount = 0 }: { cartItemCount?: number 
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-[100] md:hidden">
-      <div className="bg-white/80 backdrop-blur-xl border-t border-gray-100 px-4 py-2 pb-safe-offset-2 flex items-center justify-around shadow-[0_-4px_20px_rgba(0,0,0,0,05)] rounded-t-[1.5rem]">
-        {navItems.map((item) => {
+      <div className="bg-white/90 backdrop-blur-xl border-t border-gray-100 px-2 py-2 pb-safe-offset-2 flex items-center justify-around shadow-[0_-4px_20px_rgba(0,0,0,0,1)] rounded-t-[2rem]">
+        {navItems.map((item, index) => {
           const isActive = pathname === item.href || (item.href !== "/" && pathname?.startsWith(item.href))
+          // @ts-ignore - isCart is added to navItems
+          const isCart = item.isCart
           const Icon = item.icon
 
           return (
-            <Link
-              key={item.label}
-              href={item.href}
-              className={cn(
-                "flex flex-col items-center gap-1 p-2 transition-all duration-300 relative group",
-                isActive ? "text-red-600" : "text-gray-400 hover:text-gray-600"
-              )}
-            >
-              <div className={cn(
-                "p-1.5 rounded-2xl transition-all duration-300 active:scale-90",
-                isActive ? "bg-red-50" : "bg-transparent"
-              )}>
-                <Icon className={cn(
-                  "h-6 w-6 transition-transform duration-300",
-                  isActive ? "scale-110" : "group-active:scale-95"
-                )} />
-              </div>
-              <span className="text-[10px] font-bold uppercase tracking-wider">
-                {item.label}
-              </span>
-              
-              {item.badge !== undefined && (
-                <span className="absolute top-1 right-2 h-5 w-5 bg-red-600 text-white text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white animate-in zoom-in">
-                  {item.badge}
+            <div key={item.label + index} className={cn("flex-1 flex justify-center", isCart && "relative h-12 w-16")}>
+              <Link
+                href={item.href}
+                className={cn(
+                  "flex flex-col items-center gap-1 transition-all duration-300 relative group",
+                  isActive ? "text-red-600" : "text-gray-400 hover:text-gray-600",
+                  isCart && "absolute -top-12 scale-125 z-50",
+                  isCart && isPulsing && "animate-pulsing-cart"
+                )}
+              >
+                <div className={cn(
+                  "p-2.5 transition-all duration-300 active:scale-90 flex items-center justify-center",
+                  isCart ? "rounded-full bg-red-600 text-white shadow-2xl border-4 border-white w-14 h-14" : "rounded-2xl",
+                  !isCart && isActive ? "bg-red-50" : "bg-transparent",
+                )}>
+                  <Icon className={cn(
+                    isCart ? "h-7 w-7" : "h-6 w-6",
+                    "transition-transform duration-300",
+                    isActive && !isCart ? "scale-110" : "group-active:scale-95",
+                    isCart && isPulsing && "animate-pulse"
+                  )} />
+                </div>
+                <span className={cn(
+                  "text-[10px] font-bold uppercase tracking-wider",
+                  isCart ? "mt-2 text-red-600 font-black" : ""
+                )}>
+                  {item.label}
                 </span>
-              )}
+                
+                {item.badge !== undefined && (
+                  <span className={cn(
+                    "absolute h-5 w-5 text-[10px] font-bold rounded-full flex items-center justify-center border-2 animate-in zoom-in shadow-sm",
+                    isCart 
+                      ? "top-0 -right-2 bg-white text-red-600 border-red-600" 
+                      : "top-0 right-1 bg-red-600 text-white border-white"
+                  )}>
+                    {item.badge}
+                  </span>
+                )}
 
-              {isActive && (
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-600 rounded-full" />
-              )}
-            </Link>
+                {isActive && !isCart && (
+                  <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-red-600 rounded-full" />
+                )}
+              </Link>
+            </div>
           )
         })}
       </div>

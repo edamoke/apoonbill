@@ -336,6 +336,19 @@
   animation: float 6s ease-in-out infinite;
 }
 
+.animate-pulsing-cart {
+  animation: pulsing-cart 1s ease-in-out;
+}
+
+@keyframes pulsing-cart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
 .glassmorphism {
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
