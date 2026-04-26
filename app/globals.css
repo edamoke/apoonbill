@@ -200,7 +200,7 @@
     h3,
     h4,
     h5 {
-      @apply font-geist;
+      @apply font-staytion;
       letter-spacing: -0.02em;
       text-transform: none;
     }
@@ -217,7 +217,20 @@
   .admin-theme .font-staytion,
   .admin-theme [class*="font-staytion"],
   .admin-theme .font-bold,
-  .admin-theme [class*="font-bold"] {
+  .admin-theme [class*="font-bold"],
+  .pos-theme h1,
+  .pos-theme h2,
+  .pos-theme h3,
+  .pos-theme h4,
+  .pos-theme h5,
+  .pos-theme h6,
+  .pos-theme button,
+  .pos-theme .btn,
+  .pos-theme [role="button"],
+  .pos-theme .font-staytion,
+  .pos-theme [class*="font-staytion"],
+  .pos-theme .font-bold,
+  .pos-theme [class*="font-bold"] {
     font-family: var(--font-geist), sans-serif !important;
     text-transform: none;
   }

@@ -64,7 +64,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             <Link
               key={item.href}
               href={item.href}
-              className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
+              className={cn("block text-lg lg:text-xl xl:text-2xl transition-colors whitespace-nowrap",
                 scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
                 theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
               )}
@@ -111,7 +111,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
               <Link
                 key={item.href}
                 href={item.href}
-                className={cn("block text-lg lg:text-xl xl:text-2xl font-staytion transition-colors whitespace-nowrap",
+                className={cn("block text-lg lg:text-xl xl:text-2xl transition-colors whitespace-nowrap",
                   scrolled ? "text-red-600 hover:text-[var(--primary)]" : (pathname === "/" ? "text-white hover:text-[var(--primary)]" : "text-gray-700 hover:text-[var(--primary)]"),
                   theme?.id === 'marco-good' && headerLayout === 'centered' && "text-[var(--foreground)]/90 hover:text-[var(--primary)]"
                 )}

@@ -509,7 +509,8 @@ export function POSClient({ categories, menuItems, tables, userProfile, modifier
         user_id: selectedClient?.id
       }
 
-      const result = await createOnlineOrder(orderData as any)
+      const { createPOSOrder } = await import("@/app/actions/pos-actions")
+      const result = await createPOSOrder(orderData as any)
       if (result.success) {
         if (selectedTable && orderType === 'dine_in') {
           const supabase = createClient()

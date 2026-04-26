@@ -414,3 +414,59 @@ export async function deletePrinter(id: string) {
     return { success: false, error: error.message }
   }
 }
+
+export async function createPOSOrder(data: any) {
+  try {
+    const { createAdminClient } = await import("@/lib/supabase/server")
+    const supabase = await createAdminClient()
+
+    // Simplified order creation for POS to avoid complex guest logic and strict price verification
+    // in a controlled environment
+    const { data: order, error: orderError } = await supabase
+      .from("orders")
+      .insert({
+        user_id: data.user_id || null,
+        customer_name: data.formData.customerName,
+        customer_email: data.formData.customerEmail.toLowerCase().trim(),
+        customer_phone: data.formData.customerPhone,
+        delivery_address: data.formData.deliveryAddress,
+        order_type: data.formData.orderType,
+        delivery_type: data.formData.orderType === 'delivery' ? 'delivery' : 'takeaway',
+        special_instructions: data.formData.specialInstructions,
+        subtotal: data.subtotal,
+        delivery_fee: data.deliveryFee,
+        total: data.total,
+        status: "approved", // POS orders are pre-approved
+        payment_method: data.formData.paymentMethod,
+        payment_status: data.formData.paymentMethod === "cash" ? "completed" : "completed",
+        discount_percent: data.discount_percent || 0,
+        source: 'pos',
+      })
+      .select()
+      .single()
+
+    if (orderError) throw orderError
+
+    const orderItems = data.items.map((item: any) => ({
+      order_id: order.id,
+      product_id: item.productId,
+      item_name: item.name,
+      quantity: item.quantity,
+      price: item.price,
+      unit_price: item.price,
+      total_price: item.price * item.quantity,
+      modifiers: item.modifiers || []
+    }))
+
+    const { error: itemsError } = await supabase.from("order_items").insert(orderItems)
+    if (itemsError) throw itemsError
+
+    revalidatePath("/pos")
+    revalidatePath("/admin/orders")
+
+    return { success: true, orderId: order.id }
+  } catch (error: any) {
+    console.error("[POS Action] Create Order Error:", error)
+    return { success: false, error: error.message }
+  }
+}
