@@ -36,6 +36,43 @@ export async function addInventoryItem(formData: FormData) {
   }
 }
 
+export async function updateInventoryItem(id: string, formData: FormData) {
+  try {
+    await validateRole(['admin', 'staff', 'chef'])
+    const supabase = await createClient()
+
+    const name = formData.get("name") as string
+    const unit = formData.get("unit") as string
+    const unit_cost = parseFloat(formData.get("unit_cost") as string) || 0
+    const current_stock = parseFloat(formData.get("current_stock") as string) || 0
+    const reorder_level = parseFloat(formData.get("reorder_level") as string) || 0
+    const category = formData.get("category") as string
+    const sku = formData.get("sku") as string
+
+    const { error } = await supabase
+      .from("inventory_items")
+      .update({
+        name,
+        unit,
+        unit_cost,
+        current_stock,
+        reorder_level,
+        category,
+        sku,
+      })
+      .eq("id", id)
+
+    if (error) throw error
+
+    revalidatePath("/admin/inventory")
+    revalidatePath(`/admin/inventory/${id}`)
+    return { success: true }
+  } catch (error: any) {
+    console.error("Error updating inventory item:", error)
+    return { success: false, error: error.message }
+  }
+}
+
 export async function updateInventoryStock(itemId: string, quantity: number, type: string, notes?: string) {
   try {
     const { user } = await validateRole(['admin', 'staff', 'chef'])
