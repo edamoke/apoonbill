@@ -1,9 +1,10 @@
 "use client"
 
-import { ChefHat, MapPinned, Users, MessageSquare, Info, Star, ChevronLeft, ChevronRight } from "lucide-react"
+import { ChefHat, MapPinned, Users, MessageSquare, Info, Star, ChevronLeft, ChevronRight, Gift } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useEffect, useState, useCallback, useRef } from "react"
+import { BurgerCustomizer } from "@/components/product/burger-customizer"
 import { cn } from "@/lib/utils"
 import { ThemeConfig } from "@/lib/themes"
 import gsap from "gsap"
@@ -252,6 +253,7 @@ export function ParallaxHero({ content, theme }: { content?: any; theme?: ThemeC
 
 export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConfig }) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [showLoyaltyModal, setShowLoyaltyModal] = useState(false)
   
   const giftCard = content?.giftCard || {
     tag: "BRAND NEW",
@@ -290,44 +292,10 @@ export function GridSplit({ content, theme }: { content?: any; theme?: ThemeConf
     <section ref={containerRef} className="py-20 text-slate-900 transition-colors duration-500 relative overflow-hidden" style={{ backgroundColor: '#EBE3D8' }}>
       <div className="absolute top-0 left-0 w-full h-1 kente-gradient opacity-30" />
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-8">
-          {/* Gift Card */}
-          <div 
-            className={cn(
-              "grid-item rounded-none p-12 flex flex-col justify-between items-start relative overflow-hidden min-h-[500px] transition-all duration-500 shadow-xl kente-border",
-              theme?.id === 'pizza' ? "border-4 border-primary bg-transparent" : "bg-secondary"
-            )}
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 kente-pattern opacity-10 -rotate-12 translate-x-12 -translate-y-12" />
-            <div>
-              <span className="bg-white/90 text-secondary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-6 inline-block uppercase">
-                {giftCard.tag}
-              </span>
-              <p className="font-bold tracking-widest mb-2 uppercase italic opacity-80 text-foreground font-staytion">{giftCard.intro}</p>
-              <h3 
-                className={cn(
-                  "text-4xl md:text-5xl font-staytion mb-8 leading-tight text-foreground",
-                  theme?.typography.heading
-                )}
-                dangerouslySetInnerHTML={{ __html: giftCard.title }}
-              />
-            </div>
-          
-          <div className="relative z-10 w-full max-w-sm mx-auto my-8">
-            <div className={cn(
-              "aspect-[1.6/1] rounded-xl shadow-2xl flex items-center justify-center p-8 text-center transition-transform hover:rotate-0 border border-white/10",
-              theme?.id === 'fast-food' ? "bg-primary rotate-0" : "bg-gradient-to-r from-primary to-secondary rotate-3"
-            )}>
-               <span className={cn("text-white text-2xl italic font-staytion", theme?.typography.heading)}>{giftCard.cardText}</span>
-            </div>
-            <div className="absolute -top-4 -right-4 bg-primary text-white text-[10px] font-bold p-4 rounded-full w-24 h-24 flex items-center justify-center text-center leading-tight rotate-12 shadow-lg border-2 border-white/20">
-              {giftCard.promoText}
-            </div>
+          {/* Customizer Section */}
+          <div className="grid-item w-full">
+            <BurgerCustomizer theme={theme} />
           </div>
-
-          <Button asChild className="bg-primary hover:opacity-90 text-white font-bold px-8 border-none shadow-lg">
-            <Link href="/giftcards">{giftCard.buttonText}</Link>
-          </Button>
-        </div>
 
         {/* Image Card */}
         <div className="grid-item relative rounded-3xl overflow-hidden min-h-[500px] group border border-border shadow-xl">
@@ -802,6 +770,59 @@ export function SiteFooter({ content, theme }: { content?: any; theme?: ThemeCon
                 {item}
               </Link>
             ))}
+            <button 
+              onClick={() => {
+                const modal = document.getElementById('loyalty-modal');
+                if (modal) modal.style.display = 'flex';
+              }}
+              className="text-xs font-bold text-white/50 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-1"
+            >
+              <Gift className="h-3 w-3" />
+              Loyalty Card
+            </button>
+          </div>
+
+          {/* Inline Loyalty Modal (Hidden by default) */}
+          <div 
+            id="loyalty-modal" 
+            className="fixed inset-0 z-[200] hidden items-center justify-center bg-black/80 backdrop-blur-md p-4"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) e.currentTarget.style.display = 'none';
+            }}
+          >
+            <div className="bg-secondary p-12 rounded-3xl shadow-2xl max-w-lg w-full relative kente-border">
+              <button 
+                onClick={() => {
+                  const modal = document.getElementById('loyalty-modal');
+                  if (modal) modal.style.display = 'none';
+                }}
+                className="absolute top-4 right-4 text-foreground/50 hover:text-foreground"
+              >
+                ✕
+              </button>
+              <div className="text-left">
+                <span className="bg-white/90 text-secondary-foreground px-4 py-1 rounded-full text-xs font-bold tracking-widest mb-6 inline-block uppercase">
+                  BRAND NEW
+                </span>
+                <p className="font-bold tracking-widest mb-2 uppercase italic opacity-80 text-foreground font-staytion">INTRODUCING</p>
+                <h3 className={cn("text-4xl font-staytion mb-8 leading-tight text-foreground", theme?.typography.heading)}>
+                  THE MOST <br />DELICIOUS GIFT
+                </h3>
+              </div>
+              <div className="relative z-10 w-full max-w-sm mx-auto my-8">
+                <div className={cn(
+                  "aspect-[1.6/1] rounded-xl shadow-2xl flex items-center justify-center p-8 text-center bg-gradient-to-r from-primary to-secondary rotate-3"
+                )}>
+                  <span className={cn("text-white text-2xl italic font-staytion", theme?.typography.heading)}>thespoonbill Gift Card</span>
+                </div>
+                <div className="absolute -top-4 -right-4 bg-primary text-white text-[10px] font-bold p-4 rounded-full w-24 h-24 flex items-center justify-center text-center leading-tight rotate-12 shadow-lg border-2 border-white/20">
+                  GET & GIFT SOMEONE TODAY
+                </div>
+              </div>
+              <Button asChild className="w-full bg-primary hover:opacity-90 text-white font-bold py-6 border-none shadow-lg rounded-xl">
+                <Link href="/giftcards">BUY NOW</Link>
+              </Button>
+            </div>
           </div>
           <p className="text-xs font-bold text-white/50 uppercase tracking-widest">
             {copyright} By <a href="https://www.linkedin.com/in/eddy-akurwa-0965153a/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline underline-offset-2">Akurwa</a>
