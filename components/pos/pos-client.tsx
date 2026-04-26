@@ -494,7 +494,7 @@ export function POSClient({ categories, menuItems, tables, userProfile, modifier
         })),
         formData: {
           customerName: selectedClient?.full_name || "POS Customer",
-          customerEmail: selectedClient?.email || "pos@starsgarters.com",
+          customerEmail: selectedClient?.email || "pos@thespoonbill.co.ke",
           customerPhone: mpesaPhone || selectedClient?.phone || "0000000000",
           deliveryAddress: selectedTable ? `Table ${selectedTable.number}` : "Takeaway",
           orderType: orderType,
@@ -509,7 +509,7 @@ export function POSClient({ categories, menuItems, tables, userProfile, modifier
         user_id: selectedClient?.id
       }
 
-      const result = await createOnlineOrder(orderData)
+      const result = await createOnlineOrder(orderData as any)
       if (result.success) {
         if (selectedTable && orderType === 'dine_in') {
           const supabase = createClient()

@@ -112,7 +112,7 @@ export default function MenuClient({
               {categories?.map((category) => (
                 <TabsContent key={category.id} value={category.slug} className="mt-0 focus-visible:outline-none outline-none">
                   <div className="mb-8 md:mb-12 text-center max-w-2xl mx-auto px-4">
-                    <h2 className="text-2xl md:text-3xl font-serif italic font-bold mb-2 md:mb-4 text-[#0A2D4A]">{category.name}</h2>
+                    <h2 className="text-2xl md:text-3xl font-geist font-bold mb-2 md:mb-4 text-[#0A2D4A]">{category.name}</h2>
                     {category.description && (
                       <p className="text-gray-500 text-sm md:text-base leading-relaxed line-clamp-2 md:line-clamp-none italic">{category.description}</p>
                     )}

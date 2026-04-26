@@ -195,15 +195,15 @@
     @apply bg-background text-foreground;
     font-size: 1.2rem;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    @apply font-staytion;
-    letter-spacing: -0.02em;
-    text-transform: none;
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      @apply font-geist;
+      letter-spacing: -0.02em;
+      text-transform: none;
+    }
 
   .admin-theme h1,
   .admin-theme h2,
@@ -215,7 +215,9 @@
   .admin-theme .btn,
   .admin-theme [role="button"],
   .admin-theme .font-staytion,
-  .admin-theme [class*="font-staytion"] {
+  .admin-theme [class*="font-staytion"],
+  .admin-theme .font-bold,
+  .admin-theme [class*="font-bold"] {
     font-family: var(--font-geist), sans-serif !important;
     text-transform: none;
   }
@@ -226,11 +228,11 @@
     text-transform: uppercase;
   }
 
-  button,
-  .btn,
-  [role="button"] {
-    font-family: 'Staytion', cursive !important;
-  }
+    button,
+    .btn,
+    [role="button"] {
+      font-family: var(--font-geist), sans-serif !important;
+    }
 }
 
 .kente-border {

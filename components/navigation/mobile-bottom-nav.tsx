@@ -13,6 +13,11 @@ export function MobileBottomNav() {
   const cartItemCount = getTotalItems()
   const [isPulsing, setIsPulsing] = useState(false)
   const [lastCount, setLastCount] = useState(cartItemCount)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     if (cartItemCount > lastCount) {
@@ -64,41 +69,36 @@ export function MobileBottomNav() {
           const Icon = item.icon
 
           return (
-            <div key={item.label + index} className={cn("flex-1 flex justify-center", isCart && "relative h-12 w-16")}>
+            <div key={item.label + index} className={cn("flex-1 flex justify-center")}>
               <Link
                 href={item.href}
                 className={cn(
                   "flex flex-col items-center gap-1 transition-all duration-300 relative group",
-                  isActive ? "text-red-600" : "text-gray-400 hover:text-gray-600",
-                  isCart && "absolute -top-12 scale-125 z-50",
+                  isCart ? "text-red-600" : (isActive ? "text-red-600" : "text-gray-400 hover:text-gray-600"),
                   isCart && isPulsing && "animate-pulsing-cart"
                 )}
               >
                 <div className={cn(
-                  "p-2.5 transition-all duration-300 active:scale-90 flex items-center justify-center",
-                  isCart ? "rounded-full bg-red-600 text-white shadow-2xl border-4 border-white w-14 h-14" : "rounded-2xl",
+                  "p-2.5 transition-all duration-300 active:scale-90 flex items-center justify-center rounded-2xl",
                   !isCart && isActive ? "bg-red-50" : "bg-transparent",
                 )}>
                   <Icon className={cn(
-                    isCart ? "h-7 w-7" : "h-6 w-6",
-                    "transition-transform duration-300",
-                    isActive && !isCart ? "scale-110" : "group-active:scale-95",
+                    "h-6 w-6 transition-transform duration-300",
+                    isCart ? "text-red-600" : (isActive ? "scale-110" : "group-active:scale-95"),
                     isCart && isPulsing && "animate-pulse"
                   )} />
                 </div>
                 <span className={cn(
-                  "text-[10px] font-bold uppercase tracking-wider",
-                  isCart ? "mt-2 text-red-600 font-black" : ""
+                  "text-[10px] font-bold uppercase tracking-wider font-bold",
+                  isCart ? "text-red-600" : ""
                 )}>
                   {item.label}
                 </span>
                 
-                {item.badge !== undefined && (
+                {isMounted && item.badge !== undefined && (
                   <span className={cn(
                     "absolute h-5 w-5 text-[10px] font-bold rounded-full flex items-center justify-center border-2 animate-in zoom-in shadow-sm",
-                    isCart 
-                      ? "top-0 -right-2 bg-white text-red-600 border-red-600" 
-                      : "top-0 right-1 bg-red-600 text-white border-white"
+                    "top-0 right-1 bg-red-600 text-white border-white"
                   )}>
                     {item.badge}
                   </span>

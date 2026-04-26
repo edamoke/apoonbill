@@ -48,7 +48,7 @@ export function ProductCard({ product }: { product: Product }) {
       </Link>
       <CardContent className="p-3 md:p-6 flex-1 flex flex-col">
         <div className="mb-2 md:mb-3">
-          <h3 className="text-sm md:text-xl font-bold text-[#0A2D4A] mb-0.5 md:mb-1 group-hover:text-red-600 transition-colors duration-300 line-clamp-1">
+          <h3 className="text-sm md:text-xl font-geist font-bold text-[#0A2D4A] mb-0.5 md:mb-1 group-hover:text-red-600 transition-colors duration-300 line-clamp-1">
             {product.name}
           </h3>
           <p className="text-gray-400 text-[10px] md:text-xs leading-tight md:leading-snug line-clamp-2 italic">
