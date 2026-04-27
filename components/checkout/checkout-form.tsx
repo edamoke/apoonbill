@@ -40,7 +40,10 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
     password: "",
   })
 
-  const subtotal = getTotalPrice()
+  const rawSubtotal = getTotalPrice()
+  const discountPercent = 10
+  const discountAmount = rawSubtotal * (discountPercent / 100)
+  const subtotal = rawSubtotal - discountAmount
   const deliveryFee = formData.orderType === "delivery" ? 100 : 0
   const total = subtotal + deliveryFee
 
@@ -309,8 +312,16 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
               <div className="border-t border-border pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span>Ksh {subtotal.toFixed(2)}</span>
+                  <span className={discountAmount > 0 ? "line-through text-muted-foreground/50" : ""}>
+                    Ksh {rawSubtotal.toFixed(2)}
+                  </span>
                 </div>
+                {discountAmount > 0 && (
+                  <div className="flex justify-between text-sm text-green-600 font-medium">
+                    <span>Online Discount ({discountPercent}%)</span>
+                    <span>-Ksh {discountAmount.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Delivery Fee</span>
                   <span>Ksh {deliveryFee.toFixed(2)}</span>

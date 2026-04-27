@@ -117,11 +117,16 @@ export async function createOnlineOrder(data: OrderData & { user_id?: string }) 
       }
     })
 
+    // Apply 10% Online Order Discount
+    const discountPercent = 10
+    const discountAmount = calculatedSubtotal * (discountPercent / 100)
+    const discountedSubtotal = calculatedSubtotal - discountAmount
+
     // Fixed delivery fee logic
     const expectedDeliveryFee = data.formData.orderType === 'delivery' ? 100 : 0 
-    const calculatedTotal = calculatedSubtotal + expectedDeliveryFee
+    const calculatedTotal = discountedSubtotal + expectedDeliveryFee
 
-    const finalSubtotal = calculatedSubtotal
+    const finalSubtotal = discountedSubtotal
     const finalDeliveryFee = expectedDeliveryFee
     const finalTotal = calculatedTotal
 
@@ -144,7 +149,7 @@ export async function createOnlineOrder(data: OrderData & { user_id?: string }) 
         status: "pending",
         payment_method: data.formData.paymentMethod,
         payment_status: data.formData.paymentMethod === "cash" ? "pending" : "processing",
-        discount_percent: (data as any).discount_percent || 0,
+        discount_percent: discountPercent,
         source: data.source || 'web',
       })
       .select()
