@@ -23,147 +23,129 @@ async function populate() {
     ];
 
     console.log('Inserting suppliers...');
-    // Fetch existing suppliers to avoid duplicates if unique constraint is missing
     const { data: existingSuppliers } = await supabase.from('suppliers').select('*');
-    
     for (const s of suppliers) {
       const exists = existingSuppliers?.find(ex => ex.name === s.name);
-      if (!exists) {
-        await supabase.from('suppliers').insert(s);
-      }
+      if (!exists) await supabase.from('suppliers').insert(s);
     }
-
-    const { data: insertedSuppliers, error: sError } = await supabase
-      .from('suppliers')
-      .select();
-
-    if (sError) throw sError;
-    console.log(`Inserted ${insertedSuppliers.length} suppliers.`);
-
+    const { data: insertedSuppliers } = await supabase.from('suppliers').select();
     const meatSup = insertedSuppliers.find(s => s.name === 'Meat Supplier').id;
     const vegSup = insertedSuppliers.find(s => s.name === 'Veg Supplier').id;
     const pantrySup = insertedSuppliers.find(s => s.name === 'Pantry Supplier').id;
     const bevSup = insertedSuppliers.find(s => s.name === 'Beverage Supplier').id;
 
-    // 2. Define Inventory Items
+    // 2. Define Inventory Items (Comprehensive list based on feedback)
     const inventoryItems = [
-      // Meat
-      { name: 'Beef', category: 'Meat', unit: 'kg', current_stock: 100, min_stock_level: 20, supplier_id: meatSup },
-      { name: 'Goat Meat', category: 'Meat', unit: 'kg', current_stock: 50, min_stock_level: 10, supplier_id: meatSup },
-      { name: 'Chicken (Kienyeji)', category: 'Meat', unit: 'pcs', current_stock: 30, min_stock_level: 5, supplier_id: meatSup },
-      { name: 'Tilapia', category: 'Meat', unit: 'pcs', current_stock: 40, min_stock_level: 10, supplier_id: meatSup },
-      { name: 'King Fish', category: 'Meat', unit: 'kg', current_stock: 20, min_stock_level: 5, supplier_id: meatSup },
-      // Veg
-      { name: 'Potatoes', category: 'Vegetables', unit: 'kg', current_stock: 200, min_stock_level: 50, supplier_id: vegSup },
-      { name: 'Traditional Vegetables', category: 'Vegetables', unit: 'kg', current_stock: 50, min_stock_level: 10, supplier_id: vegSup },
-      { name: 'Onions', category: 'Vegetables', unit: 'kg', current_stock: 50, min_stock_level: 10, supplier_id: vegSup },
-      { name: 'Tomatoes', category: 'Vegetables', unit: 'kg', current_stock: 50, min_stock_level: 10, supplier_id: vegSup },
-      // Pantry
-      { name: 'Maize Flour', category: 'Pantry', unit: 'kg', current_stock: 100, min_stock_level: 20, supplier_id: pantrySup },
-      { name: 'Wheat Flour', category: 'Pantry', unit: 'kg', current_stock: 100, min_stock_level: 20, supplier_id: pantrySup },
-      { name: 'Rice', category: 'Pantry', unit: 'kg', current_stock: 100, min_stock_level: 20, supplier_id: pantrySup },
-      { name: 'Cooking Oil', category: 'Pantry', unit: 'litres', current_stock: 50, min_stock_level: 10, supplier_id: pantrySup },
-      { name: 'Sugar', category: 'Pantry', unit: 'kg', current_stock: 20, min_stock_level: 5, supplier_id: pantrySup },
-      { name: 'Salt', category: 'Pantry', unit: 'kg', current_stock: 10, min_stock_level: 2, supplier_id: pantrySup },
+      // Meats
+      { name: 'Beef Mince', category: 'Meat', unit: 'kg', current_stock: 100, reorder_level: 20, supplier_id: meatSup },
+      { name: 'Chicken Mince', category: 'Meat', unit: 'kg', current_stock: 50, reorder_level: 10, supplier_id: meatSup },
+      { name: 'Chicken Wings', category: 'Meat', unit: 'kg', current_stock: 30, reorder_level: 5, supplier_id: meatSup },
+      { name: 'Chicken Breast', category: 'Meat', unit: 'kg', current_stock: 30, reorder_level: 5, supplier_id: meatSup },
+      { name: 'Chicken Thigh', category: 'Meat', unit: 'kg', current_stock: 30, reorder_level: 5, supplier_id: meatSup },
+      { name: 'Chicken Drumstick', category: 'Meat', unit: 'kg', current_stock: 30, reorder_level: 5, supplier_id: meatSup },
+      { name: 'Fish Fillet', category: 'Meat', unit: 'kg', current_stock: 40, reorder_level: 10, supplier_id: meatSup },
+      // Vegetables
+      { name: 'Potatoes', category: 'Vegetables', unit: 'kg', current_stock: 200, reorder_level: 50, supplier_id: vegSup },
+      { name: 'Lettuce', category: 'Vegetables', unit: 'kg', current_stock: 20, reorder_level: 5, supplier_id: vegSup },
+      { name: 'Tomatoes', category: 'Vegetables', unit: 'kg', current_stock: 30, reorder_level: 5, supplier_id: vegSup },
+      // Pantry / Spices / Condiments
+      { name: 'Wheat Flour', category: 'Pantry', unit: 'kg', current_stock: 100, reorder_level: 20, supplier_id: pantrySup },
+      { name: 'Cooking Oil', category: 'Pantry', unit: 'litres', current_stock: 50, reorder_level: 10, supplier_id: pantrySup },
+      { name: 'Mayonnaise', category: 'Pantry', unit: 'kg', current_stock: 10, reorder_level: 2, supplier_id: pantrySup },
+      { name: 'Garlic Powder', category: 'Pantry', unit: 'kg', current_stock: 5, reorder_level: 1, supplier_id: pantrySup },
+      { name: 'Onion Powder', category: 'Pantry', unit: 'kg', current_stock: 5, reorder_level: 1, supplier_id: pantrySup },
+      { name: 'Black Pepper', category: 'Pantry', unit: 'kg', current_stock: 5, reorder_level: 1, supplier_id: pantrySup },
+      { name: 'Cayenne Pepper', category: 'Pantry', unit: 'kg', current_stock: 5, reorder_level: 1, supplier_id: pantrySup },
       // Beverage
-      { name: 'Milk', category: 'Beverages', unit: 'litres', current_stock: 50, min_stock_level: 10, supplier_id: bevSup },
-      { name: 'Tea Leaves', category: 'Beverages', unit: 'kg', current_stock: 5, min_stock_level: 1, supplier_id: bevSup },
-      { name: 'Coffee Beans', category: 'Beverages', unit: 'kg', current_stock: 5, min_stock_level: 1, supplier_id: bevSup },
-      { name: 'Soda 300ml', category: 'Beverages', unit: 'pcs', current_stock: 100, min_stock_level: 24, supplier_id: bevSup },
-      { name: 'Mineral Water 500ml', category: 'Beverages', unit: 'pcs', current_stock: 100, min_stock_level: 24, supplier_id: bevSup }
+      { name: 'Milk', category: 'Beverages', unit: 'litres', current_stock: 50, reorder_level: 10, supplier_id: bevSup }
     ];
 
     console.log('Inserting inventory items...');
-    const { data: existingInv } = await supabase.from('inventory_items').select('*');
     for (const item of inventoryItems) {
-      const exists = existingInv?.find(ex => ex.name === item.name);
-      if (!exists) {
-        await supabase.from('inventory_items').insert(item);
+      const { data: existing } = await supabase.from('inventory_items').select('id').eq('name', item.name).single();
+      if (!existing) {
+        const { error } = await supabase.from('inventory_items').insert(item);
+        if (error) console.error(`Error inserting ${item.name}:`, error.message);
+      } else {
+        await supabase.from('inventory_items').update({ supplier_id: item.supplier_id }).eq('id', existing.id);
       }
     }
-
-    const { data: insertedInventory, error: iError } = await supabase
-      .from('inventory_items')
-      .select();
-
-    if (iError) throw iError;
-    console.log(`Inserted ${insertedInventory.length} inventory items.`);
+    const { data: insertedInventory } = await supabase.from('inventory_items').select();
 
     // 3. Link Products to Inventory via Recipes
-    // We need to fetch products first
-    const { data: products, error: pError } = await supabase
-      .from('products')
-      .select('id, name');
-
-    if (pError) throw pError;
-    console.log(`Found ${products.length} products.`);
-
-    const recipes = [];
+    const { data: products } = await supabase.from('products').select('id, name');
     
-    // Mapping helper
-    const getInvId = (name) => insertedInventory.find(i => i.name === name)?.id;
+    console.log('Clearing old recipes...');
+    await supabase.from('recipes').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+
+    const getInvId = (name) => insertedInventory.find(i => i.name.toLowerCase() === name.toLowerCase())?.id;
+
+    const potId = getInvId('Potatoes');
+    const oilId = getInvId('Cooking Oil');
+    const beefMinceId = getInvId('Beef Mince');
+    const chickenMinceId = getInvId('Chicken Mince');
+    const chickenWingsId = getInvId('Chicken Wings');
+    const chickenBreastId = getInvId('Chicken Breast');
+    const fishId = getInvId('Fish Fillet');
+    const flourId = getInvId('Wheat Flour');
+    const lettuceId = getInvId('Lettuce');
+    const tomatoesId = getInvId('Tomatoes');
+    const mayoId = getInvId('Mayonnaise');
 
     for (const product of products) {
       const pName = product.name.toLowerCase();
+      const recipesToInsert = [];
+
+      // Base items for almost all burgers/sandwiches
+      if (pName.includes('burger')) {
+          if (lettuceId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: lettuceId, quantity_required: 0.02 });
+          if (tomatoesId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: tomatoesId, quantity_required: 0.03 });
+          if (mayoId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: mayoId, quantity_required: 0.015 });
+      }
+
+      // French Fries / Chips
+      if (pName.includes('chips') || pName.includes('fries')) {
+        if (potId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: potId, quantity_required: 0.3 });
+        if (oilId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: oilId, quantity_required: 0.05 });
+      }
       
-      // Basic Chips
-      if (pName.includes('chips')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Potatoes'), quantity: 0.3 }); // 300g
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Cooking Oil'), quantity: 0.05 });
-      }
-      
-      // Beef items
-      if (pName.includes('beef')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Beef'), quantity: 0.25 }); // 250g
+      // Beef Burgers
+      if (pName.includes('beef') && pName.includes('burger')) {
+        if (beefMinceId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: beefMinceId, quantity_required: 0.15 });
       }
 
-      // Mbuzi items
-      if (pName.includes('mbuzi')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Goat Meat'), quantity: 0.25 });
-      }
-
-      // Chicken items
-      if (pName.includes('kuku') || pName.includes('chicken')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Chicken (Kienyeji)'), quantity: 0.25 });
-      }
-
-      // Fish items
-      if (pName.includes('tilapia')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Tilapia'), quantity: 1 });
-      }
-
-      // Chapati
-      if (pName.includes('chapati')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Wheat Flour'), quantity: 0.1 });
-      }
-
-      // Sima / Ugali
-      if (pName.includes('sima')) {
-        recipes.push({ product_id: product.id, inventory_item_id: getInvId('Maize Flour'), quantity: 0.2 });
-      }
-
-      // Beverages with Milk
-      if (pName.includes('tea') || pName.includes('coffee') || pName.includes('chocolate')) {
-        if (!pName.includes('black') && !pName.includes('mineral')) {
-          recipes.push({ product_id: product.id, inventory_item_id: getInvId('Milk'), quantity: 0.15 });
+      // Chicken Burgers / Parts
+      if (pName.includes('chicken') || pName.includes('piecer') || pName.includes('wings')) {
+        if (pName.includes('burger')) {
+            if (chickenMinceId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: chickenMinceId, quantity_required: 0.15 });
+        } else if (pName.includes('wings')) {
+            if (chickenWingsId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: chickenWingsId, quantity_required: 0.25 });
+        } else {
+            // Default to breast/parts for other chicken items
+            if (chickenBreastId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: chickenBreastId, quantity_required: 0.2 });
         }
+        
+        if (flourId && (pName.includes('breaded') || pName.includes('piecer') || pName.includes('wings'))) {
+            recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: flourId, quantity_required: 0.05 });
+        }
+        if (oilId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: oilId, quantity_required: 0.02 });
+      }
+
+      // Fish Burger
+      if (pName.includes('fish')) {
+        if (fishId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: fishId, quantity_required: 0.15 });
+        if (flourId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: flourId, quantity_required: 0.05 });
+        if (oilId) recipesToInsert.push({ menu_item_id: product.id, inventory_item_id: oilId, quantity_required: 0.02 });
+      }
+
+      for (const r of recipesToInsert) {
+          const { error } = await supabase.from('recipes').insert(r);
+          if (error) console.error(`Failed to insert recipe for ${product.name}:`, error.message);
       }
     }
-
-    if (recipes.length > 0) {
-      console.log(`Inserting ${recipes.length} recipe links...`);
-      const { data: existingRecipes } = await supabase.from('recipes').select('*');
-      for (const r of recipes) {
-        const exists = existingRecipes?.find(ex => ex.product_id === r.product_id && ex.inventory_item_id === r.inventory_item_id);
-        if (!exists) {
-          await supabase.from('recipes').insert(r);
-        }
-      }
-      console.log('Recipes linked successfully.');
-    }
-
+    console.log('Population finished.');
   } catch (error) {
-    console.error('Error in population script:', error);
+    console.error('Error:', error);
   }
 }
 
