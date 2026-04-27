@@ -97,8 +97,11 @@ export function RecipeManager({ menuItemId, menuItemName, inventoryItems, existi
                 <Input 
                   type="number" 
                   step="0.001" 
-                  value={ing.quantity_required} 
-                  onChange={(e) => updateIngredient(index, "quantity_required", parseFloat(e.target.value))}
+                  value={isNaN(ing.quantity_required) ? "" : ing.quantity_required} 
+                  onChange={(e) => {
+                    const val = e.target.value === "" ? 0 : parseFloat(e.target.value)
+                    updateIngredient(index, "quantity_required", val)
+                  }}
                 />
               </div>
               <Button variant="ghost" size="icon" onClick={() => removeIngredient(index)}>
