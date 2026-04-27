@@ -14,22 +14,37 @@ interface Patty {
 }
 
 const PATTIES: Patty[] = [
-  { id: "beef", name: "Beef Patty", price: 150 },
-  { id: "chicken", name: "Chicken Patty", price: 130 },
-  { id: "fish", name: "Fish Patty", price: 160 },
+  { id: "beef", name: "Beef Patty", price: 250 },
+  { id: "chicken", name: "Chicken Patty", price: 300 },
+  { id: "fish", name: "Fish Patty", price: 400 },
+]
+
+interface Extra {
+  id: string
+  name: string
+  price: number
+}
+
+const EXTRAS: Extra[] = [
+  { id: "cheese", name: "Extra Cheese", price: 200 },
+  { id: "garlic-sauce", name: "Garlic Sauce", price: 50 },
+  { id: "1000-island", name: "1000 Island Sauce", price: 50 },
+  { id: "garlic-barbecue", name: "Garlic & Barbecue Sauce", price: 150 },
 ]
 
 const BASE_PRICE = 350 // Base burger price with bun and basic toppings
 
 export function BurgerCustomizer({ theme }: { theme?: any }) {
   const [selectedPatties, setSelectedPatties] = useState<Patty[]>([PATTIES[0]]) // Default 1 beef patty
+  const [selectedExtras, setSelectedExtras] = useState<Extra[]>([])
   const [totalPrice, setTotalPrice] = useState(BASE_PRICE + PATTIES[0].price)
   const { addItem } = useCart()
 
   useEffect(() => {
     const pattiesPrice = selectedPatties.reduce((sum, p) => sum + p.price, 0)
-    setTotalPrice(BASE_PRICE + pattiesPrice)
-  }, [selectedPatties])
+    const extrasPrice = selectedExtras.reduce((sum, e) => sum + e.price, 0)
+    setTotalPrice(BASE_PRICE + pattiesPrice + extrasPrice)
+  }, [selectedPatties, selectedExtras])
 
   const addPatty = (patty: Patty) => {
     if (selectedPatties.length >= 3) {
@@ -57,15 +72,25 @@ export function BurgerCustomizer({ theme }: { theme?: any }) {
     setSelectedPatties(newPatties)
   }
 
+  const toggleExtra = (extra: Extra) => {
+    if (selectedExtras.find((e) => e.id === extra.id)) {
+      setSelectedExtras(selectedExtras.filter((e) => e.id !== extra.id))
+    } else {
+      setSelectedExtras([...selectedExtras, extra])
+    }
+  }
+
   const handleAddToCart = () => {
     const pattyNames = selectedPatties.map((p) => p.name).join(", ")
+    const extraNames = selectedExtras.map((e) => e.name).join(", ")
     const name = `${selectedPatties.length === 1 ? "Single" : selectedPatties.length === 2 ? "Double" : "Triple"} Custom Burger`
+    const description = `${pattyNames}${extraNames ? ` with ${extraNames}` : ""}`
 
     addItem({
       productId: `custom-burger-${Date.now()}`,
       name: name,
       price: totalPrice,
-      image_url: "/images/hero-new.png",
+      image_url: "/images/pxl-20251209-114620748.jpg",
     })
 
     toast({
@@ -102,20 +127,47 @@ export function BurgerCustomizer({ theme }: { theme?: any }) {
       </div>
 
       {/* Patty Selection */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {PATTIES.map((patty) => (
-          <Button
-            key={patty.id}
-            variant="outline"
-            onClick={() => addPatty(patty)}
-            disabled={selectedPatties.length >= 3}
-            className="flex flex-col h-auto py-4 gap-1 hover:border-primary hover:text-primary transition-all border-dashed"
-          >
-            <Plus className="h-4 w-4" />
-            <span className="font-bold">{patty.name}</span>
-            <span className="text-xs opacity-70">Ksh {patty.price}</span>
-          </Button>
-        ))}
+      <div className="space-y-2">
+        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Choose Patties</p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {PATTIES.map((patty) => (
+            <Button
+              key={patty.id}
+              variant="outline"
+              onClick={() => addPatty(patty)}
+              disabled={selectedPatties.length >= 3}
+              className="flex flex-col h-auto py-4 gap-1 hover:border-primary hover:text-primary transition-all border-dashed"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="font-bold">{patty.name}</span>
+              <span className="text-xs opacity-70">Ksh {patty.price}</span>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Extras Selection */}
+      <div className="space-y-2">
+        <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Add Extras</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          {EXTRAS.map((extra) => {
+            const isSelected = selectedExtras.some((e) => e.id === extra.id)
+            return (
+              <Button
+                key={extra.id}
+                variant={isSelected ? "default" : "outline"}
+                onClick={() => toggleExtra(extra)}
+                className={cn(
+                  "flex flex-col h-auto py-3 px-2 gap-1 transition-all text-center leading-tight",
+                  isSelected ? "bg-primary text-white border-primary" : "hover:border-primary hover:text-primary border-dashed"
+                )}
+              >
+                <span className="font-bold text-[10px] sm:text-xs">{extra.name}</span>
+                <span className={cn("text-[9px] opacity-70", isSelected ? "text-white" : "")}>Ksh {extra.price}</span>
+              </Button>
+            )
+          })}
+        </div>
       </div>
 
       <div className="mt-auto pt-6 border-t border-white/20">
