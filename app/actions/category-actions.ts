@@ -41,6 +41,54 @@ export async function updateCategory(id: string, updates: {
 
   revalidatePath("/admin/categories")
   revalidatePath("/menu")
+  return { success: true, categories: data }
+}
+
+export async function deleteCategory(id: string) {
+  const supabase = await createClient()
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    throw new Error("Unauthorized")
+  }
+
+  const { data: profile } = await supabase.from("profiles").select("*").eq("id", user.id).single()
+
+  if (!profile?.is_admin && profile?.role !== "admin") {
+    throw new Error("Forbidden")
+  }
+
+  // First, check if there are products in this category
+  const { data: products, error: productsError } = await supabase
+    .from("products")
+    .select("id")
+    .eq("category_id", id)
+    .limit(1)
+
+  if (productsError) {
+    console.error("Error checking for products in category:", productsError)
+    return { success: false, error: productsError.message }
+  }
+
+  if (products && products.length > 0) {
+    return { success: false, error: "Cannot delete category with associated products. Please move or delete the products first." }
+  }
+
+  const { error } = await supabase
+    .from("categories")
+    .delete()
+    .eq("id", id)
+
+  if (error) {
+    console.error("Error deleting category:", error)
+    return { success: false, error: error.message }
+  }
+
+  revalidatePath("/admin/categories")
+  revalidatePath("/menu")
   return { success: true }
 }
 

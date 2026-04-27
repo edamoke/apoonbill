@@ -1,6 +1,6 @@
 "use client"
 
-import { createCategory, updateCategory } from "@/app/actions/category-actions"
+import { createCategory, updateCategory, deleteCategory } from "@/app/actions/category-actions"
 import { generateCategoryImage } from "@/app/actions/ai-actions"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
-import { ChevronLeft, Save, Loader2, Upload, ImageIcon, Wand2 } from "lucide-react"
+import { ChevronLeft, Save, Loader2, Upload, ImageIcon, Wand2, Trash2 } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useRef } from "react"
@@ -143,6 +143,38 @@ export function CategoryForm({ category }: CategoryFormProps) {
     }
   }
 
+  const handleDelete = async () => {
+    if (!category) return
+    if (!confirm(`Are you sure you want to delete the category "${category.name}"? This will fail if there are products in this category.`)) return
+
+    setLoading(true)
+    try {
+      const result = await deleteCategory(category.id)
+      if (result.success) {
+        toast({
+          title: "Category Deleted",
+          description: `Successfully deleted category "${category.name}"`,
+        })
+        router.push("/admin/categories")
+        router.refresh()
+      } else {
+        toast({
+          title: "Error",
+          description: result.error || "Failed to delete category",
+          variant: "destructive",
+        })
+      }
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "An unexpected error occurred",
+        variant: "destructive",
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="mb-8">
@@ -256,19 +288,39 @@ export function CategoryForm({ category }: CategoryFormProps) {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  {category ? "Updating..." : "Creating..."}
-                </>
-              ) : (
-                <>
-                  <Save className="mr-2 h-4 w-4" />
-                  {category ? "Update Category" : "Create Category"}
-                </>
+            <div className="flex gap-4">
+              <Button type="submit" className="flex-1" disabled={loading}>
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    {category ? "Updating..." : "Creating..."}
+                  </>
+                ) : (
+                  <>
+                    <Save className="mr-2 h-4 w-4" />
+                    {category ? "Update Category" : "Create Category"}
+                  </>
+                )}
+              </Button>
+
+              {category && (
+                <Button
+                  type="button"
+                  variant="destructive"
+                  onClick={handleDelete}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <>
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Delete
+                    </>
+                  )}
+                </Button>
               )}
-            </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
