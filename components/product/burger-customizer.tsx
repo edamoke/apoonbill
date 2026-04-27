@@ -47,10 +47,11 @@ export function BurgerCustomizer({ theme }: { theme?: any }) {
   }, [selectedPatties, selectedExtras])
 
   const addPatty = (patty: Patty) => {
-    if (selectedPatties.length >= 3) {
+    // Limit increased from 3 to 10 for safety, effectively "more than 3"
+    if (selectedPatties.length >= 10) {
       toast({
         title: "Max patties reached",
-        description: "You can only add up to 3 patties.",
+        description: "You can only add up to 10 patties.",
         variant: "destructive",
       })
       return
@@ -83,7 +84,12 @@ export function BurgerCustomizer({ theme }: { theme?: any }) {
   const handleAddToCart = () => {
     const pattyNames = selectedPatties.map((p) => p.name).join(", ")
     const extraNames = selectedExtras.map((e) => e.name).join(", ")
-    const name = `${selectedPatties.length === 1 ? "Single" : selectedPatties.length === 2 ? "Double" : "Triple"} Custom Burger`
+    let name = "Custom Burger"
+    if (selectedPatties.length === 1) name = "Single Custom Burger"
+    else if (selectedPatties.length === 2) name = "Double Custom Burger"
+    else if (selectedPatties.length === 3) name = "Triple Custom Burger"
+    else name = `${selectedPatties.length}-Patty Custom Burger`
+    
     const description = `${pattyNames}${extraNames ? ` with ${extraNames}` : ""}`
 
     addItem({
@@ -103,14 +109,14 @@ export function BurgerCustomizer({ theme }: { theme?: any }) {
     <div className="w-full bg-white/50 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-xl flex flex-col gap-6">
       <div>
         <h2 className="text-3xl font-staytion mb-2 text-foreground">Customize Your Burger</h2>
-        <p className="text-muted-foreground italic">Choose your patties (up to 3)</p>
+        <p className="text-muted-foreground italic">Choose your patties</p>
       </div>
 
       {/* Selected Patties Display */}
       <div className="space-y-3">
         {selectedPatties.map((patty, index) => (
           <div key={index} className="flex items-center justify-between bg-primary/10 p-4 rounded-xl border border-primary/20">
-            <span className="font-bold text-foreground">{patty.name}</span>
+            <span className="font-bold text-red-600">{patty.name}</span>
             <Button 
               variant="ghost" 
               size="icon" 
@@ -135,7 +141,7 @@ export function BurgerCustomizer({ theme }: { theme?: any }) {
               key={patty.id}
               variant="outline"
               onClick={() => addPatty(patty)}
-              disabled={selectedPatties.length >= 3}
+              disabled={selectedPatties.length >= 10}
               className="flex flex-col h-auto py-4 gap-1 hover:border-primary hover:text-primary transition-all border-dashed"
             >
               <Plus className="h-4 w-4" />

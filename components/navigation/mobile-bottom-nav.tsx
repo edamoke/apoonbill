@@ -89,7 +89,7 @@ export function MobileBottomNav() {
                   )} />
                 </div>
                 <span className={cn(
-                  "text-[10px] font-bold uppercase tracking-wider font-bold",
+                  "text-[10px] uppercase tracking-wider font-staytion",
                   isCart ? "text-red-600" : ""
                 )}>
                   {item.label}

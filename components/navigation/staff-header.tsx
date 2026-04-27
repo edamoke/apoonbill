@@ -57,7 +57,7 @@ export function StaffHeader({ user, profile }: StaffHeaderProps) {
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-3">
             <div className="bg-red-600 text-white p-1.5 rounded-sm font-black text-xs leading-none">SB</div>
-            <span className="font-black tracking-tight text-red-600 text-lg uppercase leading-none">THE SPOONBILL</span>
+            <span className="font-staytion tracking-tight text-red-600 text-lg uppercase leading-none">THE SPOONBILL</span>
           </Link>
           
           <nav className="hidden md:flex items-center gap-8">
@@ -66,7 +66,7 @@ export function StaffHeader({ user, profile }: StaffHeaderProps) {
                 key={item.name} 
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-2 text-sm font-bold transition-colors hover:text-red-600",
+                  "flex items-center gap-2 text-sm font-staytion transition-colors hover:text-red-600",
                   pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href)) ? "text-red-600" : "text-slate-600"
                 )}
               >

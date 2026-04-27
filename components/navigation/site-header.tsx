@@ -55,19 +55,19 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
         <nav className={cn(
           "hidden md:flex items-center gap-2 lg:gap-3 xl:gap-5 flex-1 justify-start"
         )}>
-          {[
-            { label: "Home", href: "/" },
-            { label: "Drinks", href: "/menu?category=drinks" },
-            { label: "Burgers", href: "/menu?category=burgers" },
-            { label: "Fries", href: "/menu?category=fries" },
-          ].map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "block text-lg lg:text-xl xl:text-2xl transition-colors whitespace-nowrap font-staytion",
-                scrolled
-                  ? "text-red-600 hover:text-[var(--primary)]"
+            {[
+              { label: "Home", href: "/" },
+              { label: "Drinks", href: "/menu?category=drinks" },
+              { label: "Burgers", href: "/menu?category=burgers" },
+              { label: "Fries", href: "/menu?category=fries" },
+            ].map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "block text-lg lg:text-xl xl:text-2xl transition-colors whitespace-nowrap font-staytion",
+                  scrolled
+                    ? "text-red-600 hover:text-[var(--primary)]"
                   : pathname === "/"
                   ? "text-white hover:text-[var(--primary)]"
                   : "text-gray-700 hover:text-[var(--primary)]",
@@ -136,7 +136,7 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
             <Link
               href="/orders"
               className={cn(
-                "hidden md:block text-xs lg:text-base font-bold transition-colors relative group/orders px-1 lg:px-4 py-2",
+                "hidden md:block text-xs lg:text-base font-staytion transition-colors relative group/orders px-1 lg:px-4 py-2",
                 scrolled
                   ? "text-red-600 hover:text-[var(--primary)]"
                   : pathname === "/"
@@ -165,10 +165,10 @@ export function SiteHeader({ user, profile, cartItemCount = 0, theme, branding }
           ) : (
             !isCheckout && (
               <div className="hidden md:flex items-center gap-2">
-                <Button variant="ghost" className={cn("font-bold", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-black/5"))} asChild>
+                <Button variant="ghost" className={cn("font-staytion", scrolled ? "text-red-600 hover:bg-black/5" : (pathname === "/" ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-black/5"))} asChild>
                   <Link href="/auth/login">Login</Link>
                 </Button>
-                <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-bold")} asChild>
+                <Button className={cn("bg-[var(--primary)] text-white hover:opacity-90 font-staytion")} asChild>
                   <Link href="/auth/sign-up">Sign Up</Link>
                 </Button>
               </div>
