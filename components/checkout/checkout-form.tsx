@@ -276,7 +276,7 @@ export function CheckoutForm({ user, profile }: CheckoutFormProps) {
                   <RadioGroupItem value="mpesa" id="mpesa" />
                   <Label htmlFor="mpesa" className="cursor-pointer flex-1">
                     <div className="font-medium">M-Pesa</div>
-                    <div className="text-xs text-muted-foreground">Pay securely with M-Pesa STK Push</div>
+                    <div className="text-xs text-muted-foreground">"Mpesa under construction" Securely with M-Pesa STK Push</div>
                   </Label>
                 </div>
                 <div className="flex items-center space-x-2 p-3 border rounded-lg">
