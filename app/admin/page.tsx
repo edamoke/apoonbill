@@ -21,13 +21,17 @@ async function getStats(supabase: any) {
   const { count: totalProducts } = await supabase.from("products").select("*", { count: "exact", head: true })
   const { count: totalOrders } = await supabase.from("orders").select("*", { count: "exact", head: true })
   
-  // 2. Revenue (Real) - Support multiple completion statuses
+  // 2. Revenue (Real) - Support multiple completion statuses including POS 'cash'/'mpesa' logic
+  // and online orders which might be 'processing' or 'pending' but still valid revenue if payment is confirmed
   const { data: revenueData } = await supabase
     .from("orders")
-    .select("total, created_at")
-    .in("payment_status", ["completed", "paid"])
+    .select("total, created_at, payment_status, status")
   
-  const totalRevenue = revenueData?.reduce((acc: number, order: any) => acc + Number(order.total), 0) || 0
+  const totalRevenue = revenueData?.filter((order: any) => 
+    ["completed", "paid"].includes(order.payment_status) || 
+    ["complete", "delivered", "served"].includes(order.status) ||
+    (order.payment_status === 'processing' && ["received", "processing", "on_transit"].includes(order.status))
+  ).reduce((acc: number, order: any) => acc + Number(order.total), 0) || 0
 
   // 3. Status Counts
   const { count: pendingOrders } = await supabase.from("orders").select("*", { count: "exact", head: true }).eq("status", "pending")
@@ -39,7 +43,12 @@ async function getStats(supabase: any) {
     return {
       date: format(d, 'MMM dd'),
       amount: revenueData
-        ?.filter((o: any) => format(new Date(o.created_at), 'yyyy-MM-dd') === format(d, 'yyyy-MM-dd'))
+        ?.filter((o: any) => 
+          format(new Date(o.created_at), 'yyyy-MM-dd') === format(d, 'yyyy-MM-dd') &&
+          (["completed", "paid"].includes(o.payment_status) || 
+           ["complete", "delivered", "served"].includes(o.status) ||
+           (o.payment_status === 'processing' && ["received", "processing", "on_transit"].includes(o.status)))
+        )
         .reduce((acc: number, curr: any) => acc + Number(curr.total), 0) || 0
     }
   }).reverse()
