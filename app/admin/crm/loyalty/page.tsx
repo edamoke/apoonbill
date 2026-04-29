@@ -9,17 +9,14 @@ import {
   TableRow 
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Settings, Plus, Check, X, ExternalLink } from "lucide-react"
+import { Settings, Plus, X, ExternalLink } from "lucide-react"
 import { createClient } from "@/lib/supabase/server"
 import { 
   getLoyaltyConfig, 
-  updateLoyaltyConfig, 
-  approveSocialPost,
   getLoyaltyRewards
 } from "@/app/actions/loyalty-actions"
-import { revalidatePath } from "next/cache"
+import { LoyaltySettingsForm } from "@/components/admin/crm/loyalty-settings-form"
+import { ApprovePostButton } from "@/components/admin/crm/approve-post-button"
 
 export default async function LoyaltyPage() {
   const supabase = await createClient()
@@ -40,16 +37,6 @@ export default async function LoyaltyPage() {
     .order("created_at", { ascending: false })
     .limit(10)
 
-  async function handleSaveConfig(formData: FormData) {
-    "use server"
-    const newConfig = {
-      points_per_100_kes: Number(formData.get("points_per_100")),
-      min_spend_for_points: Number(formData.get("min_spend")),
-      social_bonus_points: Number(formData.get("social_bonus")),
-    }
-    await updateLoyaltyConfig(newConfig)
-  }
-
   return (
     <div className="p-6 space-y-6">
       <CRMNavigation />
@@ -64,21 +51,7 @@ export default async function LoyaltyPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <form action={handleSaveConfig} className="space-y-4">
-              <div className="space-y-2">
-                <Label>Points per KSh 100 spent</Label>
-                <Input name="points_per_100" type="number" defaultValue={config.points_per_100_kes} />
-              </div>
-              <div className="space-y-2">
-                <Label>Minimum spend to earn (KSh)</Label>
-                <Input name="min_spend" type="number" defaultValue={config.min_spend_for_points} />
-              </div>
-              <div className="space-y-2">
-                <Label>Social Media Bonus Points</Label>
-                <Input name="social_bonus" type="number" defaultValue={config.social_bonus_points} />
-              </div>
-              <Button type="submit" className="w-full">Save Changes</Button>
-            </form>
+            <LoyaltySettingsForm config={config} />
           </CardContent>
         </Card>
 
@@ -103,7 +76,7 @@ export default async function LoyaltyPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {pendingPosts?.length === 0 && (
+                {(!pendingPosts || pendingPosts.length === 0) && (
                   <TableRow>
                     <TableCell colSpan={4} className="text-center text-muted-foreground py-8">
                       No pending social posts to review
@@ -120,14 +93,7 @@ export default async function LoyaltyPage() {
                       </a>
                     </TableCell>
                     <TableCell className="text-right space-x-2">
-                      <form action={async () => {
-                        "use server"
-                        await approveSocialPost(post.id)
-                      }} className="inline">
-                        <Button size="sm" variant="outline" className="text-green-600 hover:text-green-700">
-                          <Check className="h-4 w-4" />
-                        </Button>
-                      </form>
+                      <ApprovePostButton postId={post.id} />
                       <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
                         <X className="h-4 w-4" />
                       </Button>
@@ -166,7 +132,7 @@ export default async function LoyaltyPage() {
                     <TableCell>
                       <span className={`px-2 py-1 rounded-full text-xs ${
                         reward.is_available ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"
-                      }`}>
+                       }`}>
                         {reward.is_available ? "Active" : "Inactive"}
                       </span>
                     </TableCell>
