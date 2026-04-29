@@ -21,9 +21,8 @@ export async function awardPointsForPurchase(userId: string, amount: number, ord
   const supabase = await createAdminClient()
   const config = await getLoyaltyConfig()
 
-  if (amount < (config.min_spend_for_points || 0)) return { success: false, reason: "Below min spend" }
-
-  const pointsToAward = Math.floor((amount / 100) * config.points_per_100_kes)
+  // Removed min spend requirement to ensure all purchasers become members
+  const pointsToAward = Math.max(1, Math.floor((amount / 100) * config.points_per_100_kes))
   
   if (pointsToAward <= 0) return { success: false, reason: "Zero points" }
 

@@ -15,29 +15,28 @@ export async function getCRMStats() {
     .select("*", { count: "exact", head: true })
     .gt("loyalty_points", 0)
 
-  // 3. Average Points Balance
+  // 3. Average Points Balance (calculated across ALL clients as they are now all members upon first purchase)
   const { data: pointsData } = await supabase
     .from("profiles")
     .select("loyalty_points")
-    .gt("loyalty_points", 0)
+    .or("role.eq.user,role.is.null")
   
-  const avgPoints = pointsData?.length 
-    ? Math.round(pointsData.reduce((acc, curr) => acc + (curr.loyalty_points || 0), 0) / pointsData.length) 
-    : 0
-  
-  const totalPoints = pointsData?.reduce((acc, curr) => acc + (curr.loyalty_points || 0), 0) || 0
+  const totalProfilesCount = pointsData?.length || 1
+  const totalPointsValue = pointsData?.reduce((acc, curr) => acc + (curr.loyalty_points || 0), 0) || 0
+  const avgPoints = Math.round(totalPointsValue / totalProfilesCount)
 
   // 4. Campaign Data (Real from social_posts and discount usage)
-  const { count: totalSocialPosts } = await supabase
-    .from("social_posts")
+  // 4. Campaign Data (Real from social_posts and order sources)
+  const { count: totalOrders } = await supabase
+    .from("orders")
     .select("*", { count: "exact", head: true })
 
-  const { count: approvedSocialPosts } = await supabase
-    .from("social_posts")
+  const { count: campaignOrders } = await supabase
+    .from("orders")
     .select("*", { count: "exact", head: true })
-    .eq("status", "approved")
+    .not("source", "eq", "pos") // Orders not from POS are considered campaign/online driven
 
-  const campaignConversion = totalSocialPosts ? Math.round((approvedSocialPosts || 0) / totalSocialPosts * 100) : 0
+  const campaignConversion = totalOrders ? Math.round((campaignOrders || 0) / totalOrders * 100) : 0
 
   // 5. Top Customers
   const { data: topCustomers } = await supabase
@@ -64,7 +63,7 @@ export async function getCRMStats() {
     totalClients: totalClients || 0,
     activeLoyalty: activeLoyalty || 0,
     avgPoints,
-    totalPoints,
+    totalPoints: totalPointsValue,
     campaignConversion,
     topCustomers: topCustomers || [],
     recentRedemptions: recentRedemptions || []
