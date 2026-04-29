@@ -26,7 +26,6 @@ export default async function CRMLayout({
 
   return (
     <div className="flex flex-col min-h-screen">
-      <AdminHeader user={user} profile={profile} />
       <div className="flex-1">
         {children}
       </div>

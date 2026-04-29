@@ -21,26 +21,45 @@ import { ApprovePostButton } from "@/components/admin/crm/approve-post-button"
 export default async function LoyaltyPage() {
   try {
     const supabase = await createClient()
-    const config = await getLoyaltyConfig()
-    const rewards = await getLoyaltyRewards()
+    const configData = await getLoyaltyConfig()
+    const config = configData || { points_per_100_kes: 0, min_spend_for_points: 0, social_bonus_points: 0 }
+    
+    let rewards = []
+    try {
+      rewards = await getLoyaltyRewards()
+    } catch (e) {
+      console.error("Rewards fetch error:", e)
+    }
 
     // Fetch pending social posts with safety
-    const { data: pendingPosts, error: pendingError } = await supabase
+    let pendingPosts = []
+    const { data: pPosts, error: pendingError } = await supabase
       .from("social_posts")
       .select("*, profiles(full_name)")
       .eq("status", "pending")
       .order("created_at", { ascending: false })
     
+    if (pendingError) {
+      console.error("Error fetching pending posts:", pendingError)
+    } else {
+      pendingPosts = pPosts || []
+    }
+    
     if (pendingError) console.error("Error fetching pending posts:", pendingError)
 
     // Fetch recent transactions with safety
-    const { data: recentTransactions, error: txError } = await supabase
+    let recentTransactions = []
+    const { data: rTransactions, error: txError } = await supabase
       .from("loyalty_transactions")
       .select("*, profiles(full_name)")
       .order("created_at", { ascending: false })
       .limit(10)
     
-    if (txError) console.error("Error fetching recent transactions:", txError)
+    if (txError) {
+      console.error("Error fetching recent transactions:", txError)
+    } else {
+      recentTransactions = rTransactions || []
+    }
 
     return (
       <div className="p-6 space-y-6">
