@@ -25,7 +25,6 @@ export async function POST(req: Request) {
     const isAdmin = profile?.role === 'admin' || profile?.is_admin === true || profile?.role === 'staff' || profile?.role === 'manager' || profile?.role === 'chef' || profile?.role === 'accountant' || profile?.role === 'rider';
 
     if (isAdmin) {
-        // @ts-ignore
         // --- ADMIN / STAFF ASSISTANT ---
         const systemState = await getSystemStateDump();
         
@@ -87,9 +86,12 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
                     }),
                     execute: async ({ period }: { period: string }) => {
                         const state = await getSystemStateDump();
+                        const cancelledCount = state.financials.cancelledOrders;
+                        const lowStockCount = state.operations.supplyChain.lowStockItems.length;
+                        
                         return { 
-                          losses: state.risks,
-                          summary: `Identified ${state.risks.potentialLosses.length} voided/cancelled orders and ${state.risks.recentVariances.length} recent inventory discrepancies for the period: ${period}.`
+                          losses: { cancelledOrders: cancelledCount, itemsAtRisk: lowStockCount },
+                          summary: `Identified ${cancelledCount} cancelled orders today and ${lowStockCount} inventory discrepancies for the period: ${period}.`
                         };
                     }
                 } as any),
@@ -107,6 +109,7 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
 
     } else {
         // --- CUSTOMER / GUEST CONCIERGE ---
+        const systemState = await getSystemStateDump();
 
         // Fetch contextual data for the system prompt
         const { data: activeProducts } = await supabase
@@ -133,8 +136,12 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
             const categoryProducts = activeProducts?.filter(p => p.category_id === category.id) || []
             if (categoryProducts.length === 0) return null
             
-            const productsList = categoryProducts.map(p => `
-    - **${p.name}** (KES ${p.price})
+            const productsList = categoryProducts.map(p => {
+                const stockItem = systemState?.operations?.supplyChain?.lowStockItems?.find((i: any) => i.name.toLowerCase() === p.name.toLowerCase());
+                const stockWarning = stockItem ? " [LOW STOCK - PERSUADE TO BUY SOMETHING ELSE]" : " [IN STOCK]";
+                
+                return `
+    - **${p.name}** (KES ${p.price})${stockWarning}
     - Description: ${p.description || "Freshly prepared"}
     - Ingredients: ${Array.isArray(p.ingredients) ? p.ingredients.join(", ") : "Premium ingredients"}
     - Dietary: ${[
@@ -143,7 +150,8 @@ CURRENT USER: ${profile?.full_name || "Admin"} (${profile?.role || "Staff"})`
         p.spice_level ? `Spice Level ${p.spice_level}/3` : null,
         Array.isArray(p.allergens) && p.allergens.length > 0 ? `Allergens: ${p.allergens.join(", ")}` : null
     ].filter(Boolean).join(" | ") || "Standard"}
-    - Prep Time: ${p.preparation_time}m | Calories: ${p.calories || "N/A"}`).join("\n")
+    - Prep Time: ${p.preparation_time}m | Calories: ${p.calories || "N/A"}`;
+            }).join("\n")
 
             return `CATEGORY: ${category.name}\n${productsList}`
         }).filter(Boolean).join("\n\n")
@@ -165,10 +173,17 @@ MENU KNOWLEDGE BASE:
 ${menuStructure}
 
 YOUR SALES MISSION:
-1. **Active Selling**: 
-   - Always recommend the "CURRENT OFFERS" first if they fit the user's inquiry.
-   - Use evocative language: "Our signature gold-dusted burgers," "The crispest, hand-cut coastal fries," "Refreshingly chilled tropical juices."
-   - **Direct Sales Up**: When a user selects an item, proactively suggest an upgrade or a pairing. (e.g., "That Burger pairs divinely with our Loaded Masala Fries—shall I add those for you?")
+1. **Active Selling & Convincing**: 
+   - **Your core mission is to INCREASE the order value.** Never just take an order; always persuade the client to add more.
+   - Use highly evocative, sensory language: "Succulent, flame-grilled patties," "Golden-crisp, hand-cut fries seasoned with coastal herbs," "Zesty, ice-cold tropical infusions that dance on the palate."
+   - **Strategic Upselling**: 
+     * If they want a Burger -> Convince them that the "Loaded Masala Fries" are a mandatory pairing for the full experience.
+     * If they want Chicken -> Suggest a "Tropical Juice" to balance the spice.
+     * If they are a group -> Proactively pitch a "Family Feast" or "Corporate Catering Platter".
+   - **Convincing Heuristics**: 
+     * "You deserve the best—why not add our signature dip?"
+     * "Most of our guests find that [Product B] is the perfect companion to [Product A]."
+     * "It would be a shame to miss out on our limited-time offer—shall I add it for you?"
 
 2. **Navigation & Guidance**:
    - Guide users to sections: /burgers, /chicken, /drinks, /fries, /loaded, /combo.
